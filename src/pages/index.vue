@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-import { getLabPage } from '~/api/biz/exp'
 import { useRequest } from 'vue-request'
 const { data: labRes, loading } = useRequest(getLabPage)
 </script>
