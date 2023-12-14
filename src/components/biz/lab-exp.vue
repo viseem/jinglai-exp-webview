@@ -11,7 +11,6 @@ const expStatusList = [
 
 <template>
 	<div hfull wfull flex flex-col>
-		<x-title title="细胞实验室" text-center></x-title>
 		<div w-full flex flex-1 items-center justify-center>
 			<div border="2px solid black" hfull wfull flex gap-4 p-4>
 				<div
