@@ -54,6 +54,7 @@
     "eslint-plugin-vue": "^9.19.2",
     "husky": "^8.0.3",
     "ityped": "^1.0.3",
+    "less": "^4.2.0",
     "lightningcss": "^1.22.1",
     "lint-staged": "^15.2.0",
     "local-pkg": "^0.5.0",
@@ -124,6 +125,8 @@
     "iOS >= 8"
   ],
   "dependencies": {
+    "@arco-plugins/vite-vue": "^1.4.5",
+    "@arco-themes/vue-yun36524-lab": "^0.0.1",
     "html2canvas": "^1.4.1"
   }
 }

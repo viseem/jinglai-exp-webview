@@ -47,6 +47,7 @@ import Jsx from '@vitejs/plugin-vue-jsx'
 
 import type { ComponentResolver } from 'unplugin-vue-components/types'
 import type { Plugin } from 'vite'
+import { vitePluginForArco } from '@arco-plugins/vite-vue'
 
 export const _dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -186,6 +187,12 @@ export default function () {
 		 * 如果 package.json 或 pnpm-lock.yaml 更新的话，强制重启
 		 */
 		ForceRestart(),
+		/*
+		 * arco
+		 * */
+		vitePluginForArco({
+			theme: '@arco-themes/vue-yun36524-lab',
+		}),
 	]
 
 	if (env.VITE_APP_API_AUTO_IMPORT) {

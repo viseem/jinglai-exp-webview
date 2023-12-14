@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { goExpPage } from '~/utils/routerutils'
+import { ILab } from '~/api/biz/types/exptypes'
 
 defineProps({
-	title: {
-		type: String,
+	item: {
+		type: Object as PropType<ILab>,
 		required: true,
 	},
 })
@@ -19,9 +20,13 @@ function cardClickHandler() {
 		cursor-pointer
 		items-center
 		justify-center
+		style="border: 2px solid var(--color-border-2)"
 		@click="cardClickHandler"
 	>
-		<x-title :title="title"></x-title>
+		<div flex flex-col text-center>
+			<x-title :title="item.name"></x-title>
+			<x-text :text="item.mark"></x-text>
+		</div>
 	</div>
 </template>
 

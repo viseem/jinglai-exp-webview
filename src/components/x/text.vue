@@ -1,16 +1,14 @@
 <script setup lang="ts">
 defineProps({
-	title: {
+	text: {
 		type: String,
-		default: '标题',
+		default: '',
 	},
 })
 </script>
 
 <template>
-	<a-typography-text text-xl fw500>
-		{{ title }}
-	</a-typography-text>
+	<a-typography-text>{{ text }}</a-typography-text>
 </template>
 
 <style scoped></style>
