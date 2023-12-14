@@ -7,14 +7,14 @@ async function clipPoster(url) {
 	await nextTick()
 	// 获取Canvas元素和2D上下文
 	let canvas = document.getElementById('posterCanvas')
-	// canvas.width = 300 * 4 // 实际大小的两倍
-	// canvas.height = 525 * 4
+	canvas.width = 300 * 4 // 实际大小的两倍
+	canvas.height = 525 * 4
 
 	// 使用CSS样式将Canvas缩小
 	canvas.style.width = '300px' // 实际大小的一半
 	canvas.style.height = '525px'
 	let context = canvas.getContext('2d')
-	// context.imageSmoothingEnabled = true
+	context.imageSmoothingEnabled = true
 	// SVG路径数据
 	let svgPathData =
 		'm956.938,125.426a8.1,8.1 0 0 1 -7.412,-2.283c-49.146,-50.813 -178.672,-91.791 -237.555,-97.483c-37.916,-3.665 -58.486,-13.106 -68.516,-19.586a14.949,14.949 0 0 0 -16.278,0c-10.029,6.48 -30.6,15.92 -68.515,19.586c-58.39,5.644 -186.241,45.984 -236.3,96.206a11.71,11.71 0 0 1 -10.424,3.223c-46.028,-8.311 -195.063,2.478 -284.024,78.64a72.659,72.659 0 0 0 -25.247,55.234l0,1902.327c0,85.98 69.777,155.68 155.85,155.68l953.6,0c86.07,0 155.85,-69.7 155.85,-155.68l0,-1902.327a72.671,72.671 0 0 0 -25.25,-55.234c-90.127,-77.161 -241.917,-87.223 -285.779,-78.303z'
