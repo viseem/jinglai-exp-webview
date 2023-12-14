@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<a-typography-text> {{ title }} </a-typography-text>
+	<a-typography-text text-2xl> {{ title }} </a-typography-text>
 </template>
 
 <style scoped></style>

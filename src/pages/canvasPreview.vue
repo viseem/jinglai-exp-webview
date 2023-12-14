@@ -7,21 +7,21 @@ async function clipPoster(url) {
 	await nextTick()
 	// 获取Canvas元素和2D上下文
 	let canvas = document.getElementById('posterCanvas')
-	canvas.width = 300 * 4 // 实际大小的两倍
-	canvas.height = 525 * 4
+	// canvas.width = 300 * 4 // 实际大小的两倍
+	// canvas.height = 525 * 4
 
 	// 使用CSS样式将Canvas缩小
 	canvas.style.width = '300px' // 实际大小的一半
 	canvas.style.height = '525px'
 	let context = canvas.getContext('2d')
-	context.imageSmoothingEnabled = true
+	// context.imageSmoothingEnabled = true
 	// SVG路径数据
 	let svgPathData =
-		'm895.161,380.452a5.553,5.553 0 0 1 -5.081,-1.565c-33.691,-34.834 -122.485,-62.926 -162.851,-66.828c-25.992,-2.513 -40.093,-8.984 -46.969,-13.426a10.247,10.247 0 0 0 -11.159,0c-6.875,4.442 -20.976,10.913 -46.969,13.426c-40.028,3.869 -127.673,31.523 -161.991,65.952a8.027,8.027 0 0 1 -7.146,2.21c-31.554,-5.7 -133.721,1.7 -194.706,53.909a49.812,49.812 0 0 0 -17.306,37.87l0,1304.09a106.779,106.779 0 0 0 106.839,106.72l653.718,0a106.784,106.784 0 0 0 106.84,-106.72l0,-1304.09a49.8,49.8 0 0 0 -17.31,-37.865c-61.78,-52.901 -165.84,-59.798 -195.909,-53.683z'
+		'm956.938,125.426a8.1,8.1 0 0 1 -7.412,-2.283c-49.146,-50.813 -178.672,-91.791 -237.555,-97.483c-37.916,-3.665 -58.486,-13.106 -68.516,-19.586a14.949,14.949 0 0 0 -16.278,0c-10.029,6.48 -30.6,15.92 -68.515,19.586c-58.39,5.644 -186.241,45.984 -236.3,96.206a11.71,11.71 0 0 1 -10.424,3.223c-46.028,-8.311 -195.063,2.478 -284.024,78.64a72.659,72.659 0 0 0 -25.247,55.234l0,1902.327c0,85.98 69.777,155.68 155.85,155.68l953.6,0c86.07,0 155.85,-69.7 155.85,-155.68l0,-1902.327a72.671,72.671 0 0 0 -25.25,-55.234c-90.127,-77.161 -241.917,-87.223 -285.779,-78.303z'
 
 	// 创建SVG元素
 	let svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-	svgElement.setAttribute('width', '1344')
+	svgElement.setAttribute('width', '1271')
 	svgElement.setAttribute('height', '2320')
 
 	// 创建SVG路径元素
@@ -80,7 +80,7 @@ async function clipPoster(url) {
 
 <template>
 	<img :src="testPoster" alt="" w350px class="poster-img" />
-	<div relative h525px w300px border="1px solid red">
+	<div relative h525px w300px>
 		<canvas
 			id="posterCanvas"
 			style="image-rendering: auto"
@@ -89,7 +89,6 @@ async function clipPoster(url) {
 			top-0
 			hfull
 			wfull
-			border="1px solid green"
 		></canvas>
 	</div>
 </template>

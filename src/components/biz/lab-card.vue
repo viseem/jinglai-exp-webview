@@ -21,7 +21,7 @@ function cardClickHandler() {
 		justify-center
 		@click="cardClickHandler"
 	>
-		<a-typography-text text-4xl> {{ title }} </a-typography-text>
+		<x-title :title="title"></x-title>
 	</div>
 </template>
 

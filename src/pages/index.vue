@@ -1,5 +1,5 @@
 <template>
-	<div border="10px solid green" flex flex-1 flex-col w="screen">
+	<div flex flex-1 flex-col w="screen">
 		<x-title class="mt-4 text-center text-4xl" title="选择实验室"></x-title>
 		<div w-full flex flex-1 items-center justify-center>
 			<div border="2px solid black" w-90rem p24px>
