@@ -1,13 +1,20 @@
 <script setup lang="ts">
 // eslint-disabled
 const imgUrl = '/public/test.jpg'
+const testPoster = ref('')
 clipPoster(imgUrl)
 async function clipPoster(url) {
 	await nextTick()
 	// 获取Canvas元素和2D上下文
 	let canvas = document.getElementById('posterCanvas')
-	let context = canvas.getContext('2d')
+	canvas.width = 300 * 4 // 实际大小的两倍
+	canvas.height = 525 * 4
 
+	// 使用CSS样式将Canvas缩小
+	canvas.style.width = '300px' // 实际大小的一半
+	canvas.style.height = '525px'
+	let context = canvas.getContext('2d')
+	context.imageSmoothingEnabled = true
 	// SVG路径数据
 	let svgPathData =
 		'm895.161,380.452a5.553,5.553 0 0 1 -5.081,-1.565c-33.691,-34.834 -122.485,-62.926 -162.851,-66.828c-25.992,-2.513 -40.093,-8.984 -46.969,-13.426a10.247,10.247 0 0 0 -11.159,0c-6.875,4.442 -20.976,10.913 -46.969,13.426c-40.028,3.869 -127.673,31.523 -161.991,65.952a8.027,8.027 0 0 1 -7.146,2.21c-31.554,-5.7 -133.721,1.7 -194.706,53.909a49.812,49.812 0 0 0 -17.306,37.87l0,1304.09a106.779,106.779 0 0 0 106.839,106.72l653.718,0a106.784,106.784 0 0 0 106.84,-106.72l0,-1304.09a49.8,49.8 0 0 0 -17.31,-37.865c-61.78,-52.901 -165.84,-59.798 -195.909,-53.683z'
@@ -50,12 +57,14 @@ async function clipPoster(url) {
 			context.fillRect(0, 0, canvas.width, canvas.height)
 			context.setTransform(1, 0, 0, 1, 0, 0)
 			context.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+			testPoster.value = canvas.toDataURL('image/png')
 		}, 2000)
 	}
 
 	function miaobiao() {
 		// 设置路径样式
-		context.lineWidth = 10
+		context.lineWidth = 20
 		context.strokeStyle = 'red'
 		context.fillStyle = 'rgba(0,0,0,0)'
 		// 缩放SVG路径以适应Canvas尺寸
@@ -70,6 +79,7 @@ async function clipPoster(url) {
 </script>
 
 <template>
+	<img :src="testPoster" alt="" w350px class="poster-img" />
 	<div relative h525px w300px border="1px solid red">
 		<canvas
 			id="posterCanvas"
@@ -84,4 +94,8 @@ async function clipPoster(url) {
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.poster-img {
+	filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+}
+</style>
