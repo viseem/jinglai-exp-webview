@@ -36,30 +36,32 @@ async function clipPoster(url) {
 		// 在Canvas上绘制图片
 		context.drawImage(img, 0, 0, canvas.width, canvas.height)
 
-		miaobiao(true)
+		miaobiao()
 
 		setTimeout(() => {
+			// 恢复缩放状态
+			context.setTransform(1, 0, 0, 1, 0, 0)
 			// 清除画布
 			context.clearRect(0, 0, canvas.width, canvas.height)
 			miaobiao()
 			// 开始裁剪
 			context.clip(new Path2D(svgPathData))
-			// 绘制图片
+			context.fillStyle = 'red'
+			context.fillRect(0, 0, canvas.width, canvas.height)
+			context.setTransform(1, 0, 0, 1, 0, 0)
 			context.drawImage(img, 0, 0, canvas.width, canvas.height)
-		}, 3000)
+		}, 2000)
 	}
 
-	function miaobiao(first) {
+	function miaobiao() {
 		// 设置路径样式
 		context.lineWidth = 10
 		context.strokeStyle = 'red'
 		context.fillStyle = 'rgba(0,0,0,0)'
 		// 缩放SVG路径以适应Canvas尺寸
-		if (first) {
-			let scaleX = canvas.width / parseFloat(svgElement.getAttribute('width'))
-			let scaleY = canvas.height / parseFloat(svgElement.getAttribute('height'))
-			context.scale(scaleX, scaleY)
-		}
+		let scaleX = canvas.width / parseFloat(svgElement.getAttribute('width'))
+		let scaleY = canvas.height / parseFloat(svgElement.getAttribute('height'))
+		context.scale(scaleX, scaleY)
 		// 绘制路径
 		context.stroke(path)
 		context.fill(path)
