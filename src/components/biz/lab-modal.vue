@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useRequest } from 'vue-request'
+import { ILab } from '~/api/biz/types/exptypes'
 const { data: labRes } = useRequest(getLabPage)
 
 const modalStore = useModalStore()
+const labStore = useLabStore()
 const modalVisible = computed(() => modalStore.labModalVisible)
-function labClickHandler() {
+function labClickHandler(data: ILab) {
+	labStore.setCurrentLab(data)
 	modalStore.closeLabModal()
 }
 </script>
@@ -39,7 +42,7 @@ function labClickHandler() {
 						v-for="item in labRes?.list"
 						:key="item"
 						:span="6"
-						@click="labClickHandler"
+						@click="labClickHandler(item)"
 					>
 						<biz-lab-card :item="item" class="h10rem w-full rounded-5" />
 					</a-col>
