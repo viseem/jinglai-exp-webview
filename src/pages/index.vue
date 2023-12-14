@@ -1,40 +1,28 @@
 <template>
-	<div>
-		<div class="grid grid-cols-3">
-			<a href="https://github.com/dishait/tov-template" target="_blank">
-				<img :src="safeResolve('/logo.png')" class="logo" alt="Vite logo" />
-			</a>
-			<a href="https://vitejs.dev" target="_blank">
-				<img :src="safeResolve('/vite.svg')" class="logo" alt="Vite logo" />
-			</a>
-			<a href="https://vuejs.org/" target="_blank">
-				<img :src="safeResolve('/vue.svg')" class="logo vue" alt="Vue logo" />
-			</a>
+	<div border="10px solid green" flex flex-1 flex-col w="screen">
+		<x-title class="mt-4 text-center text-4xl" title="选择实验室"></x-title>
+		<div w-full flex flex-1 items-center justify-center>
+			<a-spin :loading="loading">
+				<div border="2px solid black" w-90rem p24px>
+					<a-row :gutter="[24, 24]">
+						<a-col v-for="item in labRes?.list" :key="item" :span="6">
+							<biz-lab-card
+								:title="item.name"
+								class="h10rem w-full"
+								border="1px solid red"
+							/>
+						</a-col>
+					</a-row>
+				</div>
+			</a-spin>
 		</div>
-		<HelloWorld msg="Tov + Vite + Vue" />
 	</div>
 </template>
 
-<style>
-a {
-	color: rgba(37, 99, 235);
-}
+<script lang="ts" setup>
+import { getLabPage } from '~/api/biz/exp'
+import { useRequest } from 'vue-request'
+const { data: labRes, loading } = useRequest(getLabPage)
+</script>
 
-p {
-	padding: 0 10px;
-}
-
-.logo {
-	width: 10em;
-	height: 10em;
-	padding: 1.5rem;
-	will-change: filter;
-	transition: filter 300ms;
-}
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-	filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style></style>

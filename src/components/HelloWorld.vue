@@ -9,7 +9,7 @@ const { t } = useI18n()
 <template>
 	<div class="mt-10 flex flex-col items-center space-y-7">
 		<h1 class="text-4xl">{{ msg }}</h1>
-
+		<span>123123123</span>
 		<Counter />
 		<p>
 			{{ t('edit') }}

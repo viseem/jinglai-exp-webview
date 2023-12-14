@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { API_BASE_URL } from '~/config/server'
 
 export const http = axios.create({
-	baseURL: import.meta.env.VITE_API_BASE_URL,
+	baseURL: API_BASE_URL,
 })
 
 // 添加请求拦截器
@@ -22,8 +23,9 @@ http.interceptors.response.use(
 	function (response) {
 		// 2xx 范围内的状态码都会触发该函数。
 		// 对响应数据进行格式化
-		if (response.data) {
-			return response.data
+		console.log('response', response)
+		if (response.data?.data) {
+			return response.data.data
 		}
 		return response
 	},

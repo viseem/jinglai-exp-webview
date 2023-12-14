@@ -1,5 +1,5 @@
 @import './md.css';
-
+@import './elementui.css';
 
 html.dark {
 	background: #100c2a !important;

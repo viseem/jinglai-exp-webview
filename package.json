@@ -22,13 +22,14 @@
     "auto:create": "plop --plopfile scripts/create.cjs",
     "build:debug": "cross-env NODE_ENV=debug vite build",
     "deps:fresh": "plop --plopfile scripts/deps-fresh.cjs",
-    "lint:fix": "eslint --fix --ext .ts,.js,.jsx,.vue,.cjs ."   
+    "lint:fix": "eslint --fix --ext .ts,.js,.jsx,.vue,.cjs ."
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "packageManager": "pnpm@8.11.0",
   "devDependencies": {
+    "@arco-design/web-vue": "^2.53.3",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
     "@types/ityped": "^1.0.3",
     "@types/node": "^18.19.2",
@@ -82,8 +83,8 @@
     "vite-plugin-use-modules": "^1.4.6",
     "vite-plugin-vue-devtools": "1.0.0-rc.6",
     "vite-plugin-vue-meta-layouts": "^0.3.3",
-    "vue": "^3.3.10",
     "vitest": "^1.0.1",
+    "vue": "^3.3.10",
     "vue-dark-switch": "^1.0.6",
     "vue-echarts": "^6.6.2",
     "vue-i18n": "^9.8.0",
@@ -121,5 +122,8 @@
     "not ie <= 11",
     "Android >= 4.0",
     "iOS >= 8"
-  ]
+  ],
+  "dependencies": {
+    "html2canvas": "^1.4.1"
+  }
 }
