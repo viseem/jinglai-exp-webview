@@ -60,3 +60,14 @@ http.interceptors.response.use(
 		return Promise.reject(error)
 	},
 )
+
+export const request = {
+	get(url: string, params = {}): Promise<any> {
+		return http.get(url, {
+			params,
+		})
+	},
+	post(url: string, data = {} as any): Promise<any> {
+		return http.post(url, data)
+	},
+}

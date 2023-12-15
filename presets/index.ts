@@ -191,7 +191,7 @@ export default function () {
 		 * arco
 		 * */
 		vitePluginForArco({
-			theme: '@arco-themes/vue-yun36524-lab',
+			// theme: '@arco-themes/vue-yun36524-lab',
 		}),
 	]
 
