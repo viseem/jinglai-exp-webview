@@ -38,20 +38,24 @@ const filterExpListByStatus = (status) => {
 <template>
 	<div hfull wfull flex flex-col>
 		<div w-full flex flex-1 items-center justify-center>
-			<div border="2px solid black" hfull wfull flex gap-4 p-4>
+			<div hfull wfull flex gap-4>
 				<div
-					v-for="item in expStatusList"
-					:key="item"
+					v-for="(item, index) in expStatusList"
+					:key="index"
+					mt-4
 					hfull
 					wfull
-					border="1px solid green;"
+					rounded-2
+					px-4
+					py-2
+					style="box-shadow: 0 0 3px #ccc"
 				>
-					<x-title :title="item.name" />
+					<x-title text-base :title="item.name" />
 					<div
 						v-for="expItem in filterExpListByStatus(item.status)"
 						:key="expItem"
 					>
-						<biz-exp-card :item="expItem"></biz-exp-card>
+						<biz-exp-card mt4 :item="expItem"></biz-exp-card>
 					</div>
 				</div>
 			</div>

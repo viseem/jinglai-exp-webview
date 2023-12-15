@@ -8,4 +8,6 @@ export interface ILab {
 export interface IExp {
 	name: string
 	content: string
+	sopDone: number
+	sopTotal: number
 }
