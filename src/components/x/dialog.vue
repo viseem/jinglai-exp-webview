@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const visible = ref(false)
-defineProps({
+const props = defineProps({
 	width: {
 		type: String,
 		default: '50%',
@@ -13,7 +12,33 @@ defineProps({
 		type: String,
 		default: 'red',
 	},
+	modelValue: {
+		type: Boolean,
+		default: false,
+	},
 })
+const emit = defineEmits(['update:modelValue'])
+const visible = ref(props.modelValue)
+watch(
+	() => props.modelValue,
+	(v) => {
+		visible.value = v
+	},
+	{
+		immediate: true,
+	},
+)
+
+watch(
+	() => visible.value,
+	(v) => {
+		emit('update:modelValue', v)
+	},
+	{
+		immediate: true,
+	},
+)
+
 function open() {
 	visible.value = true
 }

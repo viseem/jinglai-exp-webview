@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { IExp } from '~/api/biz/types/exptypes'
+import { IQuotation } from '~/api/biz/types/quotationtypes'
 
 const expDialogRef = ref()
 const formData = ref({} as IExp)
-function open(params: { id: number }) {
+const quotationData = ref({} as IQuotation)
+async function open(params: { id: number }) {
 	if (params.id) {
 		expDialogRef.value.open()
 		formData.value.id = params.id
 		// 获取任务详情
-		loadExpDetail()
+		await loadExpDetail()
+		loadQuotationDetail()
 	}
 }
 function close() {
@@ -24,6 +27,13 @@ async function loadExpDetail() {
 	if (formData.value.id) {
 		const res = await getExpDetail(formData.value.id)
 		formData.value = res
+	}
+}
+
+async function loadQuotationDetail() {
+	if (formData.value.quotationId) {
+		const res = await getQuotationDetail(formData.value.quotationId)
+		quotationData.value = res
 	}
 }
 </script>
@@ -50,11 +60,13 @@ async function loadExpDetail() {
 				<a-row box-border :gutter="[20]" hfull>
 					<a-col hfull :span="10">
 						<div hfull flex flex-col>
-							<div flex-1 p-2 border="1px solid red">
-								<x-title>实验方案</x-title>
-								<div>这里是实验方案</div>
+							<x-title>实验方案</x-title>
+							<div border="1px solid red" flex-1 overflow-y-auto p-2>
+								<div h0>
+									<div overflow-y-auto v-html="quotationData.planText"></div>
+								</div>
 							</div>
-							<div>
+							<div min-h-10rem>
 								<x-title>客户需求</x-title>
 								<div>这是客户需求</div>
 							</div>

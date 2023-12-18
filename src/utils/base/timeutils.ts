@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export function formatDate(date: Date, format?: string): string {
+export function formatDate(date: Date | undefined, format?: string): string {
 	// 日期不存在，则返回空
 	if (!date) {
 		return ''
@@ -12,7 +12,10 @@ export function formatDate(date: Date, format?: string): string {
 	return dayjs(date).format(format)
 }
 
-export function formatDateTime(date: Date, format?: string): string {
+export function formatDateTime(
+	date: Date | undefined,
+	format?: string,
+): string {
 	// 日期不存在，则返回空
 	if (!date) {
 		return ''

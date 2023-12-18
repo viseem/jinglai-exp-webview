@@ -13,6 +13,9 @@ export default defineStore('modal', {
 		closeLabModal() {
 			this.labModalVisible = false
 		},
+		setLabModalVisible(visible: boolean) {
+			this.labModalVisible = visible
+		},
 	},
 	persist: false,
 })

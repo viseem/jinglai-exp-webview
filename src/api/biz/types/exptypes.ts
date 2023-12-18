@@ -13,6 +13,7 @@ export interface ISop {
 
 export interface IExp {
 	id?: number
+	quotationId?: number
 	name: string
 	content: string
 	sopDone: number
@@ -29,4 +30,5 @@ export interface IExp {
 	focusList: IUser[]
 	startDate: Date
 	deadline: Date
+	createTime: Date
 }

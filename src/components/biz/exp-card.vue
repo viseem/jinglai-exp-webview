@@ -40,6 +40,7 @@ function cardClickHandler() {
 					{{ formatDate(item?.startDate) }} - {{ formatDate(item?.deadline) }}
 				</p>
 			</x-text>
+			<x-text text-right opacity-80 :text="formatDate(item.createTime)" />
 		</div>
 	</div>
 </template>

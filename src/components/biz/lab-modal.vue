@@ -5,7 +5,12 @@ const { data: labRes } = useRequest(getLabPage)
 
 const modalStore = useModalStore()
 const labStore = useLabStore()
-const modalVisible = computed(() => modalStore.labModalVisible)
+// computed set get语法
+const modalVisible = computed({
+	get: () => modalStore.labModalVisible,
+	set: (v) => modalStore.setLabModalVisible(v),
+})
+
 function labClickHandler(data: ILab) {
 	labStore.setCurrentLab(data)
 	modalStore.closeLabModal()
@@ -13,29 +18,8 @@ function labClickHandler(data: ILab) {
 </script>
 
 <template>
-	<div
-		v-if="modalVisible"
-		absolute
-		left-0
-		top-0
-		z-100
-		hscreen
-		wscreen
-		flex
-		items-center
-		justify-center
-		p-2xl
-	>
-		<div
-			hfull
-			wfull
-			flex
-			items-center
-			justify-center
-			rounded-2xl
-			bg-white
-			class="lab-modal-container"
-		>
+	<x-dialog v-model="modalVisible" background="white" width="90%">
+		<div hfull wfull flex items-center justify-center rounded-2xl>
 			<div wfull pxl>
 				<a-row :gutter="[48, 48]">
 					<a-col
@@ -49,12 +33,7 @@ function labClickHandler(data: ILab) {
 				</a-row>
 			</div>
 		</div>
-	</div>
+	</x-dialog>
 </template>
 
-<style scoped>
-.lab-modal-container {
-	//border-radius: theme('borderRadius.2xl');
-	box-shadow: 0 0 10px #ccc;
-}
-</style>
+<style scoped></style>
