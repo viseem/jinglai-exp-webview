@@ -11,6 +11,9 @@ dependencies:
   '@arco-themes/vue-yun36524-lab':
     specifier: ^0.0.1
     version: 0.0.1(@arco-design/web-vue@2.53.3)
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   html2canvas:
     specifier: ^1.4.1
     version: 1.4.1

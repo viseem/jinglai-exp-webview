@@ -2,4 +2,8 @@
 	<router-view />
 </template>
 <script setup lang="ts"></script>
-<style></style>
+<style>
+.arco-modal-body {
+	overflow: hidden !important;
+}
+</style>

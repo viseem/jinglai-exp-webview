@@ -2,7 +2,7 @@
 defineProps({
 	title: {
 		type: String,
-		default: '标题',
+		default: '',
 	},
 	rows: {
 		type: Number,
@@ -20,7 +20,10 @@ defineProps({
 		fw500
 		class="!mb-0 !text-#333"
 	>
-		{{ title }}
+		<span>{{ title }}</span>
+		<!--如果有slot-->
+		<slot></slot>
+		<span v-if="!$slots.default || !title">&nbsp;</span>
 	</a-typography-text>
 </template>
 
