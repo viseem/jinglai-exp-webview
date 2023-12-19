@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { useRequest } from 'vue-request'
 import { ILab } from '~/api/biz/types/exptypes'
-const { data: labRes } = useRequest(getLabPage)
+const labList = ref({} as ILab[])
+
+async function loadLabPage() {
+	await login()
+	const res = await getLabPage()
+	labList.value = res?.list
+}
+loadLabPage()
 
 const modalStore = useModalStore()
 const labStore = useLabStore()
@@ -23,7 +29,7 @@ function labClickHandler(data: ILab) {
 			<div wfull pxl>
 				<a-row :gutter="[48, 48]">
 					<a-col
-						v-for="item in labRes?.list"
+						v-for="item in labList"
 						:key="item"
 						:span="6"
 						@click="labClickHandler(item)"

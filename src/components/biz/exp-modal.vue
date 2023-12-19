@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { IExp } from '~/api/biz/types/exptypes'
+import { IExp, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
+import { booleanToSopStatus } from '~/utils/biz/exputils'
 
 const expDialogRef = ref()
 const formData = ref({} as IExp)
@@ -26,6 +27,9 @@ defineExpose({
 async function loadExpDetail() {
 	if (formData.value.id) {
 		const res = await getExpDetail(formData.value.id)
+		// res.sopList?.forEach((item) => {
+		// 	item.status = sopStatusToBoolean(item.status)
+		// })
 		formData.value = res
 	}
 }
@@ -35,6 +39,13 @@ async function loadQuotationDetail() {
 		const res = await getQuotationDetail(formData.value.quotationId)
 		quotationData.value = res
 	}
+}
+
+async function sopStatusChange(item: ISop, _status: boolean) {
+	const status = booleanToSopStatus(_status)
+	await updateSopStatus({ id: item.id, status })
+	toast.success('修改成功')
+	item.status = status
 }
 </script>
 
@@ -80,9 +91,19 @@ async function loadQuotationDetail() {
 							</div>
 							<div flex-1 border="1px solid purple">
 								<x-title title="关键节点" />
-								<div>
-									<p>这是关键节点1</p>
-									<p>这是关键节点2</p>
+								<div flex flex-col>
+									<a-checkbox
+										v-for="item in formData?.sopList"
+										:key="item"
+										:model-value="sopStatusToBoolean(item.status)"
+										@update:model-value="
+											(v) => {
+												sopStatusChange(item, v)
+											}
+										"
+									>
+										{{ item.status }}<span v-html="item.content"></span>
+									</a-checkbox>
 								</div>
 							</div>
 							<div>

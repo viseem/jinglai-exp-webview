@@ -3,12 +3,20 @@ import { API_BASE_URL } from '~/config/server'
 
 export const http = axios.create({
 	baseURL: API_BASE_URL,
+	headers: {
+		// 'Content-Type': 'application/json',
+		//添加token
+	},
 })
-
 // 添加请求拦截器
 http.interceptors.request.use(
 	function (config) {
-		// 在发送请求之前做些什么
+		// 添加token
+		const userStore = useUserStore()
+		if (userStore.token) {
+			config.headers['Authorization'] = 'Bearer ' + userStore.token
+		}
+
 		return config
 	},
 	function (error) {

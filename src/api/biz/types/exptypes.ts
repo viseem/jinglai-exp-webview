@@ -8,7 +8,19 @@ export interface ILab {
 }
 
 export interface ISop {
-	content: string
+	createTime: 1702884490000
+	updateTime: 1702884490000
+	creator: 145
+	updater: 145
+	deleted: false
+	tenantId: 0
+	id: 1431
+	projectCategoryId: 920
+	categoryId: null
+	content: '<p>超长的关键节点，超长的关键节点，超长的关键节点，超长的关键节点，超长的关键节点，非常的长的关键节点，非常的长的关键节点，非常的长的关键节点</p>'
+	step: 1
+	mark: string
+	status: string
 }
 
 export interface IExp {
