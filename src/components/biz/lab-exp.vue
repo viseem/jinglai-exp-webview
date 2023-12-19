@@ -2,6 +2,7 @@
 // ----静态数据
 import { useRequest } from 'vue-request'
 import { computed } from 'vue'
+import { IExper } from '~/api/biz/types/exptypes'
 
 const expStatusList = [
 	{ name: '待开展', status: '0' },
@@ -30,32 +31,45 @@ watch(
 		deep: true,
 	},
 )
-const filterExpListByStatus = (status) => {
-	return expRes.value?.list?.filter((item) => item.stage == status)
+const filterExpListByStatus = (status: string) => {
+	if (expRes.value?.list) {
+		return expRes.value?.list?.filter((item) => item.stage == status)
+	}
 }
+
+const experList = ref([] as IExper[])
+async function loadExperPage() {
+	const res = await getLabExperPage({ labId: currentLab.value.id })
+	experList.value = res?.list
+}
+loadExperPage()
 </script>
 
 <template>
 	<div hfull wfull flex flex-col>
-		<div w-full flex flex-1 items-center justify-center>
+		<div mt-4 w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-4>
+				<div class="exp-card-wrapper">
+					<x-title text-base title="基本信息" />
+				</div>
 				<div
 					v-for="(item, index) in expStatusList"
 					:key="index"
-					mt-4
-					hfull
-					wfull
-					rounded-2
-					px-4
-					py-2
-					style="box-shadow: 0 0 3px #ccc"
+					class="exp-card-wrapper"
 				>
 					<x-title text-base :title="item.name" />
 					<div
 						v-for="expItem in filterExpListByStatus(item.status)"
 						:key="expItem"
+						mt4
 					>
-						<biz-exp-card mt4 :item="expItem"></biz-exp-card>
+						<biz-exp-card :item="expItem"></biz-exp-card>
+					</div>
+				</div>
+				<div class="exp-card-wrapper">
+					<x-title text-base title="人员负载" />
+					<div v-for="experItem in experList" :key="experItem" mt4>
+						<biz-exper-card :item="experItem" />
 					</div>
 				</div>
 			</div>
@@ -63,4 +77,12 @@ const filterExpListByStatus = (status) => {
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.exp-card-wrapper {
+	height: 100%;
+	width: 100%;
+	border-radius: theme('borderRadius.lg');
+	padding: theme('spacing.xs') theme('spacing.DEFAULT');
+	box-shadow: 0 0 3px #ccc;
+}
+</style>

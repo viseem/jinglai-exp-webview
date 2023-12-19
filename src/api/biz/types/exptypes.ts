@@ -31,7 +31,7 @@ export interface IExp {
 	sopDone: number
 	sopTotal: number
 	sopList: ISop[]
-	status: string
+	stage: string
 	project: {
 		manager: IUser
 		sales: IUser
@@ -43,4 +43,69 @@ export interface IExp {
 	startDate: Date
 	deadline: Date
 	createTime: Date
+}
+
+export interface IExper {
+	labId: 20
+	userId: 139
+	mark: null
+	rank: '高级'
+	id: 29
+	createTime: 1692923017000
+	user: {
+		createTime: 1692857784000
+		updateTime: 1692950428000
+		creator: 1
+		updater: null
+		deleted: true
+		tenantId: 0
+		id: 139
+		username: 'wangming'
+		password: '$2a$04$FVOuPP3RgNTd5NL73YLudONWTY6kVn1hfq8sVwoDJ4mnBKsHCTqBC'
+		nickname: '张晨'
+		remark: ''
+		deptId: 113
+		postIds: '[]'
+		email: ''
+		mobile: '13029878782'
+		sex: 0
+		avatar: ''
+		status: 0
+		loginIp: '192.168.18.213'
+		loginDate: 1692945433000
+	}
+	lab: {
+		createTime: 1688632441000
+		updateTime: 1701072428000
+		creator: 126
+		updater: 126
+		deleted: false
+		tenantId: 0
+		id: 20
+		name: '北京实验室'
+		userId: 132
+		user: {
+			createTime: 1685959802000
+			updateTime: 1699856251000
+			creator: 1
+			updater: 132
+			deleted: false
+			tenantId: 0
+			id: 132
+			username: string
+			password: string
+			nickname: string
+			remark: ''
+			deptId: 112
+			postIds: '[]'
+			email: 'jiameng@jinglaishengwu.com'
+			mobile: '17710037381'
+			sex: 1
+			avatar: ''
+			status: 0
+			loginIp: '123.120.2.116'
+			loginDate: 1699856030000
+		}
+		mark: '动物实验室的备注'
+	}
 }

@@ -3,7 +3,6 @@ import { ILab } from '~/api/biz/types/exptypes'
 const labList = ref({} as ILab[])
 
 async function loadLabPage() {
-	await login()
 	const res = await getLabPage()
 	labList.value = res?.list
 }
