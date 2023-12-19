@@ -15,10 +15,12 @@ function cardClickHandler() {}
 <template>
 	<div wfull class="exp-card-container" p2 @click="cardClickHandler">
 		<div wfull flex items-center justify-start>
-			<div>我是头像</div>
+			<div>
+				<x-image circle :src="item.user?.avatar" />
+			</div>
 			<div flex-1>
 				<x-title class="text-base fw700" :title="item.user?.nickname"></x-title>
-				<x-text :text="item.mark" />
+				<x-text h-4 :text="item.mark" />
 			</div>
 		</div>
 	</div>
