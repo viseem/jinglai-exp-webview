@@ -3,7 +3,7 @@
 <template>
 	<div flex-1 overflow-y-auto>
 		<div h0>
-			<div overflow-y-auto>
+			<div>
 				<slot></slot>
 			</div>
 		</div>

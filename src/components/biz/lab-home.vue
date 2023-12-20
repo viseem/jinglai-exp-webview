@@ -61,15 +61,20 @@ loadExperPage()
 					v-for="(item, index) in expStatusList"
 					:key="index"
 					class="exp-card-wrapper"
+					flex
+					flex-col
 				>
 					<x-title text-base :title="item.name" />
-					<div
-						v-for="expItem in filterExpListByStatus(item.status)"
-						:key="expItem"
-						mt4
-					>
-						<biz-exp-card :item="expItem"></biz-exp-card>
-					</div>
+					<x-flex-y-overflow p-5px class="-m-5px">
+						<div
+							v-for="expItem in filterExpListByStatus(item.status)"
+							:key="expItem"
+							mt4
+							wfull
+						>
+							<biz-exp-card :item="expItem"></biz-exp-card>
+						</div>
+					</x-flex-y-overflow>
 				</div>
 				<div class="exp-card-wrapper">
 					<x-title text-base title="人员负载" />
