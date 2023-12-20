@@ -49,8 +49,13 @@ loadExperPage()
 	<div hfull wfull flex flex-col>
 		<div mt-4 w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-4>
-				<div class="exp-card-wrapper">
-					<x-title text-base title="基本信息" />
+				<div class="exp-card-wrapper" flex flex-col>
+					<biz-lab-info />
+					<echart-exp-pie />
+					<x-title title="设备列表" />
+					<x-flex-y-overflow>
+						<biz-device-card v-for="item in 8" :key="item" mt-4 />
+					</x-flex-y-overflow>
 				</div>
 				<div
 					v-for="(item, index) in expStatusList"

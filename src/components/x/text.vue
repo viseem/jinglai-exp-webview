@@ -15,6 +15,7 @@ defineProps({
 	<a-typography-text
 		copy-tooltip-props=""
 		class="!mb-0"
+		text-base
 		:ellipsis="{ rows, showTooltip: true }"
 	>
 		<p v-if="text">{{ text }}</p>

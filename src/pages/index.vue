@@ -4,7 +4,7 @@
 
 		<div hfull wfull flex flex-1 flex-col p2xl>
 			<biz-layout-title />
-			<biz-lab-exp />
+			<biz-lab-home />
 		</div>
 	</div>
 </template>
