@@ -20,13 +20,7 @@ function cardClickHandler() {}
 			</div>
 			<div ml-2 flex-1>
 				<x-title class="text-base fw700" :title="item.user?.nickname"></x-title>
-				<x-text class="text-xs !lh-3.6" rows="3">
-					<p>
-						{{
-							item.mark
-						}}大所发生的发阿斯顿发送到发送阿斯顿发斯蒂芬阿打发斯蒂芬阿斯顿发斯蒂芬阿斯顿发斯蒂芬
-					</p>
-				</x-text>
+				<x-text class="h-2rem text-xs !lh-3.6" rows="2" :text="item.mark" />
 			</div>
 		</div>
 	</div>
