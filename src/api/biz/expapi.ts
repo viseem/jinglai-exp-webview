@@ -14,3 +14,8 @@ export const getLabExperPage = (params: {
 	labId: number
 }): Promise<{ list: IExper[] }> =>
 	request.get('/open-api/lab/laboratory-user/page', params)
+
+export const getLabDevicePage = (params: {
+	labId: number
+}): Promise<{ list: IExper[] }> =>
+	request.get('/open-api/lab/laboratory-user/page', params)

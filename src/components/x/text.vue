@@ -13,13 +13,12 @@ defineProps({
 
 <template>
 	<a-typography-text
-		copy-tooltip-props="1111"
-		text-base
+		copy-tooltip-props=""
 		class="!mb-0"
 		:ellipsis="{ rows, showTooltip: true }"
 	>
-		<span v-if="text">{{ text }}</span>
-		<span text-base><slot></slot></span>
+		<p v-if="text">{{ text }}</p>
+		<slot></slot>
 	</a-typography-text>
 </template>
 
