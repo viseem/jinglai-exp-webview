@@ -7,7 +7,7 @@
 		</div>
 		<div flex flex-col items-start justify-center>
 			<x-title title="设备的名称" />
-			<x-text text="设备的功能描述" rows="2" />
+			<x-text text="设备的功能描述阿打发斯蒂芬阿斯顿发斯蒂芬" rows="2" />
 		</div>
 		<div absolute right-2 top-2 flex items-center>
 			<div h0.5rem w0.5rem rounded="50%" bg="red"></div>
