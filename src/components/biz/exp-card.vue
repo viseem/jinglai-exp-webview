@@ -17,37 +17,69 @@ function cardClickHandler() {
 </script>
 
 <template>
-	<div class="exp-card-container" p2 @click="cardClickHandler">
+	<div
+		class="exp-card-container"
+		relative
+		h8rem
+		flex
+		flex-col
+		justify-between
+		px-6
+		py-3
+		@click="cardClickHandler"
+	>
 		<exp-modal ref="expModalRef" />
-		<x-title class="text-base fw700" :title="item.name"></x-title>
-		<x-progress :total="item.sopTotal" :done="item.sopDone" />
+		<div absolute left-0 top-0 hfull flex items-center w="2%">
+			<div wfull h="60%" :style="{ background: item.color }" rounded-1></div>
+		</div>
+		<div flex items-center justify-between gap-2>
+			<x-title class="text-base fw700" :title="item.project?.name"></x-title>
+			<x-descriptions-item margin-bottom="" label="客户">{{
+				item?.project?.customer?.name
+			}}</x-descriptions-item>
+		</div>
+		<div flex items-center justify-between>
+			<x-title flex-1>{{ item.name }}</x-title>
+			<div ml-4 text-2xl>1/4</div>
+		</div>
 		<div style="zoom: 0.8">
-			<x-text class="pt-1">
-				<p>
-					<x-descriptions>
-						<x-descriptions-item margin-bottom="" label="负责人">{{
-							item?.operator?.nickname
-						}}</x-descriptions-item>
-						<x-descriptions-item margin-bottom="" label="客户">{{
-							item?.project?.customer?.name
-						}}</x-descriptions-item>
-					</x-descriptions>
-				</p>
-			</x-text>
 			<x-text pt1 :text="item?.project?.name" />
-			<x-text pt1>
-				<p>
-					{{ formatDate(item?.startDate) }} - {{ formatDate(item?.deadline) }}
-				</p>
-			</x-text>
-			<x-text text-right opacity-80 :text="formatDate(item.createTime)" />
+			<div wfull flex items-center justify-between>
+				<div>
+					<x-descriptions-item margin-bottom="" label="负责人">{{
+						item?.operator?.nickname
+					}}</x-descriptions-item>
+				</div>
+				<div w="50%" relative min-w-13rem flex items-center>
+					<x-progress :total="item.sopTotal" :done="item.sopDone" />
+					<div
+						absolute
+						left-0
+						top-0
+						hfull
+						wfull
+						flex
+						items-center
+						justify-start
+						pl-4
+						text-white
+					>
+						<div>
+							{{ formatDate(item?.startDate) }} -
+							{{ formatDate(item?.deadline) }}
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <style scoped>
 .exp-card-container {
-	box-shadow: 0 0 3px #ccc;
-	border-radius: theme('borderRadius.sm');
+	border-radius: theme('borderRadius.lg');
+	background: white;
+}
+.exp-card-bar {
 }
 </style>

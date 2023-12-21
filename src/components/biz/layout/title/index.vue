@@ -7,7 +7,6 @@ const labStore = useLabStore()
 const currentLab = computed(() => labStore.getCurrentLab)
 
 function test() {
-	console.log('test')
 	modalStore.openLabModal()
 }
 
@@ -25,7 +24,6 @@ const sysTimeInterval = setInterval(() => {
 const systemWeather = ref({} as IWeather)
 async function loadWeather() {
 	const res = await getWeather()
-	console.log('systemWeather---', res)
 	systemWeather.value = res
 }
 

@@ -43,6 +43,8 @@ export interface IExp {
 	startDate: Date
 	deadline: Date
 	createTime: Date
+
+	color: string
 }
 
 export interface IExper {

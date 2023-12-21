@@ -12,7 +12,6 @@ export const getWeather = async (): Promise<IWeather> => {
 	const res = await axios.get(
 		'https://restapi.amap.com/v3/weather/weatherInfo?city=420107&key=b33305c0867d1db017d8757430be496e&extensions=all',
 	)
-	console.log('wre----', res)
 	if (res?.data?.status == '1') {
 		const live = res?.data?.lives?.[0] || {}
 		const forecast = res?.data?.forecasts?.[0]?.casts?.[0] || {}

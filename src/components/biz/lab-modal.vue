@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ILab } from '~/api/biz/types/exptypes'
-const labList = ref({} as ILab[])
+const labList = ref([] as ILab[])
 
 async function loadLabPage() {
 	const res = await getLabPage()

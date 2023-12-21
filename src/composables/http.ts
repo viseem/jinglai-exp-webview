@@ -31,7 +31,6 @@ http.interceptors.response.use(
 	function (response) {
 		// 2xx 范围内的状态码都会触发该函数。
 		// 对响应数据进行格式化
-		console.log('response', response)
 		if (response.data?.data) {
 			return response.data.data
 		}
