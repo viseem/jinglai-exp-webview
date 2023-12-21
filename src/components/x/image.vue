@@ -33,7 +33,12 @@ const computedStyle = computed(() => {
 </script>
 
 <template>
-	<a-image :src="src" :fit="mode" :style="computedStyle"></a-image>
+	<a-image
+		class="!flex"
+		:src="src"
+		:fit="mode"
+		:style="computedStyle"
+	></a-image>
 </template>
 
 <style scoped></style>

@@ -10,7 +10,7 @@ const props = defineProps({
 	},
 	background: {
 		type: String,
-		default: 'red',
+		default: 'yellowgreen',
 	},
 	modelValue: {
 		type: Boolean,

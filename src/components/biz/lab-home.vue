@@ -43,24 +43,34 @@ async function loadExperPage() {
 	experList.value = res?.list
 }
 loadExperPage()
+function test() {
+	console.log(123123)
+}
 </script>
 
 <template>
-	<div hfull wfull flex flex-col>
-		<div mt-4 w-full flex flex-1 items-center justify-center>
+	<div wfull flex flex-1 flex-col p-4>
+		<div w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-4>
-				<div class="exp-card-wrapper" flex flex-col>
-					<biz-lab-info />
-					<echart-exp-pie />
-					<x-title title="设备列表" />
-					<x-flex-y-overflow>
-						<biz-device-card v-for="item in 8" :key="item" mt-4 />
-					</x-flex-y-overflow>
+				<div class="wfull" flex flex-col>
+					<div class="exp-card-wrapper">
+						<biz-lab-info />
+					</div>
+					<x-title py-4 title="实验开展统计" />
+					<div class="exp-card-wrapper">
+						<echart-exp-pie />
+					</div>
+					<x-title py-4 title="设备列表" @click="test" />
+					<div class="exp-card-wrapper" flex-1>
+						<x-flex-y-overflow class="hfull">
+							<biz-device-card v-for="item in 8" :key="item" mb-4 />
+						</x-flex-y-overflow>
+					</div>
 				</div>
 				<div
 					v-for="(item, index) in expStatusList"
 					:key="index"
-					class="exp-card-wrapper"
+					class="exp-card-wrapper hfull wfull"
 					flex
 					flex-col
 				>
@@ -76,11 +86,13 @@ loadExperPage()
 						</div>
 					</x-flex-y-overflow>
 				</div>
-				<div class="exp-card-wrapper">
+				<div class="exp-card-wrapper hfull wfull" flex flex-col>
 					<x-title text-base title="人员负载" />
-					<div v-for="experItem in experList" :key="experItem" mt4>
-						<biz-exper-card :item="experItem" />
-					</div>
+					<x-flex-y-overflow p-5px class="-m-5px">
+						<div v-for="experItem in experList" :key="experItem" mt4>
+							<biz-exper-card :item="experItem" />
+						</div>
+					</x-flex-y-overflow>
 				</div>
 			</div>
 		</div>
@@ -89,8 +101,6 @@ loadExperPage()
 
 <style scoped>
 .exp-card-wrapper {
-	height: 100%;
-	width: 100%;
 	border-radius: theme('borderRadius.lg');
 	padding: theme('spacing.xs') theme('spacing.DEFAULT');
 	box-shadow: 0 0 3px #ccc;

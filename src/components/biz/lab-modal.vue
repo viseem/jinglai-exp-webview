@@ -10,7 +10,6 @@ loadLabPage()
 
 const modalStore = useModalStore()
 const labStore = useLabStore()
-// computed set get语法
 const modalVisible = computed({
 	get: () => modalStore.labModalVisible,
 	set: (v) => modalStore.setLabModalVisible(v),

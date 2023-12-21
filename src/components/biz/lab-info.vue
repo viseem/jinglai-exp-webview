@@ -2,9 +2,13 @@
 
 <template>
 	<div>
-		<x-title title="实验室名称" class="fw700" />
-		<x-descriptions-item label="负责人">我是负责人</x-descriptions-item>
-		<x-text text="我是实验室的介绍"></x-text>
+		<x-descriptions-item label="负责人">
+			<div ml-4 flex items-center>
+				<x-image circle src="" size="2rem"></x-image>
+				<span ml-2>张三</span>
+			</div>
+		</x-descriptions-item>
+		<x-text h5rem rows="5" text="我是实验室的介绍"></x-text>
 	</div>
 </template>
 

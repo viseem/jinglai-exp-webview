@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { IExper } from '~/api/biz/types/exptypes'
-
+const modalStore = useModalStore()
 defineProps({
 	item: {
 		type: Object as PropType<IExper>,
@@ -9,11 +9,19 @@ defineProps({
 	},
 })
 
-function cardClickHandler() {}
+function cardClickHandler() {
+	console.log(9999)
+}
+
+function loginHandler() {
+	modalStore.setLoginModalVisible(true)
+}
 </script>
 
 <template>
-	<div wfull class="exp-card-container" p2 @click="cardClickHandler">
+	<div class="exp-card-container relative" wfull p2 @click="cardClickHandler">
+		<div absolute right-2 top-2 @click.stop="loginHandler">登录</div>
+
 		<div wfull flex items-center justify-start>
 			<div>
 				<x-image circle :src="item.user?.avatar" />

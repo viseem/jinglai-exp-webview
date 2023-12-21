@@ -4,6 +4,7 @@ export default defineStore('modal', {
 	state() {
 		return {
 			labModalVisible: true,
+			loginModalVisible: false,
 		}
 	},
 	actions: {
@@ -15,6 +16,9 @@ export default defineStore('modal', {
 		},
 		setLabModalVisible(visible: boolean) {
 			this.labModalVisible = visible
+		},
+		setLoginModalVisible(visible: boolean) {
+			this.loginModalVisible = visible
 		},
 	},
 	persist: false,

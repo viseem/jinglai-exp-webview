@@ -56,7 +56,6 @@ const option = ref<EChartsOption>({
 
 <template>
 	<div>
-		<x-title title="实验开展统计" />
 		<!-- @vue-ignore -->
 		<div h10rem wfull>
 			<v-chart class="wfull" :option="option" autoresize />
