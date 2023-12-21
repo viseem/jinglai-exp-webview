@@ -3,7 +3,7 @@ import type { IUser } from '~/api/biz/types/basetypes'
 export interface ILab {
 	id: number
 	name: string
-	user: { nickname: string }
+	user: IUser
 	mark: string
 }
 

@@ -5,4 +5,5 @@ export interface IApiPageRes<T> {
 export interface IUser {
 	id: number
 	nickname: string
+	avatar: string
 }

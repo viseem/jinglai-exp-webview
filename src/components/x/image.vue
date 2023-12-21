@@ -7,14 +7,14 @@ const props = defineProps({
 		default: '',
 	},
 	mode: {
-		type: String,
-		default: String as PropType<
+		type: String as PropType<
 			'contain' | 'fill' | 'cover' | 'none' | 'scale-down'
 		>,
+		default: 'contain',
 	},
 	size: {
 		type: String,
-		default: '2.5rem',
+		default: '',
 	},
 	circle: {
 		type: Boolean,

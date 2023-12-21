@@ -2,6 +2,8 @@
 // ----静态数据
 import { computed } from 'vue'
 import { IExp, IExper } from '~/api/biz/types/exptypes'
+import { IDevice } from '~/api/biz/types/devicetypes'
+import { getDevicePage } from '~/api/biz/deviceapi'
 
 interface IStatusItem {
 	name: string
@@ -1597,16 +1599,25 @@ const filterExpListByStatus = (statusItem: IStatusItem) => {
 	}
 	return resultList
 }
-
+/*
+ * 加载 实验室人员列表
+ * */
 const experList = ref([] as IExper[])
 async function loadExperPage() {
 	const res = await getLabExperPage({ labId: currentLab.value.id })
 	experList.value = res?.list
 }
 loadExperPage()
-function test() {
-	console.log(123123)
+
+/*
+ * 加载 实验室设备列表
+ * */
+const deviceList = ref([] as IDevice[])
+async function loadDevicePage() {
+	const res = await getDevicePage({ labId: currentLab.value.id })
+	deviceList.value = res?.list
 }
+loadDevicePage()
 </script>
 
 <template>
@@ -1622,10 +1633,15 @@ function test() {
 					<div class="exp-card-wrapper">
 						<echart-exp-pie />
 					</div>
-					<x-title py-4 title="设备列表" @click="test" />
+					<x-title py-4 title="设备列表" />
 					<div class="exp-card-wrapper" flex-1>
 						<x-flex-y-overflow class="hfull">
-							<biz-device-card v-for="item in 8" :key="item" mb-4 />
+							<biz-device-card
+								v-for="item in deviceList"
+								:key="item"
+								:item="item"
+								mb-4
+							/>
 						</x-flex-y-overflow>
 					</div>
 				</div>
