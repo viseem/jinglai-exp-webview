@@ -10,20 +10,19 @@ defineProps({
 </script>
 
 <template>
-	<div relative h4.5rem wfull flex bg="#F6F7FF" rounded-2>
+	<div bg="#F6F7FF" relative h4.5rem wfull flex rounded-2 px-4 py-2>
 		<div
 			w="35%"
 			min-w="35%"
-			m-2
 			flex
 			items-center
 			justify-center
 			overflow-hidden
 			rounded-2
 		>
-			<x-image flex class="hfull" mode="contain" :src="item.fileUrl" />
+			<x-image mode="cover" :src="item.fileUrl" />
 		</div>
-		<div wfull flex flex-col items-start justify-center pr-6>
+		<div wfull flex flex-col items-start justify-center pl-4 pr-6>
 			<x-text wfull :text="item.name" rows="1" />
 			<x-text wfull :text="item.mark" rows="1" />
 		</div>
