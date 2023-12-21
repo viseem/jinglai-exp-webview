@@ -43,7 +43,6 @@ function cardClickHandler() {
 			<div ml-4 text-2xl>1/4</div>
 		</div>
 		<div style="zoom: 0.8">
-			<x-text pt1 :text="item?.project?.name" />
 			<div wfull flex items-center justify-between>
 				<div>
 					<x-descriptions-item margin-bottom="" label="负责人">{{

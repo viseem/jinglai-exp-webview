@@ -7,16 +7,28 @@ interface IStatusItem {
 	name: string
 	status: string[]
 	colors: string[]
+	icon: string
 }
 
 const expStatusList: IStatusItem[] = [
-	{ name: '待开展', status: ['0'], colors: ['#878C9F'] },
+	{
+		name: '待开展',
+		status: ['0'],
+		colors: ['#878C9F'],
+		icon: 'images/expstatus/not-do.png',
+	},
 	{
 		name: '进行中',
 		status: ['DOING', 'PAUSE', 'DATA_CHECK'],
 		colors: ['#2E55F6', '#E2611F', '#E88B00'],
+		icon: 'images/expstatus/doing.png',
 	},
-	{ name: '已出库', status: ['COMPLETE'], colors: ['#20CB42'] },
+	{
+		name: '已出库',
+		status: ['COMPLETE'],
+		colors: ['#20CB42'],
+		icon: 'images/expstatus/outed.png',
+	},
 ]
 
 // 属性
@@ -1625,7 +1637,12 @@ function test() {
 					flex
 					flex-col
 				>
-					<x-title class="pb-4" :title="item.name" />
+					<div relative mb-4 flex items-center>
+						<div absolute flex items-center justify-center>
+							<x-image absolute size="3.5rem" :src="item.icon"></x-image>
+						</div>
+						<x-title ml-4rem flex-1 :title="item.name" />
+					</div>
 					<div class="exp-task-wrapper p-4" flex-1>
 						<x-flex-y-overflow p-5px class="hfull -m-5px">
 							<div
