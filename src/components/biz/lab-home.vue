@@ -1577,7 +1577,6 @@ const filterExpListByStatus = (statusItem: IStatusItem) => {
 	if (expRes.value) {
 		expRes.value.forEach((item) => {
 			const statusIndex = statusItem.status.indexOf(item?.stage?.toString())
-			console.log(statusIndex, '-=--=')
 			if (statusIndex > -1) {
 				item.color = statusItem.colors[statusIndex]
 				resultList.push(item)
@@ -1602,6 +1601,7 @@ function test() {
 	<div wfull flex flex-1 flex-col p-4 bg="#EBEDF1">
 		<div w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-4>
+				<!--左侧实验室信息-->
 				<div class="wfull" flex flex-col>
 					<div class="exp-card-wrapper">
 						<biz-lab-info />
@@ -1617,6 +1617,7 @@ function test() {
 						</x-flex-y-overflow>
 					</div>
 				</div>
+				<!--实验列表 三列-->
 				<div
 					v-for="(item, index) in expStatusList"
 					:key="index"
@@ -1638,13 +1639,16 @@ function test() {
 						</x-flex-y-overflow>
 					</div>
 				</div>
-				<div class="exp-card-wrapper hfull wfull" flex flex-col>
-					<x-title text-base title="人员负载" />
-					<x-flex-y-overflow class="-m-5px" flex-1 p-5px>
-						<div v-for="experItem in experList" :key="experItem" mt4>
-							<biz-exper-card :item="experItem" />
-						</div>
-					</x-flex-y-overflow>
+				<!--右侧 人员列表-->
+				<div wfull flex flex-col>
+					<x-title pb-4 title="人员负载" />
+					<div class="hfull wfull" flex flex-col>
+						<x-flex-y-overflow class="-m-5px" flex-1 p-5px>
+							<div v-for="experItem in experList" :key="experItem" mb4>
+								<biz-exper-card :item="experItem" />
+							</div>
+						</x-flex-y-overflow>
+					</div>
 				</div>
 			</div>
 		</div>

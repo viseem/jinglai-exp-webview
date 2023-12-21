@@ -19,24 +19,56 @@ function loginHandler() {
 </script>
 
 <template>
-	<div class="exp-card-container relative" wfull p2 @click="cardClickHandler">
-		<div absolute right-2 top-2 @click.stop="loginHandler">登录</div>
-
-		<div wfull flex items-center justify-start>
-			<div>
-				<x-image circle :src="item.user?.avatar" />
+	<div
+		relative
+		wfull
+		overflow-hidden
+		rounded-2
+		bg-white
+		p2
+		@click="cardClickHandler"
+	>
+		<div wfull>
+			<!--顶部-->
+			<div flex items-center justify-between class="text-sm">
+				<div flex items-center>
+					<x-image size="2rem" circle :src="item.user?.avatar" />
+					<x-title
+						ml-2
+						text-sm
+						class="fw-700"
+						w="4rem"
+						:title="item.user?.nickname"
+					></x-title>
+				</div>
+				<div flex items-center>
+					<span>在做：</span>
+					<span>10</span>
+				</div>
+				<div flex items-center>
+					<span>未做：</span>
+					<span>10</span>
+				</div>
+				<div
+					rounded-4
+					px-2.5
+					py-0.5
+					text-white
+					class="card-btn"
+					@click.stop="loginHandler"
+				>
+					登录
+				</div>
 			</div>
-			<div ml-2 flex-1>
-				<x-title class="text-base fw700" :title="item.user?.nickname"></x-title>
-				<x-text class="h-2rem text-xs !lh-3.6" rows="2" :text="item.mark" />
+			<div flex-1 p-2 pb-0>
+				<x-text class="h-2rem text-sm !lh-3.6" rows="2" :text="item.mark" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <style scoped>
-.exp-card-container {
-	box-shadow: 0 0 3px #ccc;
-	border-radius: theme('borderRadius.sm');
+.card-btn {
+	background: linear-gradient(to right, #2a59f6, #0879f5);
 }
 </style>
