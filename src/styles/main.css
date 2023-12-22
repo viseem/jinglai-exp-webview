@@ -1,7 +1,7 @@
 @import './md.css';
 @import './elementui.css';
 html{
-	/*font-size:15px;*/
+	font-size:20px;
 }
 
 html.dark {

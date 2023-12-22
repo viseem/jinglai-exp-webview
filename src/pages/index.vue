@@ -1,5 +1,5 @@
 <template>
-	<div wscreen flex flex-1 flex-col>
+	<div hfull wfull flex flex-1 flex-col>
 		<biz-lab-modal />
 		<biz-login-modal />
 

@@ -2,6 +2,7 @@
 import { PropType } from 'vue'
 import { IExper } from '~/api/biz/types/exptypes'
 const modalStore = useModalStore()
+const userStore = useUserStore()
 defineProps({
 	item: {
 		type: Object as PropType<IExper>,
@@ -13,7 +14,8 @@ function cardClickHandler() {
 	console.log(9999)
 }
 
-function loginHandler() {
+function loginHandler(item: IExper) {
+	userStore.setClickLoginUserid(item.userId)
 	modalStore.setLoginModalVisible(true)
 }
 </script>
@@ -55,7 +57,7 @@ function loginHandler() {
 					py-0.5
 					text-white
 					class="card-btn"
-					@click.stop="loginHandler"
+					@click.stop="loginHandler(item)"
 				>
 					登录
 				</div>
