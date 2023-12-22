@@ -12,6 +12,10 @@ const props = defineProps({
 		type: Number,
 		default: 0,
 	},
+	strokeWidth: {
+		type: Number,
+		default: 24,
+	},
 })
 const computedPercent = computed(() => {
 	const percent = (props.percent || props.done / props.total)?.toFixed(2)
@@ -32,7 +36,7 @@ const computedPercentStr = computed(() => {
 			'50%': '#0E73F6',
 			'100%': '#2D56F6',
 		}"
-		:stroke-width="24"
+		:stroke-width="strokeWidth"
 		:show-text="false"
 		:percent="computedPercent"
 	>

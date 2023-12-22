@@ -1682,7 +1682,10 @@ loadDevicePage()
 								v-for="(experItem, experIndex) in experList"
 								:key="experItem"
 								mb6
-								@click="currentExperIndex = experIndex"
+								@click="
+									currentExperIndex =
+										experIndex == currentExperIndex ? -1 : experIndex
+								"
 							>
 								<biz-exper-card
 									:selected="currentExperIndex == experIndex"

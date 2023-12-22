@@ -10,7 +10,7 @@ const props = defineProps({
 	},
 	background: {
 		type: String,
-		default: 'yellowgreen',
+		default: '#EAEDF0',
 	},
 	modelValue: {
 		type: Boolean,
@@ -55,7 +55,7 @@ defineExpose({
 <template>
 	<a-modal
 		v-model:visible="visible"
-		:modal-style="{ background, padding: '1rem', width }"
+		:modal-style="{ background, padding: '0', width }"
 		simple
 		hide-title
 		:footer="null"
