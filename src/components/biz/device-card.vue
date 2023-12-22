@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-	<div bg="#F6F7FF" relative h4.5rem wfull flex rounded-2 px-4 py-2>
+	<div bg="#F6F7FF" relative h7.5rem wfull flex rounded-2 px-4 py-3>
 		<div
 			w="35%"
 			min-w="35%"
@@ -22,7 +22,7 @@ defineProps({
 		>
 			<x-image mode="cover" :src="item.fileUrl" />
 		</div>
-		<div wfull flex flex-col items-start justify-center pl-4 pr-6>
+		<div wfull flex flex-col items-start justify-center pl-6 pr-6>
 			<x-text wfull :text="item.name" rows="1" />
 			<x-text wfull :text="item.mark" rows="1" />
 		</div>

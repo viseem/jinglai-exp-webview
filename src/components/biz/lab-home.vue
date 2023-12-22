@@ -1623,24 +1623,24 @@ loadDevicePage()
 <template>
 	<div wfull flex flex-1 flex-col p-4 bg="#EBEDF1">
 		<div w-full flex flex-1 items-center justify-center>
-			<div hfull wfull flex gap-4>
+			<div hfull wfull flex gap-6>
 				<!--左侧实验室信息-->
 				<div class="wfull" flex flex-col>
 					<div class="exp-card-wrapper">
 						<biz-lab-info />
 					</div>
-					<x-title py-4 title="实验开展统计" />
+					<x-title py-4>实验开展统计</x-title>
 					<div class="exp-card-wrapper">
 						<echart-exp-pie />
 					</div>
-					<x-title py-4 title="设备列表" />
-					<div class="exp-card-wrapper" flex-1>
+					<x-title py-4>设备列表</x-title>
+					<div class="exp-card-wrapper !p-6" flex-1>
 						<x-flex-y-overflow class="hfull">
 							<biz-device-card
 								v-for="item in deviceList"
 								:key="item"
 								:item="item"
-								mb-4
+								mb6
 							/>
 						</x-flex-y-overflow>
 					</div>
@@ -1657,14 +1657,14 @@ loadDevicePage()
 						<div absolute flex items-center justify-center>
 							<x-image absolute size="3.5rem" :src="item.icon"></x-image>
 						</div>
-						<x-title ml-4rem flex-1 :title="item.name" />
+						<x-title ml-4rem wfull flex-1>{{ item.name }}</x-title>
 					</div>
-					<div class="exp-task-wrapper p-4" flex-1>
+					<div class="exp-task-wrapper p-6" flex-1>
 						<x-flex-y-overflow p-5px class="hfull -m-5px">
 							<div
 								v-for="expItem in filterExpListByStatus(item)"
 								:key="expItem"
-								mb4
+								mb6
 								wfull
 							>
 								<biz-exp-card :item="expItem"></biz-exp-card>
@@ -1673,8 +1673,8 @@ loadDevicePage()
 					</div>
 				</div>
 				<!--右侧 人员列表-->
-				<div wfull flex flex-col>
-					<x-title pb-4 title="人员负载" />
+				<div hfull wfull flex flex-col>
+					<x-title pb-4>设备列表</x-title>
 					<div class="hfull wfull" flex flex-col>
 						<x-flex-y-overflow class="-m-5px" flex-1 p-5px>
 							<div v-for="experItem in experList" :key="experItem" mb4>

@@ -37,6 +37,7 @@ onUnmounted(() => {
 	<div
 		class="title-container"
 		relative
+		h4.5rem
 		flex
 		items-center
 		justify-between
@@ -72,7 +73,6 @@ onUnmounted(() => {
 
 <style scoped>
 .title-container {
-	height: 8%;
 	background: linear-gradient(to right, #017ef5, #2e54f6 65%);
 }
 </style>

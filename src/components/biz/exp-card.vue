@@ -20,36 +20,44 @@ function cardClickHandler() {
 	<div
 		class="exp-card-container"
 		relative
-		h8rem
+		h10rem
 		flex
 		flex-col
 		justify-between
-		px-6
-		py-3
+		px-8
+		py-6
 		@click="cardClickHandler"
 	>
 		<exp-modal ref="expModalRef" />
-		<div absolute left-0 top-0 hfull flex items-center w="2%">
-			<div wfull h="60%" :style="{ background: item.color }" rounded-1></div>
+		<div absolute left-0 top-0 hfull flex items-center w="0.48rem">
+			<div
+				wfull
+				h="60%"
+				class="exp-card-bar"
+				:style="{ background: item.color }"
+				rounded-1
+			></div>
 		</div>
 		<div flex items-center justify-between gap-2>
-			<x-title class="text-base fw700" :title="item.project?.name"></x-title>
+			<x-text mr-4 flex-1 :text="item.project?.name"></x-text>
 			<x-descriptions-item margin-bottom="" label="客户">{{
 				item?.project?.customer?.name
 			}}</x-descriptions-item>
 		</div>
 		<div flex items-center justify-between>
-			<x-title flex-1>{{ item.name }}</x-title>
-			<div ml-4 text-2xl>1/4</div>
+			<x-text class="text-black !text-2xl" flex-1>{{ item.name }}</x-text>
+			<div ml-4 text-2xl text="#187CEE">1/4</div>
 		</div>
-		<div style="zoom: 0.8">
+		<div>
 			<div wfull flex items-center justify-between>
 				<div>
-					<x-descriptions-item margin-bottom="" label="负责人">{{
-						item?.operator?.nickname
-					}}</x-descriptions-item>
+					<x-descriptions-item margin-bottom="" w-8rem label="负责人"
+						><span text-nowrap>{{
+							item?.operator?.nickname
+						}}</span></x-descriptions-item
+					>
 				</div>
-				<div w="50%" relative min-w-13rem flex items-center>
+				<div relative flex flex-1 ml="10%" items-center>
 					<x-progress :total="item.sopTotal" :done="item.sopDone" />
 					<div
 						absolute
@@ -60,10 +68,10 @@ function cardClickHandler() {
 						flex
 						items-center
 						justify-start
-						pl-4
+						pl-2
 						text-white
 					>
-						<div>
+						<div wfull text-center text-sm>
 							{{ formatDate(item?.startDate) }} -
 							{{ formatDate(item?.deadline) }}
 						</div>
@@ -80,5 +88,6 @@ function cardClickHandler() {
 	background: white;
 }
 .exp-card-bar {
+	box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.5);
 }
 </style>

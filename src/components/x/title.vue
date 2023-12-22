@@ -16,9 +16,8 @@ defineProps({
 		:ellipsis="{
 			rows,
 		}"
-		text-lg
 		fw500
-		class="!mb-0 !text-#333"
+		class="text-xl !mb-0 !text-#333"
 	>
 		<span>{{ title }}</span>
 		<!--如果有slot-->

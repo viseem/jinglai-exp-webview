@@ -14,7 +14,7 @@ defineProps({
 	},
 	color: {
 		type: String,
-		default: '#333',
+		default: 'black',
 	},
 })
 </script>
@@ -22,19 +22,13 @@ defineProps({
 <template>
 	<div class="flex items-center" :style="{ marginBottom }">
 		<div
-			class="desc-item-label flex items-center text-base font-bold op-70"
+			class="desc-item-label flex items-center text-base op-70"
 			:style="{ color }"
 			style="white-space: nowrap"
 		>
-			{{ label }}:
+			<span mr-4>{{ label }}</span>
 		</div>
-		<div
-			class="ml-1 text-base font-bold"
-			:style="{ color }"
-			hfull
-			flex
-			items-center
-		>
+		<div class="ml-1 text-base" :style="{ color }" hfull flex items-center>
 			<slot></slot>
 		</div>
 	</div>

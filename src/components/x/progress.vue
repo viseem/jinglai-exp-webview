@@ -26,7 +26,7 @@ const computedPercentStr = computed(() => {
 </script>
 
 <template>
-	<a-progress :stroke-width="22" :show-text="false" :percent="computedPercent">
+	<a-progress :stroke-width="24" :show-text="false" :percent="computedPercent">
 		<template #text>{{ computedPercentStr }}</template>
 	</a-progress>
 </template>

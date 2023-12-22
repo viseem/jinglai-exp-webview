@@ -13,8 +13,7 @@ defineProps({
 
 <template>
 	<a-typography-text
-		class="!mb-0"
-		text-base
+		class="text-base !mb-0"
 		:ellipsis="{ rows, showTooltip: true }"
 	>
 		<p v-if="text">{{ text }}</p>
