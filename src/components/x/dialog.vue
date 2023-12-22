@@ -68,7 +68,7 @@ defineExpose({
 	>
 		<div :style="{ height }" flex flex-col>
 			<div absolute z-9000 wfull flex justify-end class="-right-1rem -top-1rem">
-				<div bg="#255DF6" p-2 rounded="50%" @click="close">
+				<div bg="#255DF6" p-3 rounded="50%" @click="close">
 					<img h2rem w2rem src="/images/common/close.png" alt="" />
 				</div>
 			</div>
