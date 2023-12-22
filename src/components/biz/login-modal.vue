@@ -35,8 +35,8 @@ async function loginClickHandler() {
 					<p text-2xl text-white>账号登录</p>
 					<p mb-5 mt-10 text-white>账号</p>
 					<a-input
-						v-model="formData.password"
-						disabled
+						:model-value="userStore.clickLoginExper?.user?.nickname"
+						readonly
 						placeholder="请输入用户密码"
 					></a-input>
 					<p my-5 text-white>密码</p>

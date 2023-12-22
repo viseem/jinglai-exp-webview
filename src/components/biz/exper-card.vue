@@ -24,6 +24,7 @@ function cardClickHandler() {
 
 function loginHandler(item: IExper) {
 	userStore.setClickLoginUserid(item.userId)
+	userStore.setClickLoginExper(item)
 	modalStore.setLoginModalVisible(true)
 }
 </script>
