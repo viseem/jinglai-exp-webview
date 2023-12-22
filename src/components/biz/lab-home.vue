@@ -1603,6 +1603,7 @@ const filterExpListByStatus = (statusItem: IStatusItem) => {
  * 加载 实验室人员列表
  * */
 const experList = ref([] as IExper[])
+const currentExperIndex = ref(-1)
 async function loadExperPage() {
 	const res = await getLabExperPage({ labId: currentLab.value.id })
 	experList.value = res?.list
@@ -1674,11 +1675,19 @@ loadDevicePage()
 				</div>
 				<!--右侧 人员列表-->
 				<div hfull wfull flex flex-col>
-					<x-title pb-4>设备列表</x-title>
+					<x-title pb-4>人员负载</x-title>
 					<div class="hfull wfull" flex flex-col>
 						<x-flex-y-overflow class="-m-5px" flex-1 p-5px>
-							<div v-for="experItem in experList" :key="experItem" mb4>
-								<biz-exper-card :item="experItem" />
+							<div
+								v-for="(experItem, experIndex) in experList"
+								:key="experItem"
+								mb6
+								@click="currentExperIndex = experIndex"
+							>
+								<biz-exper-card
+									:selected="currentExperIndex == experIndex"
+									:item="experItem"
+								/>
 							</div>
 						</x-flex-y-overflow>
 					</div>
