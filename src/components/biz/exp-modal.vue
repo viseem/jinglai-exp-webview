@@ -52,23 +52,41 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 
 <template>
 	<x-dialog ref="expDialogRef" width="70%">
-		<div class="wfull" flex flex-col p-6>
-			<div flex items-center>
-				<span class="text-nowrap fw700" mr-10 text-xl>{{ formData.name }}</span>
-				<x-descriptions>
-					<x-descriptions-item margin-bottom="" label="客户">{{
-						formData.project?.customer?.name
-					}}</x-descriptions-item>
-					<x-descriptions-item margin-bottom="" label="项目">{{
-						formData.project?.name
-					}}</x-descriptions-item>
-					<x-descriptions-item margin-bottom="" label="责任人">{{
-						formData.operator?.nickname
-					}}</x-descriptions-item>
-					<x-descriptions-item margin-bottom="" label="实验员">{{
-						formData.focusList?.map((item) => item.nickname).join(',')
-					}}</x-descriptions-item>
-				</x-descriptions>
+		<div class="wfull" m-3 flex flex-col rounded-2 p-5 bg="#eee">
+			<div flex items-center justify-between>
+				<div flex items-center>
+					<span class="text-nowrap fw700" mr-10 text-xl>{{
+						formData.name
+					}}</span>
+					<x-descriptions>
+						<x-descriptions-item margin-bottom="" label="客户">{{
+							formData.project?.customer?.name
+						}}</x-descriptions-item>
+						<x-descriptions-item margin-bottom="" label="项目">{{
+							formData.project?.name
+						}}</x-descriptions-item>
+						<x-descriptions-item margin-bottom="" label="责任人">{{
+							formData.operator?.nickname
+						}}</x-descriptions-item>
+						<x-descriptions-item margin-bottom="" label="实验员">{{
+							formData.focusList?.map((item) => item.nickname).join(',')
+						}}</x-descriptions-item>
+					</x-descriptions>
+				</div>
+				<div flex items-center>
+					<div mr-14>{{ formData.stage }}</div>
+					<div>
+						<a-button
+							mr-8
+							class="!rounded-4 !px-6"
+							type="primary"
+							status="warning"
+							@click="close"
+							>暂停</a-button
+						>
+						<a-button class="!rounded-4 !px-6" type="primary">启动</a-button>
+					</div>
+				</div>
 			</div>
 			<div mb-4 mt-2>
 				<div flex items-center gap-4>

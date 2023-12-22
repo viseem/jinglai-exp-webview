@@ -10,7 +10,7 @@ const props = defineProps({
 	},
 	background: {
 		type: String,
-		default: '#EAEDF0',
+		default: 'linear-gradient(to right,#2e54f6 70%, #017ef5)',
 	},
 	modelValue: {
 		type: Boolean,
@@ -50,19 +50,27 @@ defineExpose({
 	open,
 	close,
 })
+// #2F54F6 #017FF5
 </script>
 
 <template>
 	<a-modal
 		v-model:visible="visible"
-		:modal-style="{ background, padding: '0', width }"
+		:modal-style="{
+			background,
+			padding: '0',
+			width,
+			borderRadius: '0.5rem',
+		}"
 		simple
 		hide-title
 		:footer="null"
 	>
 		<div :style="{ height }" flex flex-col>
-			<div absolute wfull flex justify-end>
-				<a-button @click="close">关闭</a-button>
+			<div absolute z-9000 wfull flex justify-end class="-right-1rem -top-1rem">
+				<div bg="#255DF6" p-2 rounded="50%" @click="close">
+					<img h2rem w2rem src="/images/common/close.png" alt="" />
+				</div>
 			</div>
 			<div flex flex-1 flex-col items-center justify-center>
 				<div wfull flex flex-1>
