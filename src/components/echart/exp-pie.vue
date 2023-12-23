@@ -23,6 +23,7 @@ const option = ref<EChartsOption>({
 		text: '',
 		left: 'center',
 	},
+	color: ['#214DDE', '#4FD7BD'],
 	tooltip: {
 		trigger: 'item',
 		formatter: '{a} <br/>{b} : {c} ({d}%)',
@@ -40,7 +41,7 @@ const option = ref<EChartsOption>({
 			center: ['50%', '60%'],
 			data: [
 				{ value: 335, name: '未做' },
-				{ value: 310, name: '已做' },
+				{ value: 310, name: '在做' },
 			],
 			emphasis: {
 				itemStyle: {

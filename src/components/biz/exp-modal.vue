@@ -6,6 +6,9 @@ import { formatDate } from '../../utils/base/timeutils'
 
 const expDialogRef = ref()
 const formData = ref({} as IExp)
+const computedExpStatusConfig = computed(
+	() => EXP_STATUS_MAP?.[formData.value.stage],
+)
 const quotationData = ref({} as IQuotation)
 async function open(params: { id: number }) {
 	if (params.id) {
@@ -54,7 +57,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 	<x-dialog ref="expDialogRef" width="70%">
 		<div class="wfull" m-3 flex flex-col rounded-2 p-5 bg="#eee">
 			<div flex items-center justify-between>
-				<div flex items-center>
+				<div h3rem flex items-center>
 					<span class="text-nowrap fw700" mr-10 text-xl>{{
 						formData.name
 					}}</span>
@@ -74,7 +77,15 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 					</x-descriptions>
 				</div>
 				<div flex items-center>
-					<div mr-14>{{ formData.stage }}</div>
+					<div
+						mr-14
+						:style="{
+							color: computedExpStatusConfig?.color,
+							textShadow: `0 0 1.2rem ${computedExpStatusConfig?.color}`,
+						}"
+					>
+						{{ computedExpStatusConfig?.name }}
+					</div>
 					<div>
 						<a-button
 							mr-8
@@ -88,7 +99,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 					</div>
 				</div>
 			</div>
-			<div mb-4 mt-2>
+			<div h2.5rem>
 				<div flex items-center gap-4>
 					<span text-sm>{{ formatDate(formData.startDate) }}</span>
 					<div class="w15rem" flex>
