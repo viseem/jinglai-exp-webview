@@ -10,24 +10,19 @@ defineProps({
 </script>
 
 <template>
-	<!--	<div
-		flex
-		cursor-pointer
-		items-center
-		justify-center
-		style="border: 2px solid var(&#45;&#45;color-border-2)"
-		@click="cardClickHandler"
-	>
-		<div flex flex-col text-center>
-			<x-title :title="item.name"></x-title>
-			<x-text :text="item.mark"></x-text>
+	<div bg="white" hfull wfull flex flex-1 items-center text-center>
+		<div wfull flex items-center>
+			<p w-10rem>{{ item.name }}</p>
+			<x-text
+				wfull
+				flex-1
+				text-left
+				class="!text-#666"
+				:rows="2"
+				:text="item.mark"
+			></x-text>
 		</div>
-	</div>-->
-	<a-card hoverable :title="item.name" cursor-pointer>
-		<div hfull flex flex-1 flex-col items-center text-center>
-			<x-text :rows="3" :text="item.mark"></x-text>
-		</div>
-	</a-card>
+	</div>
 </template>
 
 <style scoped></style>

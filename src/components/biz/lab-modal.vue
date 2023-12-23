@@ -22,19 +22,18 @@ function labClickHandler(data: ILab) {
 </script>
 
 <template>
-	<x-dialog v-model="modalVisible" background="white" width="90%">
+	<x-dialog v-model="modalVisible" width="70rem">
 		<div hfull wfull flex items-center justify-center rounded-2xl>
-			<div wfull pxl>
-				<a-row :gutter="[48, 48]">
-					<a-col
+			<div wfull flex flex-col items-center justify-center pxl>
+				<div w="60%">
+					<biz-lab-card
 						v-for="item in labList"
 						:key="item"
-						:span="6"
+						:item="item"
+						class="mb-4 h6rem w-full rounded-1"
 						@click="labClickHandler(item)"
-					>
-						<biz-lab-card :item="item" class="h10rem w-full rounded-5" />
-					</a-col>
-				</a-row>
+					/>
+				</div>
 			</div>
 		</div>
 	</x-dialog>
