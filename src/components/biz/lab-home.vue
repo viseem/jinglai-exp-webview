@@ -1586,6 +1586,7 @@ watch(
 		deep: true,
 	},
 )
+
 const filterExpListByStatus = (statusItem: IStatusItem) => {
 	const resultList: IExp[] = []
 	if (expRes.value) {
@@ -1599,6 +1600,13 @@ const filterExpListByStatus = (statusItem: IStatusItem) => {
 	}
 	return resultList
 }
+
+/*
+ * userstore
+ * */
+
+const userStore = useUserStore()
+const computedUserinfo = computed(() => userStore.userinfo)
 /*
  * 加载 实验室人员列表
  * */
@@ -1688,6 +1696,7 @@ loadDevicePage()
 								"
 							>
 								<biz-exper-card
+									:logined="experItem.userId == computedUserinfo.id"
 									:selected="currentExperIndex == experIndex"
 									:item="experItem"
 								/>

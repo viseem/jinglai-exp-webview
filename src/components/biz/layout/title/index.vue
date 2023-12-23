@@ -68,7 +68,12 @@ const comutedUserinfo = computed(() => userStore.userinfo)
 			<a-button class="mr-4 !rounded-4" @click="test">选择实验室</a-button>
 			<div flex items-center>
 				<span mr-4 text-base>{{ comutedUserinfo.nickname }}</span>
-				<x-image size="2.5rem" circle :src="comutedUserinfo.avatar"></x-image>
+				<x-image
+					border="2px solid white"
+					size="2.5rem"
+					circle
+					:src="comutedUserinfo.avatar"
+				></x-image>
 			</div>
 		</div>
 	</div>

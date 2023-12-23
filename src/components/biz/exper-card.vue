@@ -12,10 +12,18 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	logined: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 const computedSelected = computed(() => {
 	return props.selected
+})
+
+const computedLogined = computed(() => {
+	return props.logined
 })
 
 function cardClickHandler() {
@@ -43,7 +51,7 @@ function loginHandler(item: IExper) {
 	>
 		<div wfull flex items-center justify-between>
 			<!--顶部-->
-			<x-image size="3rem" circle :src="item.user?.avatar" />
+			<x-image size="3rem" circle :src="item.user?.avatar" @click.stop />
 			<div mx-6 flex flex-1 flex-col justify-between>
 				<div flex items-center justify-between class="text-sm">
 					<div flex items-center>
@@ -73,11 +81,13 @@ function loginHandler(item: IExper) {
 				</div>
 			</div>
 			<div
+				:style="computedLogined ? 'opacity:0;z-index:-1;' : ''"
+				:class="computedSelected ? 'btn-active' : ''"
+				relative
 				rounded-4
 				px-4
 				py-0.8
 				text-sm
-				:class="computedSelected ? 'btn-active' : ''"
 				text-white
 				class="card-btn"
 				@click.stop="loginHandler(item)"
