@@ -125,8 +125,12 @@
     "iOS >= 8"
   ],
   "dependencies": {
+    "@antv/x6": "^2.11.1",
+    "@antv/x6-vue-shape": "^2.0.11",
     "@arco-plugins/vite-vue": "^1.4.5",
     "@arco-themes/vue-yun36524-lab": "^0.0.1",
+    "@types/dagre": "^0.7.52",
+    "dagre": "^0.8.5",
     "dayjs": "^1.11.10",
     "html2canvas": "^1.4.1"
   }

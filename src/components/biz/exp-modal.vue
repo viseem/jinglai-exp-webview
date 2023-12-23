@@ -17,6 +17,7 @@ async function open(params: { id: number }) {
 		// 获取任务详情
 		await loadExpDetail()
 		loadQuotationDetail()
+		loadGrapDatas()
 	}
 }
 function close() {
@@ -123,6 +124,21 @@ const processAttachmentsByType = (list, referDicts) => {
 			}
 		})
 	})
+}
+
+/*
+ * 处理实验脑图
+ * */
+const graphDatas = ref(null)
+async function loadGrapDatas() {
+	const res = await getExpPage({
+		quotationId: formData.value?.quotationId,
+	})
+	console.log('res---', res)
+	graphDatas.value = convertApiData2GraphDependData(
+		JSON.parse(JSON.stringify(res?.list)),
+		res?.name,
+	) as any
 }
 </script>
 
@@ -261,7 +277,9 @@ const processAttachmentsByType = (list, referDicts) => {
 						<div hfull flex flex-col>
 							<div flex flex-1 flex-col>
 								<p pb-4>实验总览</p>
-								<div class="content-card" flex-1>这里是实验总览</div>
+								<div class="content-card" flex-1>
+									<biz-exp-graph v-if="graphDatas" :list="graphDatas" />
+								</div>
 							</div>
 							<div class="h-[30%]" flex flex-col>
 								<p py-4>实验记录</p>

@@ -42,3 +42,38 @@ export const EXP_STATUS_MAP = {
 		icon: 'images/expstatus/outed.png',
 	},
 }
+
+export const convertScheduleData2GraphDependData = (data) => {
+	return data?.map((item) => {
+		item.uid = '2-' + item.id
+		item.oid = item.id
+		delete item.id
+		return {
+			...item,
+			dependIds: [],
+			name: item.name,
+			child: item?.sopList?.map((sop) => {
+				sop.uid = '3-' + sop.id
+				sop.oid = sop.id
+				delete sop?.id
+				return {
+					...sop,
+					name: sop.content,
+					level: 3,
+					dependIds: [],
+				}
+			}),
+			level: 2,
+		}
+	})
+}
+
+export const convertApiData2GraphDependData = (data, rootName) => {
+	if (!rootName) {
+		rootName = '根节点'
+	}
+	return {
+		root: { name: rootName },
+		child: convertScheduleData2GraphDependData(data),
+	}
+}

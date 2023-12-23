@@ -1,7 +1,7 @@
 import { IExp, IExper, ILab } from '~/api/biz/types/exptypes'
 
 export const getExpPage = (
-	params: { labId?: number } = {},
+	params: { labId?: number; quotationId?: number } = {},
 ): Promise<{ list: IExp[] }> =>
 	request.get('/open-api/lab/project-category/page', params)
 export const getLabPage = (): Promise<{ list: ILab[] }> =>
