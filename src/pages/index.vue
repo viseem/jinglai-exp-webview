@@ -2,6 +2,7 @@
 	<div hfull wfull flex flex-1 flex-col>
 		<biz-lab-modal />
 		<biz-login-modal />
+		<x-file-modal />
 
 		<div hfull wfull flex flex-1 flex-col>
 			<biz-layout-title />

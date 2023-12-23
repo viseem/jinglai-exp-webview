@@ -19,7 +19,7 @@ const props = defineProps({
 	picStyle: {
 		type: Object,
 		default: () => ({
-			size: '50px',
+			size: '30px',
 		}),
 	},
 })
@@ -80,13 +80,13 @@ determineFile()
 	</div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .file-name {
 	display: flex;
 	max-width: 100%;
 	padding: 0;
 	line-height: 1;
-	color: var(--el-color-primary);
+	color: #2e55f6;
 	cursor: pointer;
 	align-items: center;
 	justify-content: center;
