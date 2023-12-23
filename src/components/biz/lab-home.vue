@@ -1578,7 +1578,7 @@ async function loadExpPage() {
 watch(
 	() => currentLab.value,
 	(v) => {
-		if (v == 1) {
+		if (v) {
 			loadExpPage()
 		}
 	},

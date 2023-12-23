@@ -35,6 +35,7 @@ async function loadExpDetail() {
 		// 	item.status = sopStatusToBoolean(item.status)
 		// })
 		formData.value = res
+		processReferFiles()
 	}
 }
 
@@ -50,6 +51,78 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 	await updateSopStatus({ id: item.id, status })
 	toast.success('修改成功')
 	item.status = status
+}
+
+/*
+ * 参考资料
+ * */
+const referList = ref([])
+const processReferFiles = () => {
+	const dicts = [
+		{
+			sort: 1,
+			label: '需求快照',
+			value: '4',
+			dictType: 'name_item_reference_type',
+			status: 0,
+			colorType: '',
+			cssClass: '',
+			remark: '',
+			id: 1403,
+			createTime: 1689232497000,
+		},
+		{
+			sort: 2,
+			label: '结果参考',
+			value: '2',
+			dictType: 'name_item_reference_type',
+			status: 0,
+			colorType: '',
+			cssClass: '',
+			remark: '',
+			id: 1323,
+			createTime: 1685672266000,
+		},
+		{
+			sort: 3,
+			label: '交付标准',
+			value: '3',
+			dictType: 'name_item_reference_type',
+			status: 0,
+			colorType: '',
+			cssClass: '',
+			remark: '',
+			id: 1324,
+			createTime: 1685672277000,
+		},
+		{
+			sort: 4,
+			label: '参考文献',
+			value: '1',
+			dictType: 'name_item_reference_type',
+			status: 0,
+			colorType: '',
+			cssClass: '',
+			remark: '',
+			id: 1322,
+			createTime: 1685672246000,
+		},
+	]
+	processAttachmentsByType(formData.value?.attachmentList, dicts)
+	console.log('dicts----', dicts)
+	referList.value = dicts
+}
+const processAttachmentsByType = (list, referDicts) => {
+	list?.forEach((attachment) => {
+		referDicts?.forEach((item) => {
+			if (!item.files) {
+				item.files = []
+			}
+			if (item.value == attachment?.type) {
+				item.files.push(attachment)
+			}
+		})
+	})
 }
 </script>
 
@@ -110,23 +183,27 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 			</div>
 			<div box-border flex-1>
 				<a-row box-border :gutter="[20]" hfull>
-					<a-col hfull :span="10">
+					<a-col hfull :span="8">
 						<div hfull flex flex-col>
 							<p pb-4>实验方案</p>
 							<div class="content-card" flex-1 overflow-y-auto p-2>
 								<div h0>
-									<div overflow-y-auto v-html="quotationData.planText"></div>
+									<div
+										overflow-y-auto
+										pb-4
+										v-html="quotationData.planText"
+									></div>
 								</div>
 							</div>
 						</div>
 					</a-col>
-					<a-col hfull :span="7">
+					<a-col hfull :span="8">
 						<div hfull flex flex-col>
 							<div class="h-[30%]" flex flex-col>
 								<p pb-4>实验内容</p>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
-										<div class="" v-html="formData.content"></div>
+										<div class="" pb-4 v-html="formData.content"></div>
 									</x-flex-y-overflow>
 								</div>
 							</div>
@@ -151,13 +228,33 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 									</x-flex-y-overflow>
 								</div>
 							</div>
-							<div min-h="8rem" flex flex-col>
+							<div min-h="12rem" flex flex-col>
 								<span py-4>参考资料</span>
-								<div flex-1 class="content-card">这是参考资料</div>
+								<div flex-1 class="content-card">
+									<div>
+										<a-descriptions column>
+											<a-descriptions-item
+												v-for="refer in referList"
+												:key="refer"
+												:label="refer.label"
+											>
+												<template
+													v-for="file in refer?.files || []"
+													:key="file"
+												>
+													<x-file-link
+														:url="file.fileUrl"
+														:name="file.fileName"
+													></x-file-link>
+												</template>
+											</a-descriptions-item>
+										</a-descriptions>
+									</div>
+								</div>
 							</div>
 						</div>
 					</a-col>
-					<a-col hfull :span="7">
+					<a-col hfull :span="8">
 						<div hfull flex flex-col>
 							<div flex flex-1 flex-col>
 								<p pb-4>实验总览</p>
@@ -167,7 +264,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 								<p py-4>实验记录</p>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
-										<div class="" v-html="formData.content"></div>
+										<div class="" pb-4 v-html="formData.content"></div>
 									</x-flex-y-overflow>
 								</div>
 							</div>

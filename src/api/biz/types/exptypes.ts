@@ -43,7 +43,7 @@ export interface IExp {
 	startDate: Date
 	deadline: Date
 	createTime: Date
-
+	attachmentList: any[]
 	color: string
 }
 

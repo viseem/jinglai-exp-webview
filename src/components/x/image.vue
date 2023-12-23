@@ -24,8 +24,6 @@ const props = defineProps({
 
 const computedStyle = computed(() => {
 	return {
-		width: props.size || '',
-		height: props.size || '',
 		borderRadius: props.circle ? '50%' : '',
 		overflow: props.circle ? 'hidden' : '',
 	}
@@ -37,6 +35,8 @@ const computedStyle = computed(() => {
 		class="!flex"
 		:src="src"
 		:fit="mode"
+		:width="size || ''"
+		:height="size || ''"
 		:style="computedStyle"
 	></a-image>
 </template>

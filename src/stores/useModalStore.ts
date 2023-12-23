@@ -5,6 +5,8 @@ export default defineStore('modal', {
 		return {
 			labModalVisible: true,
 			loginModalVisible: false,
+			fileModalVisible: false,
+			fileModalConfig: {} as IFileConfig,
 		}
 	},
 	actions: {
@@ -20,6 +22,17 @@ export default defineStore('modal', {
 		setLoginModalVisible(visible: boolean) {
 			this.loginModalVisible = visible
 		},
+		setFileModalVisible(visible: boolean) {
+			this.fileModalVisible = visible
+		},
+		setFileModalConfig(config: IFileConfig) {
+			this.fileModalConfig = config
+		},
 	},
 	persist: false,
 })
+
+export interface IFileConfig {
+	fileName: string
+	fileUrl: string
+}
