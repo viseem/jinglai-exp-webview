@@ -22,6 +22,7 @@ const sysTimeInterval = setInterval(() => {
  * 系统天气
  * */
 const systemWeather = ref({} as IWeather)
+
 async function loadWeather() {
 	const res = await getWeather()
 	systemWeather.value = res
@@ -31,6 +32,8 @@ loadWeather()
 onUnmounted(() => {
 	clearInterval(sysTimeInterval)
 })
+const userStore = useUserStore()
+const comutedUserinfo = computed(() => userStore.userinfo)
 </script>
 
 <template>
@@ -64,8 +67,8 @@ onUnmounted(() => {
 		<div flex items-center>
 			<a-button class="mr-4 !rounded-4" @click="test">选择实验室</a-button>
 			<div flex items-center>
-				<span mr-4 text-base>名字</span>
-				<x-image size="2.5rem" circle></x-image>
+				<span mr-4 text-base>{{ comutedUserinfo.nickname }}</span>
+				<x-image size="2.5rem" circle :src="comutedUserinfo.avatar"></x-image>
 			</div>
 		</div>
 	</div>

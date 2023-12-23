@@ -34,6 +34,10 @@ http.interceptors.response.use(
 		if (response.data?.data) {
 			return response.data.data
 		}
+		if (response.data?.code != 0) {
+			toast.warning(response.data?.msg || '未知错误')
+			return Promise.reject()
+		}
 		return response
 	},
 	function (error) {

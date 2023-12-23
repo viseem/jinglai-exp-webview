@@ -1,7 +1,10 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
 const modalVisible = computed({
-	get: () => modalStore.loginModalVisible,
+	get: () => {
+		formData.value.password = ''
+		return modalStore.loginModalVisible
+	},
 	set: (v) => modalStore.setLoginModalVisible(v),
 })
 
@@ -12,11 +15,12 @@ const formData = ref({
 async function loginClickHandler() {
 	const userid = userStore.clickLoginUserid
 	await login({ userid, password: formData.value.password })
+	modalStore.setLoginModalVisible(false)
 }
 </script>
 
 <template>
-	<x-dialog v-model="modalVisible" height="50rem">
+	<x-dialog v-model="modalVisible" height="50rem" width="85rem">
 		<div
 			bg="#E9EEFC"
 			m-4
@@ -37,11 +41,11 @@ async function loginClickHandler() {
 					<a-input
 						:model-value="userStore.clickLoginExper?.user?.nickname"
 						readonly
-						placeholder="请输入用户密码"
 					></a-input>
 					<p my-5 text-white>密码</p>
 					<a-input
 						v-model="formData.password"
+						type="password"
 						placeholder="请输入用户密码"
 					></a-input>
 					<a-button class="wfull" mt-10 @click="loginClickHandler"
