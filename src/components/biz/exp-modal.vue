@@ -238,15 +238,18 @@ const processAttachmentsByType = (list, referDicts) => {
 												:key="refer"
 												:label="refer.label"
 											>
-												<template
-													v-for="file in refer?.files || []"
-													:key="file"
-												>
-													<x-file-link
-														:url="file.fileUrl"
-														:name="file.fileName"
-													></x-file-link>
-												</template>
+												<div flex gap-2>
+													<template
+														v-for="file in refer?.files || []"
+														:key="file"
+													>
+														<x-file-link
+															width="8rem"
+															:url="file.fileUrl"
+															:name="file.fileName"
+														></x-file-link>
+													</template>
+												</div>
 											</a-descriptions-item>
 										</a-descriptions>
 									</div>

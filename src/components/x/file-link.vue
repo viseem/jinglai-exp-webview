@@ -46,21 +46,21 @@ determineFile()
 </script>
 
 <template>
-	<div class="inline-flex flex-col justify-start">
+	<div class="inline-flex flex-col justify-start" text-sm>
 		<div
 			v-if="!picFlag"
 			class="file-name"
 			:style="{ width: props.width }"
-			@click="handleFileClick"
+			style="font-size: inherit"
 		>
-			<div class="m-text-ellipsis-1">
+			<span class="m-text-ellipsis-1" style="font-size: inherit">
 				{{
 					props.name?.includes('.')
 						? props.name.substring(0, props.name.lastIndexOf('.'))
 						: props.name
 				}}
-			</div>
-			<span style="word-break: normal">
+			</span>
+			<span style="word-break: normal; font-size: inherit">
 				{{
 					props.name?.includes('.')
 						? '.' + props.name.substring(props.name.lastIndexOf('.') + 1)
@@ -89,7 +89,6 @@ determineFile()
 	color: #2e55f6;
 	cursor: pointer;
 	align-items: center;
-	justify-content: center;
 }
 
 .m-text-ellipsis-1 {
