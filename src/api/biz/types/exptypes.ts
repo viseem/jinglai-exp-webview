@@ -47,6 +47,25 @@ export interface IExp {
 	color: string
 }
 
+export interface IExpAttachment {
+	fileUrl: string
+	fileName: string
+	mark: string
+	type: string
+}
+
+export interface IExpLog {
+	id: number
+	projectId: number
+	projectCategoryId: number
+	categoryId: number
+	operatorId: number
+	operator: IUser
+	mark: string
+	score: string
+	attachments: IExpAttachment[]
+}
+
 export interface IExper {
 	labId: 20
 	userId: 139

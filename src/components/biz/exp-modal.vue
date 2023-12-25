@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IExp, ISop } from '~/api/biz/types/exptypes'
+import { IExp, IExpLog, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
 import { booleanToSopStatus } from '~/utils/biz/exputils'
 import { formatDate } from '../../utils/base/timeutils'
@@ -14,6 +14,7 @@ async function open(params: { id: number }) {
 	if (params.id) {
 		expDialogRef.value.open()
 		formData.value.id = params.id
+		loadExpLogs()
 		// 获取任务详情
 		await loadExpDetail()
 		loadQuotationDetail()
@@ -145,6 +146,17 @@ async function loadGrapDatas() {
  * 实验内容tab切换
  * */
 const demandTab = ref(1)
+
+/*
+ * 加载 实验记录
+ * */
+const expLogs = ref([] as IExpLog[])
+async function loadExpLogs() {
+	if (formData.value.id) {
+		const res = await getExpLogPage({ projectCategoryId: formData.value.id })
+		expLogs.value = res?.list
+	}
+}
 </script>
 
 <template>
@@ -309,8 +321,9 @@ const demandTab = ref(1)
 									<x-flex-y-overflow hfull flex-1>
 										<div class="">
 											<biz-exp-log
-												v-for="item in 5"
+												v-for="item in expLogs"
 												:key="item"
+												:item="item"
 												mb="0.5rem"
 											></biz-exp-log>
 										</div>

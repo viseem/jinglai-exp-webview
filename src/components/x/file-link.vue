@@ -24,13 +24,13 @@ const props = defineProps({
 	},
 })
 
-const modalStore = useModalStore()
+// const modalStore = useModalStore()
 // const fileViewRef = ref()
-function handleFileClick() {
+/*function handleFileClick() {
 	// fileViewRef.value?.open(props)
 	modalStore.setFileModalConfig({ fileName: props.name, fileUrl: props.url })
 	modalStore.setFileModalVisible(true)
-}
+}*/
 let picFlag = false
 const determineFile = () => {
 	if (props?.url) {
@@ -74,7 +74,7 @@ determineFile()
 				:size="props.picStyle.size"
 				:src="props.url"
 				fit="cover"
-				@click="handleFileClick"
+				@click.stop
 			/>
 		</div>
 	</div>
