@@ -116,8 +116,14 @@ async function loadDevicePage() {
  * 加载 实验室任务数量统计
  * */
 const expCountStats = ref({} as IExpCountStats)
+const expCountLoading = ref(true)
 async function loadExpStats() {
-	const res = await getLabExpCountStats({ labId: currentLab.value.id })
+	expCountLoading.value = true
+	const res = await getLabExpCountStats({ labId: currentLab.value.id }).finally(
+		() => {
+			expCountLoading.value = false
+		},
+	)
 	expCountStats.value = res
 }
 
@@ -156,7 +162,7 @@ function lookSelfClickHandler(e: boolean) {
 					</div>
 					<x-title py-4>实验开展统计</x-title>
 					<div class="exp-card-wrapper">
-						<echart-exp-pie />
+						<echart-exp-pie :stats="expCountStats" />
 					</div>
 					<x-title py-4>设备列表</x-title>
 					<div class="exp-card-wrapper !p-6" flex-1>

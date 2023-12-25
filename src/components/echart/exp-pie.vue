@@ -9,6 +9,7 @@ import {
 } from 'echarts/components'
 import VChart from 'vue-echarts'
 import type { EChartsOption } from 'echarts'
+import { IExpCountStats } from '~/api/biz/types/statstypes'
 
 use([
 	CanvasRenderer,
@@ -17,6 +18,28 @@ use([
 	TooltipComponent,
 	LegendComponent,
 ])
+
+const props = defineProps({
+	stats: {
+		type: Object as PropType<IExpCountStats>,
+	},
+})
+const chartRef = ref()
+const chartData = ref([
+	{ value: 0, name: '未做' },
+	{ value: 0, name: '在做' },
+])
+watch(
+	() => props.stats,
+	async (v) => {
+		if (v) {
+			await nextTick()
+			chartData.value[0].value = v?.notDoCount || 0
+			chartData.value[1].value = v?.doingCount || 0
+			chartRef.value.setOptions(option)
+		}
+	},
+)
 
 const option = ref<EChartsOption>({
 	title: {
@@ -35,14 +58,10 @@ const option = ref<EChartsOption>({
 	},
 	series: [
 		{
-			name: '',
 			type: 'pie',
 			radius: '55%',
 			center: ['50%', '60%'],
-			data: [
-				{ value: 335, name: '未做' },
-				{ value: 310, name: '在做' },
-			],
+			data: chartData.value,
 			emphasis: {
 				itemStyle: {
 					shadowBlur: 10,
@@ -59,7 +78,7 @@ const option = ref<EChartsOption>({
 	<div>
 		<!-- @vue-ignore -->
 		<div h10rem wfull>
-			<v-chart class="wfull" :option="option" autoresize />
+			<v-chart ref="chartRef" class="wfull" :option="option" autoresize />
 		</div>
 	</div>
 </template>
