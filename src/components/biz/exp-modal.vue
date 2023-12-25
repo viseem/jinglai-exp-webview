@@ -205,11 +205,14 @@ async function loadExpLogs() {
 					</div>-->
 				</div>
 			</div>
-			<div h2.5rem>
+			<div h1rem flex items-center>
 				<div flex items-center gap-4>
 					<span text-sm>{{ formatDate(formData.startDate) }}</span>
 					<div class="w15rem" flex>
-						<x-progress :stroke-width="8" />
+						<x-progress
+							v-if="formData.startDate || formData.deadline"
+							:stroke-width="8"
+						/>
 					</div>
 					<span text-sm>{{ formatDate(formData.deadline) }}</span>
 				</div>
@@ -358,6 +361,10 @@ async function loadExpLogs() {
 }
 .content-card-title {
 	height: 3.5rem;
+	min-height: 3.5rem;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: hidden;
 	display: flex;
 	align-items: center;
 }
