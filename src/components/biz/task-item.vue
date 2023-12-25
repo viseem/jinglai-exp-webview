@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
+import { removeHTMLTags } from '../../utils/base/stringutils'
 
 let data = ref({})
 const message = toast
@@ -106,10 +107,6 @@ function test() {
 	console.log('test---')
 }
 defineExpose({ test })
-
-function removeHTMLTags() {
-	return 1111222
-}
 </script>
 
 <template>

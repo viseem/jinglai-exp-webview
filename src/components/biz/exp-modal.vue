@@ -140,6 +140,11 @@ async function loadGrapDatas() {
 		res?.name,
 	) as any
 }
+
+/*
+ * 实验内容tab切换
+ * */
+const demandTab = ref(1)
 </script>
 
 <template>
@@ -217,9 +222,26 @@ async function loadGrapDatas() {
 						<div hfull flex flex-col>
 							<div class="h-[30%]" flex flex-col>
 								<p pb-4>实验内容</p>
-								<div class="content-card" hfull>
+								<div class="content-card !p-2" hfull>
+									<div>
+										<a-radio-group v-model="demandTab" type="button">
+											<a-radio :value="1">客户需求</a-radio>
+											<a-radio :value="2">实验内容</a-radio>
+										</a-radio-group>
+									</div>
 									<x-flex-y-overflow hfull flex-1>
-										<div class="" pb-4 v-html="formData.content"></div>
+										<div
+											v-show="demandTab == 1"
+											class=""
+											p-2
+											v-html="formData.demand"
+										></div>
+										<div
+											v-show="demandTab == 2"
+											class=""
+											p-2
+											v-html="formData.content"
+										></div>
 									</x-flex-y-overflow>
 								</div>
 							</div>
