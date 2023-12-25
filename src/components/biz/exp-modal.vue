@@ -218,7 +218,7 @@ async function loadExpLogs() {
 				<a-row box-border :gutter="[20]" hfull>
 					<a-col hfull :span="8">
 						<div hfull flex flex-col>
-							<p pb-4>实验方案</p>
+							<div class="content-card-title">实验方案</div>
 							<div class="content-card" flex-1 overflow-y-auto p-2>
 								<div h0>
 									<div
@@ -233,14 +233,16 @@ async function loadExpLogs() {
 					<a-col hfull :span="8">
 						<div hfull flex flex-col>
 							<div class="h-[30%]" flex flex-col>
-								<p pb-4>实验内容</p>
-								<div class="content-card !p-2" hfull>
+								<div class="content-card-title" flex justify-between>
+									<span>实验内容</span>
 									<div>
 										<a-radio-group v-model="demandTab" type="button">
 											<a-radio :value="1">客户需求</a-radio>
 											<a-radio :value="2">实验内容</a-radio>
 										</a-radio-group>
 									</div>
+								</div>
+								<div class="content-card !p-2" hfull>
 									<x-flex-y-overflow hfull flex-1>
 										<div
 											v-show="demandTab == 1"
@@ -258,7 +260,7 @@ async function loadExpLogs() {
 								</div>
 							</div>
 							<div flex flex-1 flex-col>
-								<p py-4>关键节点</p>
+								<div class="content-card-title">关键节点</div>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
 										<div flex flex-col>
@@ -279,7 +281,7 @@ async function loadExpLogs() {
 								</div>
 							</div>
 							<div min-h="12rem" flex flex-col>
-								<span py-4>参考资料</span>
+								<div class="content-card-title">参考资料</div>
 								<div flex-1 class="content-card">
 									<div>
 										<a-descriptions column>
@@ -310,13 +312,13 @@ async function loadExpLogs() {
 					<a-col hfull :span="8">
 						<div hfull flex flex-col>
 							<div flex flex-1 flex-col>
-								<p pb-4>实验总览</p>
+								<div class="content-card-title">实验总览</div>
 								<div class="content-card" flex-1>
 									<biz-exp-graph v-if="graphDatas" :list="graphDatas" />
 								</div>
 							</div>
 							<div class="h-[30%]" flex flex-col>
-								<p py-4>实验记录</p>
+								<div class="content-card-title">实验记录</div>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
 										<div class="">
@@ -331,7 +333,7 @@ async function loadExpLogs() {
 								</div>
 							</div>
 							<div class="h-[30%]" flex flex-col>
-								<p py-4>实验数据</p>
+								<div class="content-card-title">实验数据</div>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
 										<div class="" v-html="formData.content"></div>
@@ -353,5 +355,10 @@ async function loadExpLogs() {
 	position: relative;
 	border-radius: theme('borderRadius.DEFAULT');
 	padding: 1rem;
+}
+.content-card-title {
+	height: 3.5rem;
+	display: flex;
+	align-items: center;
 }
 </style>
