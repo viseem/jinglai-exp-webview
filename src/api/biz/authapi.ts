@@ -7,13 +7,13 @@ export const login = async (
 	} = { userid: 146, password: '123456' },
 ): Promise<any> => {
 	const res = (await http.post('/admin-api/system/auth/lab-login', params)) as {
-		refreshToken: string
+		accessToken: string
 		user: IUser
 	}
 	console.log('res-----', res)
-	if (res?.refreshToken && res?.user?.id) {
+	if (res?.accessToken && res?.user?.id) {
 		const userStore = useUserStore()
-		userStore.setToken(res.refreshToken)
+		userStore.setToken(res.accessToken)
 		userStore.setUserinfo(res.user)
 		return res
 	}

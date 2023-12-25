@@ -9,7 +9,6 @@ export const http = axios.create({
 	},
 })
 const userStore = useUserStore()
-const modalStore = useModalStore()
 // 添加请求拦截器
 http.interceptors.request.use(
 	function (config) {
@@ -36,13 +35,14 @@ http.interceptors.response.use(
 			return response.data.data
 		}
 		if (response.data?.code != 0) {
-			switch (response.data?.code) {
+			/*			switch (response.data?.code) {
 				case 401:
 					modalStore.setLoginModalVisible(true)
 					break
 				default:
 					toast.warning(response.data?.msg || '未知错误')
-			}
+			}*/
+			toast.warning(response.data?.msg || '未知错误')
 			return Promise.reject()
 		}
 		return response
