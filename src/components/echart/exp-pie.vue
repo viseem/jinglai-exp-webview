@@ -26,12 +26,12 @@ const option = ref<EChartsOption>({
 	color: ['#214DDE', '#4FD7BD'],
 	tooltip: {
 		trigger: 'item',
-		formatter: '{a} <br/>{b} : {c} ({d}%)',
+		formatter: '{b} : {c} ({d}%)',
 	},
 	legend: {
 		orient: 'vertical',
 		left: 'left',
-		data: ['未做', '已做'],
+		data: ['未做', '在做'],
 	},
 	series: [
 		{

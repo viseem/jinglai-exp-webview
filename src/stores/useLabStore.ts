@@ -9,6 +9,7 @@ export default defineStore('lab', {
 	},
 	actions: {
 		setCurrentLab(data: ILab) {
+			console.log('data----', data)
 			this.currentLab = data
 		},
 	},

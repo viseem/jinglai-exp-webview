@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { IExp, IExper } from '~/api/biz/types/exptypes'
 import { IDevice } from '~/api/biz/types/devicetypes'
 import { getDevicePage } from '~/api/biz/deviceapi'
+import { IExpCountStats } from '~/api/biz/types/statstypes'
 
 interface IStatusItem {
 	name: string
@@ -38,11 +39,13 @@ const labStore = useLabStore()
 const currentLab = computed(() => labStore.getCurrentLab)
 
 const expParams = ref({
-	labId: currentLab.value.id,
+	labId: null as null | number,
 	operatorId: null as null | number,
 })
 const expRes = ref([] as IExp[])
 async function loadExpPage() {
+	expRes.value = []
+	expParams.value.labId = currentLab.value.id
 	const res = await getExpPage(expParams.value)
 	expRes.value = res?.list
 }
@@ -50,14 +53,17 @@ async function loadExpPage() {
 watch(
 	() => currentLab.value,
 	(v) => {
-		if (v) {
+		console.log('currentLab.value changed--', v)
+		if (v?.id) {
 			loadExpPage()
 			loadExperPage()
 			loadDevicePage()
+			loadExpStats()
 		}
 	},
 	{
 		deep: true,
+		immediate: true,
 	},
 )
 
@@ -106,6 +112,19 @@ async function loadDevicePage() {
 	deviceList.value = res?.list
 }
 
+/*
+ * 加载 实验室任务数量统计
+ * */
+const expCountStats = ref({} as IExpCountStats)
+async function loadExpStats() {
+	const res = await getLabExpCountStats({ labId: currentLab.value.id })
+	expCountStats.value = res
+}
+
+/*
+ *
+ * 实验人员点击事件
+ * */
 function experClickHandler(experIndex: number, experItem: IExper) {
 	currentExperIndex.value =
 		experIndex == currentExperIndex.value ? -1 : experIndex
@@ -115,6 +134,9 @@ function experClickHandler(experIndex: number, experItem: IExper) {
 	loadExpPage()
 }
 
+/*
+ * 只看自己
+ * */
 const lookSelf = ref(false)
 function lookSelfClickHandler(e: boolean) {
 	currentExperIndex.value = e ? computedLoginUserIndex.value : -1
