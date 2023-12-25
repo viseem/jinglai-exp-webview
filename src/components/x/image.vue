@@ -43,7 +43,11 @@ const computedStyle = computed(() => {
 		:width="size || ''"
 		:height="size || ''"
 		:style="computedStyle"
-	></a-image>
+	>
+		<template #error-icon>
+			<span></span>
+		</template>
+	</a-image>
 </template>
 
 <style scoped></style>

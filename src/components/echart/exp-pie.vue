@@ -82,7 +82,7 @@ const option = ref<EChartsOption>({
 <template>
 	<div>
 		<!-- @vue-ignore -->
-		<div h10rem wfull>
+		<div h14rem wfull>
 			<v-chart ref="chartRef" class="wfull" :option="option" autoresize />
 		</div>
 	</div>
