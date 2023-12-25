@@ -55,6 +55,11 @@ const option = ref<EChartsOption>({
 		orient: 'vertical',
 		left: 'left',
 		data: ['未做', '在做'],
+		formatter: (name) => {
+			return (
+				name + ' ' + chartData.value.find((item) => item.name === name)?.value
+			)
+		},
 	},
 	series: [
 		{
