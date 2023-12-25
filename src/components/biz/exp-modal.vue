@@ -167,7 +167,7 @@ async function loadGrapDatas() {
 				</div>
 				<div flex items-center>
 					<div
-						mr-14
+						mr-8
 						:style="{
 							color: computedExpStatusConfig?.color,
 							textShadow: `0 0 1.2rem ${computedExpStatusConfig?.color}`,
@@ -175,7 +175,7 @@ async function loadGrapDatas() {
 					>
 						{{ computedExpStatusConfig?.name }}
 					</div>
-					<div>
+					<!--					<div ml-14>
 						<a-button
 							mr-8
 							class="!rounded-4 !px-6"
@@ -185,7 +185,7 @@ async function loadGrapDatas() {
 							>暂停</a-button
 						>
 						<a-button class="!rounded-4 !px-6" type="primary">启动</a-button>
-					</div>
+					</div>-->
 				</div>
 			</div>
 			<div h2.5rem>
@@ -285,7 +285,7 @@ async function loadGrapDatas() {
 								<p py-4>实验记录</p>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
-										<div class="" border="1px solid red">
+										<div class="">
 											<biz-exp-log
 												v-for="item in 5"
 												:key="item"

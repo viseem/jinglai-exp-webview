@@ -10,7 +10,7 @@ export interface IWeather {
 
 export const getWeather = async (): Promise<IWeather> => {
 	const res = await axios.get(
-		'https://restapi.amap.com/v3/weather/weatherInfo?city=420107&key=b33305c0867d1db017d8757430be496e&extensions=all',
+		'https://restapi.amap.com/v3/weather/weatherInfo?city=110112&key=b33305c0867d1db017d8757430be496e&extensions=all',
 	)
 	if (res?.data?.status == '1') {
 		const live = res?.data?.lives?.[0] || {}

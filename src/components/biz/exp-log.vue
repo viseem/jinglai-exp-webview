@@ -6,7 +6,7 @@
 		<div>
 			<x-text rows="2">我是实验记录</x-text>
 			<x-descriptions-item label="附件" margin-bottom=""
-				><x-file-link name="你好.docx"
+				><x-file-link name="附件.docx"
 			/></x-descriptions-item>
 		</div>
 	</div>
