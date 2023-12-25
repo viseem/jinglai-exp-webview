@@ -24,6 +24,12 @@ export default defineStore('user', {
 		setClickLoginExper(user: IExper) {
 			this.clickLoginExper = user
 		},
+		logout() {
+			this.token = ''
+			this.userinfo = {} as IUser
+			this.clickLoginUserid = 0
+			this.clickLoginExper = {} as IExper
+		},
 	},
 	persist: true,
 })

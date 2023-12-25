@@ -41,6 +41,7 @@ function loginHandler(item: IExper) {
 	<div
 		relative
 		wfull
+		cursor-pointer
 		overflow-hidden
 		rounded-2
 		bg-white
@@ -51,7 +52,7 @@ function loginHandler(item: IExper) {
 	>
 		<div wfull flex items-center justify-between>
 			<!--顶部-->
-			<x-image size="3rem" circle :src="item.user?.avatar" @click.stop />
+			<x-image circle h3rem w3rem :src="item.user?.avatar" @click.stop />
 			<div mx-6 flex flex-1 flex-col justify-between>
 				<div flex items-center justify-between class="text-sm">
 					<div flex items-center>
@@ -84,6 +85,7 @@ function loginHandler(item: IExper) {
 				:style="computedLogined ? 'opacity:0;z-index:-1;' : ''"
 				:class="computedSelected ? 'btn-active' : ''"
 				relative
+				cursor-pointer
 				rounded-4
 				px-4
 				py-0.8

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { IWeather } from '~/api/biz/thirdapi'
+import { computed } from 'vue'
 
 const modalStore = useModalStore()
 const labStore = useLabStore()
@@ -33,7 +34,7 @@ onUnmounted(() => {
 	clearInterval(sysTimeInterval)
 })
 const userStore = useUserStore()
-const comutedUserinfo = computed(() => userStore.userinfo)
+const computedUserinfo = computed(() => userStore.userinfo)
 </script>
 
 <template>
@@ -65,16 +66,26 @@ const comutedUserinfo = computed(() => userStore.userinfo)
 			></x-title>
 		</div>
 		<div flex items-center>
-			<a-button class="mr-4 !rounded-4" @click="test">选择实验室</a-button>
-			<div flex items-center>
-				<span mr-4 text-base>{{ comutedUserinfo.nickname }}</span>
+			<a-popconfirm
+				v-if="computedUserinfo?.id"
+				content="确认退出吗?"
+				@ok="userStore.logout"
+			>
+				<a-button mr-4 cursor-pointer text="#ccc" size="small"> 退出 </a-button>
+			</a-popconfirm>
+			<div v-if="computedUserinfo?.id" flex items-center>
 				<x-image
 					border="2px solid white"
-					size="2.5rem"
 					circle
-					:src="comutedUserinfo.avatar"
+					h2.5rem
+					w2.5rem
+					:src="computedUserinfo.avatar"
 				></x-image>
+				<span ml-2 text-base>{{ computedUserinfo.nickname }}</span>
 			</div>
+			<a-button size="small" class="ml-10 !rounded-4" @click="test"
+				>选择实验室</a-button
+			>
 		</div>
 	</div>
 </template>

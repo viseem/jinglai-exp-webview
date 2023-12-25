@@ -285,7 +285,13 @@ async function loadGrapDatas() {
 								<p py-4>实验记录</p>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
-										<div class="" pb-4 v-html="formData.content"></div>
+										<div class="" border="1px solid red">
+											<biz-exp-log
+												v-for="item in 5"
+												:key="item"
+												mb="0.5rem"
+											></biz-exp-log>
+										</div>
 									</x-flex-y-overflow>
 								</div>
 							</div>
