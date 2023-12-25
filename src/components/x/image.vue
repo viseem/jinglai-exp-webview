@@ -20,6 +20,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	preview: {
+		type: Boolean,
+		default: true,
+	},
 })
 
 const computedStyle = computed(() => {
@@ -32,6 +36,7 @@ const computedStyle = computed(() => {
 
 <template>
 	<a-image
+		:preview="preview"
 		class="!flex"
 		:src="src"
 		:fit="mode"

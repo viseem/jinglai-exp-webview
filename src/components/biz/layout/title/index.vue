@@ -2,6 +2,7 @@
 import dayjs from 'dayjs'
 import { IWeather } from '~/api/biz/thirdapi'
 import { computed } from 'vue'
+import { Modal } from '@arco-design/web-vue'
 
 const modalStore = useModalStore()
 const labStore = useLabStore()
@@ -35,6 +36,16 @@ onUnmounted(() => {
 })
 const userStore = useUserStore()
 const computedUserinfo = computed(() => userStore.userinfo)
+
+function logoutClickHandler() {
+	Modal.confirm({
+		title: '提示',
+		content: '确定退出登录吗？',
+		onOk: () => {
+			userStore.logout()
+		},
+	})
+}
 </script>
 
 <template>
@@ -57,32 +68,31 @@ const computedUserinfo = computed(() => userStore.userinfo)
 			</div>
 		</div>
 		<div absolute left-0 top-0 hfull wfull flex items-center justify-center>
-			<x-title
-				w="40%"
-				:title="currentLab?.name"
-				text-center
-				class="!text-white"
-				style="letter-spacing: 0.2rem"
-			></x-title>
+			<span class="text-6" style="letter-spacing: 0.1rem">{{
+				currentLab?.name
+			}}</span>
 		</div>
 		<div flex items-center>
-			<a-popconfirm
-				v-if="computedUserinfo?.id"
-				content="确认退出吗?"
-				@ok="userStore.logout"
-			>
-				<a-button mr-4 cursor-pointer text="#ccc" size="small"> 退出 </a-button>
-			</a-popconfirm>
-			<div v-if="computedUserinfo?.id" flex items-center>
-				<x-image
-					border="2px solid white"
-					circle
-					h2.5rem
-					w2.5rem
-					:src="computedUserinfo.avatar"
-				></x-image>
-				<span ml-2 text-base>{{ computedUserinfo.nickname }}</span>
-			</div>
+			<a-dropdown>
+				<div v-if="computedUserinfo?.id" flex items-center>
+					<x-image
+						border="2px solid white"
+						circle
+						h2.5rem
+						w2.5rem
+						:src="computedUserinfo.avatar"
+						:preview="false"
+					></x-image>
+					<span relative z-10 ml-2 text-base>{{
+						computedUserinfo.nickname
+					}}</span>
+				</div>
+				<template #content>
+					<a-doption>
+						<div w4rem text-center @click="logoutClickHandler">退出</div>
+					</a-doption>
+				</template>
+			</a-dropdown>
 			<a-button size="small" class="ml-10 !rounded-4" @click="test"
 				>选择实验室</a-button
 			>

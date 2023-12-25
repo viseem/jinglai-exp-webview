@@ -25,10 +25,12 @@ function labClickHandler(data: ILab) {
 	<x-dialog v-model="modalVisible" width="70rem">
 		<div hfull wfull flex items-center justify-center rounded-2xl>
 			<div wfull flex flex-col items-center justify-center pxl>
-				<div w="60%">
+				<div text-xl text-white fw900>选择实验室</div>
+				<div w="60%" mt-10>
 					<biz-lab-card
 						v-for="item in labList"
 						:key="item"
+						cursor-pointer
 						:item="item"
 						class="mb-4 h6rem w-full rounded-1"
 						@click="labClickHandler(item)"

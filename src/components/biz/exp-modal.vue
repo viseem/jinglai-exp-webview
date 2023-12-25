@@ -160,8 +160,8 @@ async function loadExpLogs() {
 </script>
 
 <template>
-	<x-dialog ref="expDialogRef" width="70%">
-		<div class="wfull" m-3 flex flex-col rounded-2 p-5 bg="#eee">
+	<x-dialog ref="expDialogRef" width="95%" height="95vh">
+		<div class="wfull" m-3 flex flex-col rounded-2 p-5 bg="#EAEDF0">
 			<div flex items-center justify-between>
 				<div h3rem flex items-center>
 					<span class="text-nowrap fw700" mr-10 text-xl>{{
@@ -348,7 +348,7 @@ async function loadExpLogs() {
 
 <style scoped>
 .content-card {
-	box-shadow: 0 0 10px #e3e6e9;
+	box-shadow: 0 0 20px #e3e6e9;
 	background: white;
 	position: relative;
 	border-radius: theme('borderRadius.DEFAULT');
