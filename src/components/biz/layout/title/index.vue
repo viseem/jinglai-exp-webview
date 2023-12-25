@@ -56,7 +56,7 @@ function logoutClickHandler() {
 		flex
 		items-center
 		justify-between
-		px-4
+		px-8
 		text-white
 	>
 		<div flex items-center text-base>

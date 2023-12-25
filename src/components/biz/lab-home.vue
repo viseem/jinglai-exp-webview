@@ -185,10 +185,13 @@ function lookSelfClickHandler(e: boolean) {
 					flex-col
 				>
 					<div relative mb-4 flex items-center>
-						<div absolute flex items-center justify-center>
-							<x-image absolute size="3.5rem" :src="item.icon"></x-image>
-						</div>
-						<x-title ml-4rem wfull flex-1>{{ item.name }}</x-title>
+						<x-image
+							h1.5rem
+							w1.5rem
+							:src="item.icon"
+							style="filter: drop-shadow(0 0 0.8rem #999)"
+						></x-image>
+						<x-title ml-2rem wfull flex-1>{{ item.name }}</x-title>
 					</div>
 					<div class="exp-task-wrapper p-6" flex-1>
 						<x-flex-y-overflow p-5px class="hfull -m-5px">
