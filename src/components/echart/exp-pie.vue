@@ -36,7 +36,7 @@ watch(
 			await nextTick()
 			chartData.value[0].value = v?.notDoCount || 0
 			chartData.value[1].value = v?.doingCount || 0
-			chartRef.value.setOptions(option)
+			// chartRef.value.setOptions(option)
 		}
 	},
 )
