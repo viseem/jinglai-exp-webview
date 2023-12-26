@@ -132,6 +132,8 @@
     "@types/dagre": "^0.7.52",
     "dagre": "^0.8.5",
     "dayjs": "^1.11.10",
-    "html2canvas": "^1.4.1"
+    "html2canvas": "^1.4.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "vue3-dnd": "^2.0.4"
   }
 }

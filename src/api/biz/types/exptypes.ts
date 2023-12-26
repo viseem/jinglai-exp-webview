@@ -24,6 +24,7 @@ export interface ISop {
 }
 
 export interface IExp {
+	index?: number
 	id?: number
 	quotationId?: number
 	name: string

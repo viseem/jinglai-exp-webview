@@ -5,6 +5,8 @@ import { IExp, IExper } from '~/api/biz/types/exptypes'
 import { IDevice } from '~/api/biz/types/devicetypes'
 import { getDevicePage } from '~/api/biz/deviceapi'
 import { IExpCountStats } from '~/api/biz/types/statstypes'
+import { useDrop } from 'vue3-dnd'
+import { updateExpStage } from '~/api/biz/expapi'
 
 interface IStatusItem {
 	name: string
@@ -33,6 +35,40 @@ const expStatusList: IStatusItem[] = [
 		icon: 'images/expstatus/outed.png',
 	},
 ]
+const [collectedProps1, drop1] = useDrop(() => ({
+	accept: ['BOX'],
+	drop: () => ({ index: 0, status: '0' }),
+}))
+const [collectedProps2, drop2] = useDrop(() => ({
+	accept: ['BOX'],
+	drop: () => ({ index: 1, status: 'DOING' }),
+}))
+const [collectedProps3, drop3] = useDrop(() => ({
+	accept: ['BOX'],
+	drop: () => ({ index: 2, status: 'COMPLETE' }),
+}))
+console.log(collectedProps1, collectedProps2, collectedProps3)
+async function expCardDropHandler(item, dropResult) {
+	console.log('item---', item, 'doresult---', dropResult)
+	if (item?.index > -1 && item?.item?.id && dropResult?.status) {
+		await updateExpStage({ id: item.item.id, stage: dropResult.status })
+		expRes.value[item.index].stage = dropResult.status
+		toast.success('操作成功')
+	}
+}
+
+function computeDropRef(index: number) {
+	switch (index) {
+		case 0:
+			return drop1
+		case 1:
+			return drop2
+		case 2:
+			return drop3
+		default:
+			return null
+	}
+}
 
 // 属性
 const labStore = useLabStore()
@@ -47,6 +83,9 @@ async function loadExpPage() {
 	expRes.value = []
 	expParams.value.labId = currentLab.value.id
 	const res = await getExpPage(expParams.value)
+	res?.list?.forEach((item, index) => {
+		item.index = index
+	})
 	expRes.value = res?.list
 }
 
@@ -153,6 +192,7 @@ function lookSelfClickHandler(e: boolean) {
 
 <template>
 	<div wfull flex flex-1 flex-col p-4 bg="#EBEDF1">
+		<!--<div v-if="collectedProps.isDragging" :ref="dragPreview">dragPreview</div>-->
 		<div w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-6>
 				<!--左侧实验室信息-->
@@ -193,7 +233,7 @@ function lookSelfClickHandler(e: boolean) {
 						></x-image>
 						<x-title ml-2rem wfull flex-1>{{ item.name }}</x-title>
 					</div>
-					<div class="exp-task-wrapper p-6" flex-1>
+					<div :ref="computeDropRef(index)" class="exp-task-wrapper p-6" flex-1>
 						<x-flex-y-overflow p-5px class="hfull -m-5px">
 							<div
 								v-for="expItem in filterExpListByStatus(item)"
@@ -201,7 +241,11 @@ function lookSelfClickHandler(e: boolean) {
 								mb6
 								wfull
 							>
-								<biz-exp-card :item="expItem"></biz-exp-card>
+								<biz-exp-card
+									:index="expItem.index"
+									:item="expItem"
+									@drop="expCardDropHandler"
+								></biz-exp-card>
 							</div>
 						</x-flex-y-overflow>
 					</div>

@@ -19,3 +19,9 @@ export const getExpLogPage = (
 	params: { projectCategoryId: number } = {},
 ): Promise<{ list: IExpLog[] }> =>
 	request.get('/open-api/lab/exp-log/page', params)
+
+export const updateExpStage = (params: {
+	id: number
+	stage: string
+}): Promise<any> =>
+	request.post('/open-api/lab/project-category/update-stage', params)
