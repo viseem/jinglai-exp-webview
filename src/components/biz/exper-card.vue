@@ -65,11 +65,11 @@ function loginHandler(item: IExper) {
 					</div>
 					<div flex items-center>
 						<span>在做：</span>
-						<span>10</span>
+						<span>{{ item.doingCount }}</span>
 					</div>
 					<div flex items-center>
 						<span>未做：</span>
-						<span>10</span>
+						<span>{{ item.notDoCount }}</span>
 					</div>
 				</div>
 				<div>

@@ -68,6 +68,8 @@ export interface IExpLog {
 }
 
 export interface IExper {
+	notDoCount: number
+	doingCount: number
 	labId: 20
 	userId: 139
 	mark: null

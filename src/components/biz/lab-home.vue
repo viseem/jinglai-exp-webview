@@ -92,20 +92,21 @@ async function loadExpPage() {
 	expRes.value = res?.list
 }
 
-/*function initExpParams() {
+function initExpParams() {
 	lookSelf.value = false
 	currentExperIndex.value = -1
 	expParams.value = {
 		labId: null,
 		operatorId: null,
 	}
-}*/
+}
 
 watch(
 	() => currentLab.value,
 	(v) => {
 		console.log('currentLab.value changed--', v)
 		if (v?.id) {
+			initExpParams()
 			loadExpPage()
 			loadExperPage()
 			loadDevicePage()
@@ -208,13 +209,8 @@ function lookSelfClickHandler(e: boolean) {
 watch(
 	() => computedUserinfo.value,
 	(v) => {
-		if (v?.id) {
-			lookSelf.value = true
-			lookSelfClickHandler(true)
-		} else {
-			lookSelf.value = false
-			lookSelfClickHandler(false)
-		}
+		lookSelf.value = !!v?.id
+		lookSelfClickHandler(lookSelf.value)
 	},
 	{
 		deep: true,
