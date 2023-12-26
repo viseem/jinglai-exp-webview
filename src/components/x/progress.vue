@@ -6,20 +6,56 @@ const props = defineProps({
 	},
 	total: {
 		type: Number,
-		default: 0,
 	},
 	done: {
 		type: Number,
-		default: 0,
+	},
+	startDate: {
+		type: Number,
+	},
+	endDate: {
+		type: Number,
 	},
 	strokeWidth: {
 		type: Number,
-		default: 24,
+		default: 20,
 	},
 })
-const computedPercent = computed(() => {
-	const percent = (props.percent || props.done / props.total)?.toFixed(2)
-	return isNaN(percent) ? 0 : percent
+
+const total = computed<number>(() => {
+	if (props.total !== undefined) {
+		return props.total
+	}
+	if (
+		props.startDate &&
+		props.startDate > 0 &&
+		props.endDate &&
+		props.endDate > 0
+	) {
+		return props.endDate - props.startDate
+	}
+	return 0
+})
+const done = computed<number>(() => {
+	if (props.done !== undefined) {
+		return props.done
+	}
+	if (
+		props.startDate &&
+		props.startDate > 0 &&
+		props.endDate &&
+		props.endDate > 0
+	) {
+		return Date.now() - props.startDate
+	}
+	return 0
+})
+
+const computedPercent = computed<number>(() => {
+	const percent = parseFloat(
+		(props.percent || done.value / total.value)?.toFixed(2),
+	)
+	return !isNaN(percent) ? percent : 0 // Parse the result to a float if not 0
 })
 
 const computedPercentStr = computed(() => {

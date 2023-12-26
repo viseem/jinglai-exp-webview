@@ -4,6 +4,7 @@ import ExpModal from '~/components/biz/exp-modal.vue'
 import { IExp } from '~/api/biz/types/exptypes'
 import { useDrag } from 'vue3-dnd'
 import { toRefs } from '@vueuse/core'
+import dayjs from 'dayjs'
 
 const props = defineProps({
 	item: {
@@ -71,7 +72,9 @@ function cardClickHandler() {
 		</div>
 		<div flex items-center justify-between>
 			<x-text class="text-black !text-2xl" flex-1>{{ item.name }}</x-text>
-			<div ml-4 text-2xl text="#187CEE">1/4</div>
+			<div ml-4 text-2xl text="#187CEE">
+				{{ item.sopDone }}/{{ item.sopTotal }}
+			</div>
 		</div>
 		<div>
 			<div wfull flex items-center justify-between>
@@ -83,7 +86,10 @@ function cardClickHandler() {
 					>
 				</div>
 				<div relative flex flex-1 ml="10%" items-center>
-					<x-progress :total="item.sopTotal" :done="item.sopDone" />
+					<x-progress
+						:start-date="dayjs(item.startDate).valueOf()"
+						:end-date="dayjs(item.deadline).valueOf()"
+					/>
 					<div
 						absolute
 						left-0
