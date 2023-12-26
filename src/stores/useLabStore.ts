@@ -5,11 +5,12 @@ export default defineStore('lab', {
 	state() {
 		return {
 			currentLab: {} as ILab,
+			refreshLab: 0,
 		}
 	},
 	actions: {
 		setCurrentLab(data: ILab) {
-			console.log('data----', data)
+			this.refreshLab++
 			this.currentLab = data
 		},
 	},

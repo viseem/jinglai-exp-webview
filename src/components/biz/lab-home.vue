@@ -101,24 +101,6 @@ function initExpParams() {
 	}
 }
 
-watch(
-	() => currentLab.value,
-	(v) => {
-		console.log('currentLab.value changed--', v)
-		if (v?.id) {
-			initExpParams()
-			loadExpPage()
-			loadExperPage()
-			loadDevicePage()
-			loadExpStats()
-		}
-	},
-	{
-		deep: true,
-		immediate: true,
-	},
-)
-
 const filterExpListByStatus = (statusItem: IStatusItem) => {
 	const resultList: IExp[] = []
 	if (expRes.value) {
@@ -215,6 +197,19 @@ watch(
 	{
 		deep: true,
 	},
+)
+
+watch(
+	() => labStore.refreshLab,
+	(v) => {
+		console.log('currentLab.value changed--', v)
+		initExpParams()
+		loadExpPage()
+		loadExperPage()
+		loadDevicePage()
+		loadExpStats()
+	},
+	{},
 )
 </script>
 
