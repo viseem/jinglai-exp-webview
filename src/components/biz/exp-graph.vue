@@ -128,7 +128,6 @@ watch(
 	async (nv) => {
 		if (nv) {
 			data = nv?.child
-			console.log('data---', data)
 			rootNode = { ...rootNode, ...nv?.root }
 			await nextTick()
 			painGraph()
@@ -377,13 +376,10 @@ const painGraph = () => {
 			})
 			edges.push(edgeItem)
 		})
-		console.log('nodes----', nodes)
-		console.log('edges----', edges)
 		graph.resetCells([...nodes, ...edges])
 		layout()
-		console.log('layout----')
 	} catch (e) {
-		console.log('e----', e)
+		console.log('e--', e)
 	}
 	// graph.fromJSON(graphJson)
 	graph.centerContent()
@@ -484,7 +480,6 @@ onMounted(() => {
 
 	graph.on('node:click', (e) => {
 		const data = e?.node?.store?.data?.data
-		console.log('data---', data)
 		if (data) {
 			projectStore.setTaskItemData(data)
 		}

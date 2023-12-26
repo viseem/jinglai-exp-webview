@@ -2,7 +2,8 @@
 import { IExp, IExpLog, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
 import { booleanToSopStatus } from '~/utils/biz/exputils'
-import { formatDate } from '../../utils/base/timeutils'
+
+const emit = defineEmits(['change'])
 
 const expDialogRef = ref()
 const formData = ref({} as IExp)
@@ -10,13 +11,19 @@ const computedExpStatusConfig = computed(
 	() => EXP_STATUS_MAP?.[formData.value.stage],
 )
 const quotationData = ref({} as IQuotation)
-async function open(params: { id: number }) {
+async function open(params: { id: number; index: number }) {
 	if (params.id) {
 		expDialogRef.value.open()
+		formData.value = {}
+		quotationData.value = {}
+		expLogs.value = []
+		graphDatas.value = null
+
 		formData.value.id = params.id
 		loadExpLogs()
 		// 获取任务详情
 		await loadExpDetail()
+		formData.value.index = params.index
 		loadQuotationDetail()
 		loadGrapDatas()
 	}
@@ -42,6 +49,7 @@ async function loadExpDetail() {
 }
 
 async function loadQuotationDetail() {
+	quotationData.value = {}
 	if (formData.value.quotationId) {
 		const res = await getQuotationDetail(formData.value.quotationId)
 		quotationData.value = res
@@ -53,6 +61,8 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 	await updateSopStatus({ id: item.id, status })
 	toast.success('修改成功')
 	item.status = status
+	formData.value.sopDone += _status ? 1 : -1
+	emit('change', formData.value)
 }
 
 /*
@@ -132,10 +142,10 @@ const processAttachmentsByType = (list, referDicts) => {
  * */
 const graphDatas = ref(null)
 async function loadGrapDatas() {
+	graphDatas.value = null
 	const res = await getExpPage({
 		quotationId: formData.value?.quotationId,
 	})
-	console.log('res---', res)
 	graphDatas.value = convertApiData2GraphDependData(
 		JSON.parse(JSON.stringify(res?.list)),
 		res?.name,
@@ -152,6 +162,7 @@ const demandTab = ref(1)
  * */
 const expLogs = ref([] as IExpLog[])
 async function loadExpLogs() {
+	expLogs.value = []
 	if (formData.value.id) {
 		const res = await getExpLogPage({ projectCategoryId: formData.value.id })
 		expLogs.value = res?.list
@@ -339,7 +350,7 @@ async function loadExpLogs() {
 								<div class="content-card-title">实验数据</div>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
-										<div class="" v-html="formData.content"></div>
+										<div class=""></div>
 									</x-flex-y-overflow>
 								</div>
 							</div>

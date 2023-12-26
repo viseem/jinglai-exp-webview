@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
-import ExpModal from '~/components/biz/exp-modal.vue'
 import { IExp } from '~/api/biz/types/exptypes'
 import { useDrag } from 'vue3-dnd'
 import { toRefs } from '@vueuse/core'
@@ -32,11 +31,6 @@ const [collect, dragSource] = useDrag({
 
 const { isDragging } = toRefs(collect)
 const opacity = computed(() => (unref(isDragging) ? 0.4 : 1))
-
-const expModalRef = ref<any>(null)
-function cardClickHandler() {
-	expModalRef.value.open({ id: props.item.id })
-}
 </script>
 
 <template>
@@ -52,9 +46,7 @@ function cardClickHandler() {
 		px-8
 		py-6
 		:style="{ opacity }"
-		@click="cardClickHandler"
 	>
-		<exp-modal ref="expModalRef" />
 		<div absolute left-0 top-0 hfull flex items-center w="0.48rem">
 			<div
 				wfull

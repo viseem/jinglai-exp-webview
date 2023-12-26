@@ -7,6 +7,7 @@ import { getDevicePage } from '~/api/biz/deviceapi'
 import { IExpCountStats } from '~/api/biz/types/statstypes'
 import { useDrop } from 'vue3-dnd'
 import { updateExpStage } from '~/api/biz/expapi'
+import ExpModal from '~/components/biz/exp-modal.vue'
 
 interface IStatusItem {
 	name: string
@@ -35,21 +36,19 @@ const expStatusList: IStatusItem[] = [
 		icon: 'images/expstatus/outed.png',
 	},
 ]
-const [collectedProps1, drop1] = useDrop(() => ({
+const [, drop1] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 0, status: '0' }),
 }))
-const [collectedProps2, drop2] = useDrop(() => ({
+const [, drop2] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 1, status: 'DOING' }),
 }))
-const [collectedProps3, drop3] = useDrop(() => ({
+const [, drop3] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 2, status: 'COMPLETE' }),
 }))
-console.log(collectedProps1, collectedProps2, collectedProps3)
 async function expCardDropHandler(item, dropResult) {
-	console.log('item---', item, 'doresult---', dropResult)
 	if (item?.index > -1 && item?.item?.id && dropResult?.status) {
 		await updateExpStage({ id: item.item.id, stage: dropResult.status })
 		expRes.value[item.index].stage = dropResult.status
@@ -78,6 +77,10 @@ const expParams = ref({
 	labId: null as null | number,
 	operatorId: null as null | number,
 })
+
+/*
+ * 加载任务列表
+ * */
 const expRes = ref([] as IExp[])
 async function loadExpPage() {
 	expRes.value = []
@@ -179,7 +182,6 @@ function experClickHandler(experIndex: number, experItem: IExper) {
  * */
 const lookSelf = ref(false)
 function lookSelfClickHandler(e: boolean) {
-	console.log('e---', e, currentExperIndex)
 	currentExperIndex.value = e ? computedLoginUserIndex.value : -1
 	expParams.value.operatorId = e ? computedUserinfo.value.id : null
 	loadExpPage()
@@ -211,9 +213,24 @@ watch(
 	},
 	{},
 )
+const expModalRef = ref<any>(null)
+function cardClickHandler(id: number, index: number) {
+	expModalRef.value.open({ id, index })
+}
+
+/*
+ * 修改exp时的emit
+ * */
+async function expChangeHandler(item: IExp) {
+	console.log('item---====', item)
+	if (item?.index !== undefined && item?.index > -1) {
+		expRes.value[item.index] = { ...expRes.value[item.index], ...item }
+	}
+}
 </script>
 
 <template>
+	<exp-modal ref="expModalRef" @change="expChangeHandler" />
 	<div wfull flex flex-1 flex-col p-4 bg="#EBEDF1">
 		<!--<div v-if="collectedProps.isDragging" :ref="dragPreview">dragPreview</div>-->
 		<div w-full flex flex-1 items-center justify-center>
@@ -267,6 +284,7 @@ watch(
 								<biz-exp-card
 									:index="expItem.index"
 									:item="expItem"
+									@click="cardClickHandler(expItem.id, expItem.index)"
 									@drop="expCardDropHandler"
 								></biz-exp-card>
 							</div>
