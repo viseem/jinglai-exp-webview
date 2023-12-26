@@ -211,6 +211,9 @@ watch(
 		if (v?.id) {
 			lookSelf.value = true
 			lookSelfClickHandler(true)
+		} else {
+			lookSelf.value = false
+			lookSelfClickHandler(false)
 		}
 	},
 	{
