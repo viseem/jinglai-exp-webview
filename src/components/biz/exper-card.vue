@@ -76,6 +76,7 @@ function loginHandler(item: IExper) {
 					<x-text
 						:class="computedSelected ? 'text-active' : ''"
 						text-sm
+						class="!text-[#666]"
 						rows="1"
 						:text="item.mark"
 					/>
