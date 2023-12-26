@@ -114,7 +114,7 @@ function loginHandler(item: IExper) {
 	color: white;
 }
 .text-active {
-	color: white;
+	color: white !important;
 }
 .card-inactive {
 }
