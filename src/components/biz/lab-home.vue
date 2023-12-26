@@ -81,6 +81,9 @@ const expParams = ref({
 const expRes = ref([] as IExp[])
 async function loadExpPage() {
 	expRes.value = []
+	if (!currentLab.value.id) {
+		return
+	}
 	expParams.value.labId = currentLab.value.id
 	const res = await getExpPage(expParams.value)
 	res?.list?.forEach((item, index) => {
@@ -88,6 +91,15 @@ async function loadExpPage() {
 	})
 	expRes.value = res?.list
 }
+
+/*function initExpParams() {
+	lookSelf.value = false
+	currentExperIndex.value = -1
+	expParams.value = {
+		labId: null,
+		operatorId: null,
+	}
+}*/
 
 watch(
 	() => currentLab.value,
@@ -136,7 +148,6 @@ const computedLoginUserIndex = computed(
  * 加载 实验室人员列表
  * */
 const experList = ref([] as IExper[])
-const currentExperIndex = ref(-1)
 async function loadExperPage() {
 	const res = await getLabExperPage({ labId: currentLab.value.id })
 	experList.value = res?.list
@@ -170,6 +181,7 @@ async function loadExpStats() {
  *
  * 实验人员点击事件
  * */
+const currentExperIndex = ref(-1)
 function experClickHandler(experIndex: number, experItem: IExper) {
 	currentExperIndex.value =
 		experIndex == currentExperIndex.value ? -1 : experIndex
@@ -184,10 +196,27 @@ function experClickHandler(experIndex: number, experItem: IExper) {
  * */
 const lookSelf = ref(false)
 function lookSelfClickHandler(e: boolean) {
+	console.log('e---', e, currentExperIndex)
 	currentExperIndex.value = e ? computedLoginUserIndex.value : -1
 	expParams.value.operatorId = e ? computedUserinfo.value.id : null
 	loadExpPage()
 }
+
+/*
+ *如果重新登录了，重置点击状态和只看自己
+ * */
+watch(
+	() => computedUserinfo.value,
+	(v) => {
+		if (v?.id) {
+			lookSelf.value = true
+			lookSelfClickHandler(true)
+		}
+	},
+	{
+		deep: true,
+	},
+)
 </script>
 
 <template>
