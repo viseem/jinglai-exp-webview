@@ -29,6 +29,7 @@ export interface IExp {
 	quotationId?: number
 	name: string
 	content: string
+	demand: string
 	sopDone: number
 	sopTotal: number
 	sopList: ISop[]

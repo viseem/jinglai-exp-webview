@@ -122,7 +122,6 @@ const processReferFiles = () => {
 		},
 	]
 	processAttachmentsByType(formData.value?.attachmentList, dicts)
-	console.log('dicts----', dicts)
 	referList.value = dicts
 }
 const processAttachmentsByType = (list, referDicts) => {
@@ -218,17 +217,6 @@ async function loadExpAttachments() {
 					>
 						{{ computedExpStatusConfig?.name }}
 					</div>
-					<!--					<div ml-14>
-						<a-button
-							mr-8
-							class="!rounded-4 !px-6"
-							type="primary"
-							status="warning"
-							@click="close"
-							>暂停</a-button
-						>
-						<a-button class="!rounded-4 !px-6" type="primary">启动</a-button>
-					</div>-->
 				</div>
 			</div>
 			<div h1rem flex items-center>
