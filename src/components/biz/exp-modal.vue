@@ -18,6 +18,7 @@ async function open(params: { id: number; index: number }) {
 		quotationData.value = {}
 		expLogs.value = []
 		graphDatas.value = null
+		referList.value = []
 
 		formData.value.id = params.id
 		loadExpLogs()
@@ -71,6 +72,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
  * */
 const referList = ref([])
 const processReferFiles = () => {
+	referList.value = []
 	const dicts = [
 		{
 			sort: 1,
