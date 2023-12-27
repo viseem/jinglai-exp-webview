@@ -4,6 +4,7 @@ import { IExp } from '~/api/biz/types/exptypes'
 import { useDrag } from 'vue3-dnd'
 import { toRefs } from '@vueuse/core'
 import dayjs from 'dayjs'
+import { EXP_STATUS_MAP } from '../../utils/biz/exputils'
 
 const props = defineProps({
 	item: {
@@ -47,6 +48,20 @@ const opacity = computed(() => (unref(isDragging) ? 0.4 : 1))
 		py-6
 		:style="{ opacity }"
 	>
+		<div
+			absolute
+			left-2
+			top-2
+			text-xs
+			op80
+			:style="{
+				color: EXP_STATUS_MAP?.[item.stage]?.color,
+				textShadow: `0 0 3px ${EXP_STATUS_MAP?.[item.stage]?.color}`,
+			}"
+		>
+			{{ EXP_STATUS_MAP?.[item.stage]?.name }}
+		</div>
+
 		<div absolute left-0 top-0 hfull flex items-center w="0.48rem">
 			<div
 				wfull
@@ -79,6 +94,7 @@ const opacity = computed(() => (unref(isDragging) ? 0.4 : 1))
 				</div>
 				<div relative flex flex-1 ml="10%" items-center>
 					<x-progress
+						:stroke-width="16"
 						:start-date="dayjs(item.startDate).valueOf()"
 						:end-date="dayjs(item.deadline).valueOf()"
 					/>
@@ -94,7 +110,7 @@ const opacity = computed(() => (unref(isDragging) ? 0.4 : 1))
 						pl-2
 						text-white
 					>
-						<div wfull text-center text-sm>
+						<div wfull text-center text-3.5>
 							{{ formatDate(item?.startDate) }} -
 							{{ formatDate(item?.deadline) }}
 						</div>

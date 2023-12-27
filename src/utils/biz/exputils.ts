@@ -10,7 +10,7 @@ export function booleanToSopStatus(status: boolean) {
 	return status ? SOP_STATUS.已做 : SOP_STATUS.未做
 }
 
-export const EXP_STATUS_MAP = {
+export const EXP_STATUS_MAP: Record<string, any> = {
 	'0': {
 		name: '待开展',
 		status: '0',
