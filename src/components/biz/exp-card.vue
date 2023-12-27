@@ -45,37 +45,36 @@ const opacity = computed(() => (unref(isDragging) ? 0.4 : 1))
 		flex-col
 		justify-between
 		px-8
-		py-6
+		py-5
 		:style="{ opacity }"
 	>
-		<div
-			absolute
-			left-2
-			top-2
-			text-xs
-			op80
-			:style="{
-				color: EXP_STATUS_MAP?.[item.stage]?.color,
-				textShadow: `0 0 3px ${EXP_STATUS_MAP?.[item.stage]?.color}`,
-			}"
-		>
-			{{ EXP_STATUS_MAP?.[item.stage]?.name }}
-		</div>
-
 		<div absolute left-0 top-0 hfull flex items-center w="0.48rem">
 			<div
 				wfull
-				h="60%"
+				h="70%"
 				class="exp-card-bar"
 				:style="{ background: item.color }"
 				rounded-1
 			></div>
 		</div>
-		<div flex items-center justify-between gap-2>
-			<x-text mr-4 flex-1 :text="item.project?.name"></x-text>
-			<x-descriptions-item margin-bottom="" label="客户">{{
-				item?.project?.customer?.name
-			}}</x-descriptions-item>
+		<div>
+			<div
+				mb-1
+				text-xs
+				op80
+				:style="{
+					color: EXP_STATUS_MAP?.[item.stage]?.color,
+					textShadow: `0 0 3px ${EXP_STATUS_MAP?.[item.stage]?.color}`,
+				}"
+			>
+				{{ EXP_STATUS_MAP?.[item.stage]?.name }}
+			</div>
+			<div flex items-center justify-between gap-2>
+				<x-text mr-4 flex-1 :text="item.project?.name"></x-text>
+				<x-descriptions-item margin-bottom="" label="客户">{{
+					item?.project?.customer?.name
+				}}</x-descriptions-item>
+			</div>
 		</div>
 		<div flex items-center justify-between>
 			<x-text class="text-black !text-2xl" flex-1>{{ item.name }}</x-text>
