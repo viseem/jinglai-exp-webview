@@ -28,9 +28,11 @@ const currentFileConfig = computed(() => modalStore.fileModalConfig)
 const currentFileName = computed(() =>
 	props.fileName ? props.fileName : currentFileConfig.value.fileName,
 )
+
 const currentFileUrl = computed(() =>
 	props.fileUrl ? props.fileUrl : currentFileConfig.value.fileUrl,
 )
+
 const computeFileExtension = computed(() =>
 	getFileExtension(currentFileUrl.value),
 )
@@ -48,9 +50,10 @@ const computeFileExtension = computed(() =>
 				</div>
 				<iframe
 					v-if="
-						isWordFile(computeFileExtension) ||
-						isExcelFile(computeFileExtension) ||
-						isPPTFile(computeFileExtension)
+						modalVisible &&
+						(isWordFile(computeFileExtension) ||
+							isExcelFile(computeFileExtension) ||
+							isPPTFile(computeFileExtension))
 					"
 					style="width: 100%; min-height: 70vh"
 					:style="{ height }"
@@ -62,7 +65,7 @@ const computeFileExtension = computed(() =>
 				<div v-if="isImgFile(currentFileUrl)" class="flex justify-center">
 					<x-image :src="fileUrl" />
 				</div>
-				<div v-if="isPDFFile(computeFileExtension)">
+				<div v-if="modalVisible && isPDFFile(computeFileExtension)">
 					<iframe
 						v-if="isPDFFile(computeFileExtension)"
 						style="width: 100%; min-height: 65vh"
