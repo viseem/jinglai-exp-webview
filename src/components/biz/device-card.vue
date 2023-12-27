@@ -24,13 +24,23 @@ defineProps({
 		</div>
 		<div wfull flex flex-col items-start justify-center pl-6 pr-6>
 			<x-text wfull :text="item.name" rows="1" />
-			<x-text wfull :text="item.mark" rows="1" />
+			<x-text class="!text-[#666]" ptf-4 wfull :text="item.mark" rows="1" />
 		</div>
-		<div absolute right-2 top-2 flex items-center>
-			<x-image size="1rem"></x-image>
-			<div ml-1 text-3>{{ item.status }}</div>
+		<div absolute right-4 top-4 flex items-center>
+			<div ml-1 text-3.5 :class="item.busy ? 'device-busy' : 'device-leisure'">
+				{{ item.busy ? '忙碌' : '空闲' }}
+			</div>
 		</div>
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.device-busy {
+	color: #e88b00 !important;
+	text-shadow: 0 0 2px #e88b00;
+}
+.device-leisure {
+	color: #20cb42 !important;
+	text-shadow: 0 0 2px #20cb42;
+}
+</style>

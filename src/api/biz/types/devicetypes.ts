@@ -5,4 +5,5 @@ export interface IDevice {
 	fileUrl: string
 	owner_type: string
 	status: string
+	busy: boolean
 }
