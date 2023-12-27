@@ -39,14 +39,23 @@ const expStatusList: IStatusItem[] = [
 const [, drop1] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 0, status: '0' }),
+	canDrop: (item) => {
+		return item?.item?.stage !== '0'
+	},
 }))
 const [, drop2] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 1, status: 'DOING' }),
+	canDrop: (item) => {
+		return item?.item?.stage !== 'DOING'
+	},
 }))
 const [, drop3] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 2, status: 'COMPLETE' }),
+	canDrop: (item) => {
+		return item?.item?.stage !== 'COMPLETE'
+	},
 }))
 async function expCardDropHandler(item, dropResult) {
 	if (item?.index > -1 && item?.item?.id && dropResult?.status) {
