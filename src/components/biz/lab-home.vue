@@ -8,6 +8,7 @@ import { IExpCountStats } from '~/api/biz/types/statstypes'
 import { useDrop } from 'vue3-dnd'
 import { updateExpStage } from '~/api/biz/expapi'
 import ExpModal from '~/components/biz/exp-modal.vue'
+import { EXP_STATUS_MAP } from '~/utils/biz/exputils'
 
 interface IStatusItem {
 	name: string
@@ -25,20 +26,24 @@ const expStatusList: IStatusItem[] = [
 	{
 		name: '待开展',
 		status: ['0'],
-		colors: ['#878C9F'],
-		icon: 'images/expstatus/not-do.png',
+		colors: [EXP_STATUS_MAP['0'].color],
+		icon: EXP_STATUS_MAP['0'].icon,
 	},
 	{
 		name: '进行中',
 		status: ['DOING', 'PAUSE', 'DATA_CHECK'],
-		colors: ['#2E55F6', '#E2611F', '#E88B00'],
-		icon: 'images/expstatus/doing.png',
+		colors: [
+			EXP_STATUS_MAP['DOING'].color,
+			EXP_STATUS_MAP['PAUSE'].color,
+			EXP_STATUS_MAP['DATA_CHECK'].color,
+		],
+		icon: EXP_STATUS_MAP['DOING'].icon,
 	},
 	{
 		name: '已出库',
 		status: ['COMPLETE'],
-		colors: ['#20CB42'],
-		icon: 'images/expstatus/outed.png',
+		colors: [EXP_STATUS_MAP['COMPLETE'].color],
+		icon: EXP_STATUS_MAP['COMPLETE'].icon,
 	},
 ]
 const [, drop1] = useDrop(() => ({
