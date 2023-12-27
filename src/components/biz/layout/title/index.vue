@@ -2,7 +2,6 @@
 import dayjs from 'dayjs'
 import { IWeather } from '~/api/biz/thirdapi'
 import { computed } from 'vue'
-import { Modal } from '@arco-design/web-vue'
 
 const modalStore = useModalStore()
 const labStore = useLabStore()
@@ -36,15 +35,9 @@ onUnmounted(() => {
 })
 const userStore = useUserStore()
 const computedUserinfo = computed(() => userStore.userinfo)
-
-function logoutClickHandler() {
-	Modal.confirm({
-		title: '提示',
-		content: '确定退出登录吗？',
-		onOk: () => {
-			userStore.logout()
-		},
-	})
+async function logoutClickHandler() {
+	await toast.confirm('确认退出吗？')
+	userStore.logout()
 }
 </script>
 

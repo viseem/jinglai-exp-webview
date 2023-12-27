@@ -134,6 +134,7 @@
     "dayjs": "^1.11.10",
     "html2canvas": "^1.4.1",
     "react-dnd-html5-backend": "^16.0.1",
+    "sweetalert2": "^11.10.1",
     "vue3-dnd": "^2.0.4"
   }
 }
