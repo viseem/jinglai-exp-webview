@@ -1,4 +1,10 @@
-import { IExp, IExper, IExpLog, ILab } from '~/api/biz/types/exptypes'
+import {
+	IExp,
+	IExpAttachment,
+	IExper,
+	IExpLog,
+	ILab,
+} from '~/api/biz/types/exptypes'
 
 export const getExpPage = (
 	params: { labId?: null | number; quotationId?: number } = {},
@@ -16,9 +22,18 @@ export const getLabExperPage = (params: {
 	request.get('/open-api/lab/laboratory-user/page', params)
 
 export const getExpLogPage = (
-	params: { projectCategoryId: number } = {},
+	params: { projectCategoryId: number } = { projectCategoryId: -1 },
 ): Promise<{ list: IExpLog[] }> =>
 	request.get('/open-api/lab/exp-log/page', params)
+
+export const getExpAttachmentPage = (
+	params: { projectCategoryId: number; type?: string } = {
+		projectCategoryId: -1,
+	},
+): Promise<{ list: IExpAttachment[] }> => {
+	params.type = 'EXP'
+	return request.get('/open-api/lab/exp-attachment/page', params)
+}
 
 export const updateExpStage = (params: {
 	id: number

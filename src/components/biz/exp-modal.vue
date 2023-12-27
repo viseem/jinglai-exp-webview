@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IExp, IExpLog, ISop } from '~/api/biz/types/exptypes'
+import { IExp, IExpAttachment, IExpLog, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
 import { booleanToSopStatus } from '~/utils/biz/exputils'
 
@@ -21,6 +21,7 @@ async function open(params: { id: number; index: number }) {
 
 		formData.value.id = params.id
 		loadExpLogs()
+		loadExpAttachments()
 		// 获取任务详情
 		await loadExpDetail()
 		formData.value.index = params.index
@@ -166,6 +167,20 @@ async function loadExpLogs() {
 	if (formData.value.id) {
 		const res = await getExpLogPage({ projectCategoryId: formData.value.id })
 		expLogs.value = res?.list
+	}
+}
+
+/*
+ * 加载 实验数据
+ * */
+const expAttachments = ref([] as IExpAttachment[])
+async function loadExpAttachments() {
+	expAttachments.value = []
+	if (formData.value.id) {
+		const res = await getExpAttachmentPage({
+			projectCategoryId: formData.value.id,
+		})
+		expAttachments.value = res?.list
 	}
 }
 </script>
@@ -349,8 +364,15 @@ async function loadExpLogs() {
 							<div class="h-[30%]" flex flex-col>
 								<div class="content-card-title">实验数据</div>
 								<div class="content-card" hfull>
-									<x-flex-y-overflow hfull flex-1>
-										<div class=""></div>
+									<x-flex-y-overflow hfull flex-1 m="-5px" p-5px>
+										<div>
+											<biz-exp-attachment
+												v-for="item in expAttachments"
+												:key="item"
+												:item="item"
+												mb4
+											/>
+										</div>
 									</x-flex-y-overflow>
 								</div>
 							</div>

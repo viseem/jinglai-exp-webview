@@ -52,7 +52,8 @@ export interface IExpAttachment {
 	fileUrl: string
 	fileName: string
 	mark: string
-	type: string
+	expType: string
+	createTime: number
 }
 
 export interface IExpLog {

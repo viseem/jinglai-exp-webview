@@ -1,6 +1,9 @@
 import dayjs from 'dayjs'
 
-export function formatDate(date: Date | undefined, format?: string): string {
+export function formatDate(
+	date: Date | number | undefined,
+	format?: string,
+): string {
 	// 日期不存在，则返回空
 	if (!date) {
 		return ''
