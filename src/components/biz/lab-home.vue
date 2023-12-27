@@ -16,6 +16,11 @@ interface IStatusItem {
 	icon: string
 }
 
+/*
+ * store
+ * */
+const userStore = useUserStore()
+
 const expStatusList: IStatusItem[] = [
 	{
 		name: '待开展',
@@ -62,6 +67,8 @@ async function expCardDropHandler(item, dropResult) {
 		await updateExpStage({ id: item.item.id, stage: dropResult.status })
 		expRes.value[item.index].stage = dropResult.status
 		toast.success('操作成功')
+		loadExpStats()
+		loadExperPage()
 	}
 }
 
@@ -128,10 +135,8 @@ const filterExpListByStatus = (statusItem: IStatusItem) => {
 }
 
 /*
- * userstore
+ * user
  * */
-
-const userStore = useUserStore()
 const computedUserinfo = computed(() => userStore.userinfo)
 const computedLoginUserIndex = computed(
 	() =>
@@ -163,6 +168,7 @@ async function loadDevicePage() {
 const expCountStats = ref({} as IExpCountStats)
 const expCountLoading = ref(true)
 async function loadExpStats() {
+	expCountStats.value = {} as any
 	expCountLoading.value = true
 	const res = await getLabExpCountStats({ labId: currentLab.value.id }).finally(
 		() => {
