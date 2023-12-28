@@ -8,12 +8,13 @@ export const http = axios.create({
 		//添加token
 	},
 })
+const WHITE_LIST = ['/admin-api/system/auth/lab-login']
 const userStore = useUserStore()
 // 添加请求拦截器
 http.interceptors.request.use(
 	function (config) {
 		// 添加token
-		if (userStore.token) {
+		if (!WHITE_LIST.includes(config?.url) && userStore.token) {
 			config.headers['Authorization'] = 'Bearer ' + userStore.token
 		}
 
