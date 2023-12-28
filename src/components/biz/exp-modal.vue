@@ -4,7 +4,7 @@ import { IQuotation } from '~/api/biz/types/quotationtypes'
 import { booleanToSopStatus } from '~/utils/biz/exputils'
 
 const emit = defineEmits(['change'])
-
+const userStore = useUserStore()
 const expDialogRef = ref()
 const formData = ref({} as IExp)
 const computedExpStatusConfig = computed(
@@ -286,6 +286,9 @@ async function loadExpAttachments() {
 											<a-checkbox
 												v-for="item in formData?.sopList"
 												:key="item"
+												:disabled="
+													formData.operatorId !== userStore?.userinfo?.id
+												"
 												:model-value="sopStatusToBoolean(item.status)"
 												@update:model-value="
 													(v) => {

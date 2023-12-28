@@ -40,6 +40,7 @@ export interface IExp {
 		name: string
 		customer: { name: string }
 	}
+	operatorId: number
 	operator: IUser
 	focusList: IUser[]
 	startDate: Date
