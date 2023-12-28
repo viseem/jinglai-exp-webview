@@ -32,9 +32,9 @@ const expStatusList: IStatusItem[] = [
 	{
 		name: '进行中',
 		status: [
-			'DOING',
-			'PAUSE',
-			'DATA_CHECK',
+			EXP_STATUS_MAP.DOING.status,
+			EXP_STATUS_MAP.PAUSE.status,
+			EXP_STATUS_MAP.DATA_CHECK.status,
 			EXP_STATUS_MAP.DATA_ACCEPT.status,
 			EXP_STATUS_MAP.DATA_REJECT.status,
 		],
@@ -49,9 +49,9 @@ const expStatusList: IStatusItem[] = [
 	},
 	{
 		name: '已出库',
-		status: ['COMPLETE'],
-		colors: [EXP_STATUS_MAP['COMPLETE'].color],
-		icon: EXP_STATUS_MAP['COMPLETE'].icon,
+		status: [EXP_STATUS_MAP.COMPLETE.status],
+		colors: [EXP_STATUS_MAP.COMPLETE.color],
+		icon: EXP_STATUS_MAP.COMPLETE.icon,
 	},
 ]
 const [, drop1] = useDrop(() => ({
