@@ -31,13 +31,21 @@ const expStatusList: IStatusItem[] = [
 	},
 	{
 		name: '进行中',
-		status: ['DOING', 'PAUSE', 'DATA_CHECK'],
-		colors: [
-			EXP_STATUS_MAP['DOING'].color,
-			EXP_STATUS_MAP['PAUSE'].color,
-			EXP_STATUS_MAP['DATA_CHECK'].color,
+		status: [
+			'DOING',
+			'PAUSE',
+			'DATA_CHECK',
+			EXP_STATUS_MAP.DATA_ACCEPT.status,
+			EXP_STATUS_MAP.DATA_REJECT.status,
 		],
-		icon: EXP_STATUS_MAP['DOING'].icon,
+		colors: [
+			EXP_STATUS_MAP.DOING.color,
+			EXP_STATUS_MAP.PAUSE.color,
+			EXP_STATUS_MAP.DATA_CHECK.color,
+			EXP_STATUS_MAP.DATA_ACCEPT.color,
+			EXP_STATUS_MAP.DATA_REJECT.color,
+		],
+		icon: EXP_STATUS_MAP.DOING.icon,
 	},
 	{
 		name: '已出库',
@@ -50,21 +58,30 @@ const [, drop1] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 0, status: '0' }),
 	canDrop: (item) => {
-		return item?.item?.stage !== '0'
+		return (
+			item?.item?.operatorId == userStore.userinfo.id &&
+			item?.item?.stage !== '0'
+		)
 	},
 }))
 const [, drop2] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 1, status: 'DOING' }),
 	canDrop: (item) => {
-		return item?.item?.stage !== 'DOING'
+		return (
+			item?.item?.operatorId == userStore.userinfo.id &&
+			item?.item?.stage !== 'DOING'
+		)
 	},
 }))
 const [, drop3] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 2, status: 'COMPLETE' }),
 	canDrop: (item) => {
-		return item?.item?.stage !== 'COMPLETE'
+		return (
+			item?.item?.operatorId == userStore.userinfo.id &&
+			item?.item?.stage !== 'COMPLETE'
+		)
 	},
 }))
 async function expCardDropHandler(item, dropResult) {

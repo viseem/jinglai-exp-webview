@@ -10,7 +10,7 @@ export function booleanToSopStatus(status: boolean) {
 	return status ? SOP_STATUS.已做 : SOP_STATUS.未做
 }
 
-export const EXP_STATUS_MAP: Record<string, any> = {
+export const EXP_STATUS_MAP = {
 	'0': {
 		name: '待开展',
 		status: '0',
@@ -35,10 +35,22 @@ export const EXP_STATUS_MAP: Record<string, any> = {
 		color: '#E88B00',
 		icon: 'images/expstatus/doing.png',
 	},
+	DATA_ACCEPT: {
+		name: '数据审核通过',
+		status: 'DATA_ACCEPT',
+		color: '#20CB42',
+		icon: 'images/expstatus/doing.png',
+	},
+	DATA_REJECT: {
+		name: '数据审核驳回',
+		status: 'DATA_REJECT',
+		color: '#E21F1F',
+		icon: 'images/expstatus/doing.png',
+	},
 	COMPLETE: {
 		name: '已出库',
 		status: 'COMPLETE',
-		color: '#20CB42',
+		color: '#01C3F5',
 		icon: 'images/expstatus/outed.png',
 	},
 }
