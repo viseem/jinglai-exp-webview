@@ -142,7 +142,7 @@ defineExpose({ test })
 
 		<a-tooltip>
 			<template #content>
-				<div v-if="isCategoryLevel">我是个提示</div>
+				<div v-if="isCategoryLevel" v-html="data?.content"></div>
 				<div v-else><span v-html="data?.name"></span></div>
 			</template>
 			<div
