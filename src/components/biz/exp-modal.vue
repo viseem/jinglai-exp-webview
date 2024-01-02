@@ -62,15 +62,6 @@ async function loadQuotationDetail() {
 	}
 }
 
-async function sopStatusChange(item: ISop, _status: boolean) {
-	const status = booleanToSopStatus(_status)
-	await updateSopStatus({ id: item.id, status })
-	toast.success('修改成功')
-	item.status = status
-	formData.value.sopDone += _status ? 1 : -1
-	emit('sop-change', formData.value)
-}
-
 /*
  * 参考资料
  * */
@@ -202,6 +193,22 @@ async function changeStatusHandler(stage: string) {
 	emit('exp-change', formData.value)
 	toast.success('操作成功')
 }
+
+/*
+ * 实验sop状态更改
+ * */
+const sopStatusLoading = ref(false)
+async function sopStatusChange(item: ISop, _status: boolean) {
+	sopStatusLoading.value = true
+	const status = booleanToSopStatus(_status)
+	await updateSopStatus({ id: item.id, status }).finally(() => {
+		sopStatusLoading.value = false
+	})
+	toast.success('修改成功')
+	item.status = status
+	formData.value.sopDone += _status ? 1 : -1
+	emit('sop-change', formData.value)
+}
 </script>
 
 <template>
@@ -324,61 +331,63 @@ async function changeStatusHandler(stage: string) {
 							<div flex flex-1 flex-col>
 								<div class="content-card-title">关键节点</div>
 								<div class="content-card" hfull>
-									<x-flex-y-overflow hfull flex-1>
-										<div flex flex-col ml="-1">
-											<a-checkbox
-												v-for="item in formData?.sopList"
-												:key="item"
-												mb-2
-												style="zoom: 1.25"
-												:disabled="
-													formData.operatorId !== userStore?.userinfo?.id
-												"
-												:model-value="sopStatusToBoolean(item.status)"
-												@update:model-value="
-													(v) => {
-														sopStatusChange(item, v)
-													}
-												"
-											>
-												<template #checkbox="{ checked }">
-													<div flex>
-														<div
-															rounded="50%"
-															relative
-															mr-2
-															mt-0.8
-															h1.3rem
-															min-h-1.3rem
-															min-w-1.3rem
-															w1.3rem
-															flex
-															items-center
-															justify-center
-														>
+									<a-spin dot hfull wfull :loading="sopStatusLoading">
+										<x-flex-y-overflow hfull flex-1>
+											<div flex flex-col ml="-1">
+												<a-checkbox
+													v-for="item in formData?.sopList"
+													:key="item"
+													mb-2
+													style="zoom: 1.25"
+													:disabled="
+														formData.operatorId !== userStore?.userinfo?.id
+													"
+													:model-value="sopStatusToBoolean(item.status)"
+													@update:model-value="
+														(v) => {
+															sopStatusChange(item, v)
+														}
+													"
+												>
+													<template #checkbox="{ checked }">
+														<div flex>
 															<div
-																v-show="checked"
-																absolute
-																hfull
-																wfull
-																class="i-bi:check-circle-fill"
-																text="#017FF5"
-															></div>
-															<div
-																v-show="!checked"
-																absolute
-																hfull
-																wfull
 																rounded="50%"
-																border="3px solid #017FF5"
-															></div>
+																relative
+																mr-2
+																mt-0.8
+																h1.3rem
+																min-h-1.3rem
+																min-w-1.3rem
+																w1.3rem
+																flex
+																items-center
+																justify-center
+															>
+																<div
+																	v-show="checked"
+																	absolute
+																	hfull
+																	wfull
+																	class="i-bi:check-circle-fill"
+																	text="#017FF5"
+																></div>
+																<div
+																	v-show="!checked"
+																	absolute
+																	hfull
+																	wfull
+																	rounded="50%"
+																	border="3px solid #017FF5"
+																></div>
+															</div>
+															<div v-html="item.content"></div>
 														</div>
-														<div v-html="item.content"></div>
-													</div>
-												</template>
-											</a-checkbox>
-										</div>
-									</x-flex-y-overflow>
+													</template>
+												</a-checkbox>
+											</div>
+										</x-flex-y-overflow>
+									</a-spin>
 								</div>
 							</div>
 							<div min-h="12rem" flex flex-col>
