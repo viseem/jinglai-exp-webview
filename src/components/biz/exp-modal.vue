@@ -281,10 +281,12 @@ async function loadExpAttachments() {
 								<div class="content-card-title">关键节点</div>
 								<div class="content-card" hfull>
 									<x-flex-y-overflow hfull flex-1>
-										<div flex flex-col>
+										<div flex flex-col ml="-1">
 											<a-checkbox
 												v-for="item in formData?.sopList"
 												:key="item"
+												mb-2
+												style="zoom: 1.25"
 												:disabled="
 													formData.operatorId !== userStore?.userinfo?.id
 												"
@@ -295,7 +297,39 @@ async function loadExpAttachments() {
 													}
 												"
 											>
-												<span v-html="item.content"></span>
+												<template #checkbox="{ checked }">
+													<div flex>
+														<div
+															rounded="50%"
+															relative
+															mr-2
+															mt-0.8
+															h1.3rem
+															w1.3rem
+															flex
+															items-center
+															justify-center
+														>
+															<div
+																v-show="checked"
+																absolute
+																hfull
+																wfull
+																class="i-bi:check-circle-fill"
+																text="#017FF5"
+															></div>
+															<div
+																v-show="!checked"
+																absolute
+																hfull
+																wfull
+																rounded="50%"
+																border="3px solid #017FF5"
+															></div>
+														</div>
+														<div v-html="item.content"></div>
+													</div>
+												</template>
 											</a-checkbox>
 										</div>
 									</x-flex-y-overflow>
