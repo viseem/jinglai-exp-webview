@@ -154,7 +154,7 @@ async function loadGrapDatas() {
 	})
 	graphDatas.value = convertApiData2GraphDependData(
 		JSON.parse(JSON.stringify(res?.list)),
-		res?.name,
+		formData.value.project?.name,
 	) as any
 }
 
@@ -349,6 +349,8 @@ async function changeStatusHandler(stage: string) {
 															mr-2
 															mt-0.8
 															h1.3rem
+															min-h-1.3rem
+															min-w-1.3rem
 															w1.3rem
 															flex
 															items-center
