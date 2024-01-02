@@ -214,7 +214,6 @@ async function loadExpAttachments() {
 						mr-8
 						:style="{
 							color: computedExpStatusConfig?.color,
-							textShadow: `0 0 1.2rem ${computedExpStatusConfig?.color}`,
 						}"
 					>
 						{{ computedExpStatusConfig?.name }}

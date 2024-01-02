@@ -69,7 +69,6 @@ onMounted(() => {
 				op80
 				:style="{
 					color: EXP_STATUS_MAP?.[item.stage]?.color,
-					textShadow: `0 0 3px ${EXP_STATUS_MAP?.[item.stage]?.color}`,
 				}"
 			>
 				{{ EXP_STATUS_MAP?.[item.stage]?.name }}
