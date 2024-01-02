@@ -12,4 +12,7 @@ import { TouchBackend } from 'react-dnd-touch-backend'
 .arco-modal-body {
 	overflow: visible !important;
 }
+.arco-btn-disabled {
+	opacity: 0.3;
+}
 </style>

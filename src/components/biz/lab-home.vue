@@ -267,7 +267,11 @@ async function expChangeHandler(item: IExp) {
 </script>
 
 <template>
-	<exp-modal ref="expModalRef" @change="expChangeHandler" />
+	<exp-modal
+		ref="expModalRef"
+		@sop-change="expChangeHandler"
+		@exp-change="expChangeHandler"
+	/>
 	<div wfull flex flex-1 flex-col p-4 bg="#EBEDF1">
 		<!--<div v-if="collectedProps.isDragging" :ref="dragPreview">dragPreview</div>-->
 		<div w-full flex flex-1 items-center justify-center>

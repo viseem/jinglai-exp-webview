@@ -2,8 +2,9 @@
 import { IExp, IExpAttachment, IExpLog, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
 import { booleanToSopStatus } from '~/utils/biz/exputils'
+import { updateExpStage } from '~/api/biz/expapi'
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(['sop-change', 'exp-change'])
 const userStore = useUserStore()
 const expDialogRef = ref()
 const formData = ref({} as IExp)
@@ -64,7 +65,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 	toast.success('修改成功')
 	item.status = status
 	formData.value.sopDone += _status ? 1 : -1
-	emit('change', formData.value)
+	emit('sop-change', formData.value)
 }
 
 /*
@@ -184,6 +185,20 @@ async function loadExpAttachments() {
 		expAttachments.value = res?.list
 	}
 }
+
+/*
+ * 更改实验状态
+ * */
+const statusLoading = ref(false)
+async function changeStatusHandler(stage: string) {
+	statusLoading.value = true
+	await updateExpStage({ id: formData.value.id, stage }).finally(() => {
+		statusLoading.value = false
+	})
+	formData.value.stage = stage
+	emit('exp-change', formData.value)
+	toast.success('操作成功')
+}
 </script>
 
 <template>
@@ -209,14 +224,40 @@ async function loadExpAttachments() {
 						}}</x-descriptions-item>
 					</x-descriptions>
 				</div>
-				<div flex items-center>
+				<div v-if="computedExpStatusConfig?.name" mr-8 flex items-center>
 					<div
-						mr-8
+						mr-12
 						:style="{
 							color: computedExpStatusConfig?.color,
 						}"
 					>
 						{{ computedExpStatusConfig?.name }}
+					</div>
+					<div flex gap-6>
+						<a-button
+							:disabled="
+								computedExpStatusConfig?.status === EXP_STATUS_MAP.DOING.status
+							"
+							rounded="!4"
+							px="!6"
+							style="background: linear-gradient(to right, #2b58f6, #0779f5)"
+							text="!white"
+							:loading="statusLoading"
+							@click="changeStatusHandler(EXP_STATUS_MAP.DOING.status)"
+							>启动</a-button
+						>
+						<a-button
+							:loading="statusLoading"
+							:disabled="
+								computedExpStatusConfig?.status === EXP_STATUS_MAP.PAUSE.status
+							"
+							rounded="!4"
+							px="!6"
+							style="background: linear-gradient(to right, #f19406, #e3a61e)"
+							text="!white"
+							@click="changeStatusHandler(EXP_STATUS_MAP.PAUSE.status)"
+							>暂停</a-button
+						>
 					</div>
 				</div>
 			</div>
