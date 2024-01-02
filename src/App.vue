@@ -1,5 +1,6 @@
 <template>
 	<DndProvider :backend="TouchBackend">
+		<DndPreview />
 		<router-view />
 	</DndProvider>
 </template>

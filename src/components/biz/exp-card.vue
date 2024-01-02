@@ -5,6 +5,7 @@ import { useDrag } from 'vue3-dnd'
 import { toRefs } from '@vueuse/core'
 import dayjs from 'dayjs'
 import { EXP_STATUS_MAP } from '../../utils/biz/exputils'
+import { getEmptyImage } from 'react-dnd-html5-backend'
 
 const props = defineProps({
 	item: {
@@ -17,7 +18,7 @@ const props = defineProps({
 	},
 })
 const emit = defineEmits(['drop'])
-const [collect, dragSource] = useDrag({
+const [collect, dragSource, preview] = useDrag({
 	type: 'BOX',
 	item: { index: props.index, item: props.item },
 	end: (item, monitor) => {
@@ -32,6 +33,10 @@ const [collect, dragSource] = useDrag({
 
 const { isDragging } = toRefs(collect)
 const opacity = computed(() => (unref(isDragging) ? 0.4 : 1))
+
+onMounted(() => {
+	preview(getEmptyImage(), { captureDraggingState: true })
+})
 </script>
 
 <template>
