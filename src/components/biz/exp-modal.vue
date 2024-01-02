@@ -22,13 +22,16 @@ async function open(params: { id: number; index: number }) {
 		referList.value = []
 
 		formData.value.id = params.id
-		loadExpLogs()
-		loadExpAttachments()
-		// 获取任务详情
-		await loadExpDetail()
-		formData.value.index = params.index
-		loadQuotationDetail()
-		loadGrapDatas()
+		setTimeout(async () => {
+			loadExpLogs()
+			loadExpAttachments()
+			// 获取任务详情
+			loadExpDetail().then(() => {
+				formData.value.index = params.index
+				loadQuotationDetail()
+				loadGrapDatas()
+			})
+		})
 	}
 }
 function close() {
