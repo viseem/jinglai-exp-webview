@@ -1,11 +1,11 @@
 <template>
-	<DndProvider :backend="HTML5Backend">
+	<DndProvider :backend="TouchBackend">
 		<router-view />
 	</DndProvider>
 </template>
 <script setup lang="ts">
 import { DndProvider } from 'vue3-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { TouchBackend } from 'react-dnd-touch-backend'
 </script>
 <style>
 .arco-modal-body {
