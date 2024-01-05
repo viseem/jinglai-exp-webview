@@ -10,6 +10,8 @@ import {
 import VChart from 'vue-echarts'
 import type { EChartsOption } from 'echarts'
 import { IExpCountStats } from '~/api/biz/types/statstypes'
+import { PropType } from 'vue'
+import { EXP_STATUS_MAP } from '~/utils/biz/exputils'
 
 use([
 	CanvasRenderer,
@@ -26,16 +28,54 @@ const props = defineProps({
 })
 const chartRef = ref()
 const chartData = ref([
-	{ value: 0, name: '未做' },
-	{ value: 0, name: '在做' },
+	{
+		value: 0,
+		name: '待开展',
+		color: EXP_STATUS_MAP['0'].color,
+		status: EXP_STATUS_MAP['0'].status,
+	},
+	{
+		value: 0,
+		name: '进行中',
+		color: EXP_STATUS_MAP.DOING.color,
+		status: EXP_STATUS_MAP.DOING.status,
+	},
+	{
+		value: 0,
+		name: '暂停',
+		color: EXP_STATUS_MAP.PAUSE.color,
+		status: EXP_STATUS_MAP.PAUSE.status,
+	},
+	{
+		value: 0,
+		name: '审核中',
+		color: EXP_STATUS_MAP.DATA_CHECK.color,
+		status: EXP_STATUS_MAP.DATA_CHECK.status,
+	},
+	{
+		value: 0,
+		name: '审核通过',
+		color: EXP_STATUS_MAP.DATA_ACCEPT.color,
+		status: EXP_STATUS_MAP.DATA_ACCEPT.status,
+	},
+	{
+		value: 0,
+		name: '审核驳回',
+		color: EXP_STATUS_MAP.DATA_REJECT.color,
+		status: EXP_STATUS_MAP.DATA_REJECT.status,
+	},
 ])
 watch(
 	() => props.stats,
-	async (v) => {
+	async (v: IExpCountStats) => {
 		if (v) {
 			await nextTick()
 			chartData.value[0].value = v?.notDoCount || 0
 			chartData.value[1].value = v?.doingCount || 0
+			chartData.value[2].value = v?.pauseCount || 0
+			chartData.value[3].value = v?.dataCheckCount || 0
+			chartData.value[4].value = v?.dataAcceptCount || 0
+			chartData.value[5].value = v?.dataRejectCount || 0
 			// chartRef.value.setOptions(option)
 		}
 	},
@@ -46,15 +86,23 @@ const option = ref<EChartsOption>({
 		text: '',
 		left: 'center',
 	},
-	color: ['#214DDE', '#4FD7BD'],
+	color: [
+		EXP_STATUS_MAP['0'].color,
+		EXP_STATUS_MAP.DOING.color,
+		EXP_STATUS_MAP.PAUSE.color,
+		EXP_STATUS_MAP.DATA_CHECK.color,
+		EXP_STATUS_MAP.DATA_ACCEPT.color,
+		EXP_STATUS_MAP.DATA_REJECT.color,
+	],
 	tooltip: {
 		trigger: 'item',
 		formatter: '{b} : {c} ({d}%)',
 	},
 	legend: {
+		show: false,
 		orient: 'vertical',
 		left: 'left',
-		data: ['未做', '在做'],
+		data: ['待开展', '进行中', '暂停', '审核中', '审核通过', '数据驳回'],
 		formatter: (name) => {
 			return (
 				name + ' ' + chartData.value.find((item) => item.name === name)?.value
@@ -64,8 +112,8 @@ const option = ref<EChartsOption>({
 	series: [
 		{
 			type: 'pie',
-			radius: '55%',
-			center: ['50%', '60%'],
+			radius: '70%',
+			center: ['55%', '50%'],
 			data: chartData.value,
 			emphasis: {
 				itemStyle: {
@@ -77,15 +125,58 @@ const option = ref<EChartsOption>({
 		},
 	],
 })
+const emit = defineEmits(['status-change'])
+const currentTagIndex = ref(-1)
+function tagClickHandler(index: number) {
+	if (index === currentTagIndex.value) {
+		currentTagIndex.value = -1
+	} else {
+		currentTagIndex.value = index
+	}
+	if (![0].includes(index)) {
+		emit('status-change', chartData.value[currentTagIndex.value])
+	}
+}
 </script>
 
 <template>
-	<div>
+	<div h14rem flex>
+		<div hfull min-w-6rem flex-1>
+			<div
+				v-for="(item, index) in chartData"
+				:key="item"
+				border="2px solid transparent"
+				rounded="1"
+				mt-2
+				flex
+				cursor-pointer
+				items-center
+				gap-1
+				px-1
+				py-1
+				text-nowrap
+				:class="index == currentTagIndex ? 'tag-active' : 'tag-inactive'"
+				@click="tagClickHandler(index)"
+			>
+				<div
+					min-h-0.6rem
+					min-w-0.6rem
+					rounded="50%"
+					:style="{ background: item.color }"
+				></div>
+				<span text-xs>{{ item.name }}</span>
+				<span text-xs>{{ item.value }}</span>
+			</div>
+		</div>
 		<!-- @vue-ignore -->
-		<div h14rem wfull>
+		<div hfull wfull>
 			<v-chart ref="chartRef" class="wfull" :option="option" autoresize />
 		</div>
 	</div>
 </template>
 
-<style></style>
+<style scoped>
+.tag-active {
+	border-color: #0078d4;
+}
+</style>

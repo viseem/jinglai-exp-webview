@@ -20,16 +20,15 @@ interface IStatusItem {
  * store
  * */
 const userStore = useUserStore()
-
-const expStatusList: IStatusItem[] = [
+const _expStatusList = [
 	{
-		name: '待开展',
+		name: '筹备待开展',
 		status: ['0'],
 		colors: [EXP_STATUS_MAP['0'].color],
 		icon: EXP_STATUS_MAP['0'].icon,
 	},
 	{
-		name: '进行中',
+		name: '开展中',
 		status: [
 			EXP_STATUS_MAP.DOING.status,
 			EXP_STATUS_MAP.PAUSE.status,
@@ -53,6 +52,9 @@ const expStatusList: IStatusItem[] = [
 		icon: EXP_STATUS_MAP.COMPLETE.icon,
 	},
 ]
+const expStatusList = ref<IStatusItem[]>(
+	JSON.parse(JSON.stringify(_expStatusList)),
+)
 const [, drop1] = useDrop(() => ({
 	accept: ['BOX'],
 	drop: () => ({ index: 0, status: '0' }),
@@ -263,6 +265,20 @@ async function expChangeHandler(item: IExp) {
 		expRes.value[item.index] = { ...expRes.value[item.index], ...item }
 	}
 }
+
+/*
+ * 饼图状态改变
+ * */
+function pieStatusChangeHandler(item: { status: string; color: string }) {
+	console.log('item--', item)
+	if (item) {
+		expStatusList.value[1].status = [item.status]
+		expStatusList.value[1].colors = [item.color]
+	} else {
+		expStatusList.value[1].status = _expStatusList[1].status
+		expStatusList.value[1].colors = _expStatusList[1].colors
+	}
+}
 </script>
 
 <template>
@@ -283,7 +299,10 @@ async function expChangeHandler(item: IExp) {
 					</div>
 					<x-title py-4>实验开展统计</x-title>
 					<div class="exp-card-wrapper">
-						<echart-exp-pie :stats="expCountStats" />
+						<echart-exp-pie
+							:stats="expCountStats"
+							@status-change="pieStatusChangeHandler"
+						/>
 					</div>
 					<x-title py-4>设备列表</x-title>
 					<div class="exp-card-wrapper !p-6" flex-1>
