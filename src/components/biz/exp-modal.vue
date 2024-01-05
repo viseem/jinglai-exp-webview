@@ -355,7 +355,6 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 																rounded="50%"
 																relative
 																mr-2
-																mt-0.8
 																h1.3rem
 																min-h-1.3rem
 																min-w-1.3rem
@@ -370,7 +369,12 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 																	hfull
 																	wfull
 																	class="i-bi:check-circle-fill"
-																	text="#017FF5"
+																	:style="
+																		formData.operatorId ==
+																		userStore?.userinfo?.id
+																			? 'color: #017FF5'
+																			: 'color: #ccc'
+																	"
 																></div>
 																<div
 																	v-show="!checked"
@@ -379,6 +383,12 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 																	wfull
 																	rounded="50%"
 																	border="3px solid #017FF5"
+																	:style="
+																		formData.operatorId ==
+																		userStore?.userinfo?.id
+																			? 'border:3px solid #017FF5'
+																			: 'border:3px solid #ccc'
+																	"
 																></div>
 															</div>
 															<div v-html="item.content"></div>
