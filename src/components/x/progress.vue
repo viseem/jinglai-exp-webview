@@ -20,6 +20,10 @@ const props = defineProps({
 		type: Number,
 		default: 20,
 	},
+	showText: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 const total = computed<number>(() => {
@@ -73,7 +77,7 @@ const computedPercentStr = computed(() => {
 			'100%': '#2D56F6',
 		}"
 		:stroke-width="strokeWidth"
-		:show-text="false"
+		:show-text="showText"
 		:percent="computedPercent"
 	>
 		<template #text>{{ computedPercentStr }}</template>

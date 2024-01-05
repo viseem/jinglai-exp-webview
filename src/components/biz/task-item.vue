@@ -86,14 +86,14 @@ const computeTaskContainerClass = computed(() => {
 		return 'category-container-class'
 	}
 })
-const computeCategorySopProgress = computed(() => {
+/*const computeCategorySopProgress = computed(() => {
 	if (isCategoryLevel.value) {
 		if (!(data.value?.sopList?.length > 0)) {
 			return
 		}
 		const sopList = data.value?.sopList
 		const doneSopCount =
-			sopList?.filter((item) => item.status === SOP_STATUS.DONE).length || 0
+			sopList?.filter((item) => item.status === SOP_STATUS.已做).length || 0
 		const progress = doneSopCount
 			? Math.floor((doneSopCount / sopList.length) * 100)
 			: 0
@@ -102,7 +102,7 @@ const computeCategorySopProgress = computed(() => {
 			countStr: `${doneSopCount} / ${sopList.length}`,
 		}
 	}
-})
+})*/
 function test() {
 	console.log('test---')
 }
@@ -136,9 +136,11 @@ defineExpose({ test })
 			class="task-sop-status"
 			style="color: green; border-color: green"
 		>
-			<x-image icon="ep:check" />
+			<div hfull wfull class="i-bi:check-circle-fill"></div>
 		</div>
-		<div v-if="sopStatusIsUnDone" class="task-sop-status"></div>
+		<div v-if="sopStatusIsUnDone" class="task-sop-status">
+			<div hfull wfull border="2px solid #ccc" rounded="50%"></div>
+		</div>
 
 		<a-tooltip>
 			<template #content>
@@ -160,24 +162,13 @@ defineExpose({ test })
 				>
 					{{ data?.operator?.nickname }}
 				</p>
-				<div class="w-full flex justify-center">
-					<a-progress
-						:color="[
-							{ color: '#f56c6c', percentage: 20 },
-							{ color: '#d7ae72', percentage: 40 },
-							{ color: '#1989fa', percentage: 60 },
-							{ color: '#6ccc6c', percentage: 100 },
-						]"
-						style="width: 100%"
-						stroke-width="6"
-						:percentage="computeCategorySopProgress?.percentage"
-					>
-						<template #default>
-							<div class="items-center text-[12px] !p-0">
-								{{ computeCategorySopProgress?.countStr }}
-							</div>
-						</template>
-					</a-progress>
+				<div class="mt-1 w-full flex justify-center">
+					<x-progress
+						show-text
+						:stroke-width="7"
+						:done="data?.sopDone"
+						:total="data?.sopTotal"
+					/>
 				</div>
 			</div>
 			<div v-else class="text-ellipsis-1 w-[80%] text-center">
@@ -219,14 +210,8 @@ defineExpose({ test })
 	position: absolute;
 	top: 0.2rem;
 	left: 0.2rem;
-	display: flex;
-	width: 18px;
-	height: 18px;
-	border: 2px solid #666;
-	border-radius: 50%;
-	box-sizing: border-box;
-	align-items: center;
-	justify-content: center;
+	width: 26px;
+	height: 26px;
 }
 
 .item-operation-icon {
