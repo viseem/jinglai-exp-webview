@@ -3,6 +3,7 @@ import { IExp, IExpAttachment, IExpLog, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
 import { booleanToSopStatus } from '~/utils/biz/exputils'
 import { updateExpStage } from '~/api/biz/expapi'
+import dayjs from 'dayjs'
 
 const emit = defineEmits(['sop-change', 'exp-change'])
 const userStore = useUserStore()
@@ -275,9 +276,14 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 				<div flex items-center gap-4>
 					<span text-sm>{{ formatDate(formData.startDate) }}</span>
 					<div class="w15rem" flex>
-						<x-progress
+						<!--						<x-progress
 							v-if="formData.startDate || formData.deadline"
 							:stroke-width="8"
+						/>-->
+						<x-progress
+							:stroke-width="8"
+							:start-date="dayjs(formData.startDate).valueOf()"
+							:end-date="dayjs(formData.deadline).valueOf()"
 						/>
 					</div>
 					<span text-sm>{{ formatDate(formData.deadline) }}</span>
