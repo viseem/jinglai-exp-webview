@@ -16,7 +16,7 @@ export default {
 			icon: 'warning',
 			title,
 			showConfirmButton: false,
-			timer: 3000,
+			timer: 2000,
 		})
 	},
 	success(title: string) {
@@ -25,7 +25,7 @@ export default {
 			icon: 'success',
 			title,
 			showConfirmButton: false,
-			timer: 3000,
+			timer: 2000,
 		})
 	},
 	async confirm(title: string, text?: string) {

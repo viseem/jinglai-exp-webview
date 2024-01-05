@@ -355,6 +355,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 																rounded="50%"
 																relative
 																mr-2
+																mt-0.5
 																h1.3rem
 																min-h-1.3rem
 																min-w-1.3rem
