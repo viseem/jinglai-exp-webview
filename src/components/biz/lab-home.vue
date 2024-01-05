@@ -47,7 +47,7 @@ const expStatusList: IStatusItem[] = [
 		icon: EXP_STATUS_MAP.DOING.icon,
 	},
 	{
-		name: '已出库',
+		name: '已完成',
 		status: [EXP_STATUS_MAP.COMPLETE.status],
 		colors: [EXP_STATUS_MAP.COMPLETE.color],
 		icon: EXP_STATUS_MAP.COMPLETE.icon,

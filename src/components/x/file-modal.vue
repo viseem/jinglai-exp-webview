@@ -55,6 +55,7 @@ const computeFileExtension = computed(() =>
 							isExcelFile(computeFileExtension) ||
 							isPPTFile(computeFileExtension))
 					"
+					border="1px solid red"
 					style="width: 100%; min-height: 70vh"
 					:style="{ height }"
 					:src="`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(
@@ -68,6 +69,7 @@ const computeFileExtension = computed(() =>
 				<div v-if="modalVisible && isPDFFile(computeFileExtension)">
 					<iframe
 						v-if="isPDFFile(computeFileExtension)"
+						border="1px solid red"
 						style="width: 100%; min-height: 65vh"
 						:style="{ height }"
 						:src="currentFileUrl"

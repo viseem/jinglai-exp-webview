@@ -204,7 +204,7 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 	await updateSopStatus({ id: item.id, status }).finally(() => {
 		sopStatusLoading.value = false
 	})
-	toast.success('修改成功')
+	// toast.success('修改成功')
 	item.status = status
 	formData.value.sopDone += _status ? 1 : -1
 	emit('sop-change', formData.value)
@@ -492,5 +492,6 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 	overflow: hidden;
 	display: flex;
 	align-items: center;
+	font-weight: 900;
 }
 </style>
