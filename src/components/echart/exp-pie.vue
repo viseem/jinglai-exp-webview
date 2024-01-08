@@ -140,8 +140,8 @@ function tagClickHandler(index: number) {
 </script>
 
 <template>
-	<div h14rem flex>
-		<div hfull min-w-6rem flex-1>
+	<div h19rem flex>
+		<div hfull min-w-8rem flex-1>
 			<div
 				v-for="(item, index) in chartData"
 				:key="item"
@@ -159,13 +159,13 @@ function tagClickHandler(index: number) {
 				@click="tagClickHandler(index)"
 			>
 				<div
-					min-h-0.6rem
-					min-w-0.6rem
+					min-h-1.2rem
+					min-w-1.2rem
 					rounded="50%"
 					:style="{ background: item.color }"
 				></div>
-				<span text-xs>{{ item.name }}</span>
-				<span text-xs>{{ item.value }}</span>
+				<span text-base>{{ item.name }}</span>
+				<span text-base>{{ item.value }}</span>
 			</div>
 		</div>
 		<!-- @vue-ignore -->

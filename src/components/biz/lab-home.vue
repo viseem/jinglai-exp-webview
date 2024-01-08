@@ -270,11 +270,14 @@ async function expChangeHandler(item: IExp) {
  * 饼图状态改变
  * */
 function pieStatusChangeHandler(item: { status: string; color: string }) {
-	console.log('item--', item)
+	console.log('item--===', item)
 	if (item) {
+		expStatusList.value[1].name = EXP_STATUS_MAP?.[item.status]?.name
 		expStatusList.value[1].status = [item.status]
 		expStatusList.value[1].colors = [item.color]
+		console.log('expStatusList.value[1]--===', expStatusList.value[1])
 	} else {
+		expStatusList.value[1].name = '开展中'
 		expStatusList.value[1].status = _expStatusList[1].status
 		expStatusList.value[1].colors = _expStatusList[1].colors
 	}
@@ -331,7 +334,7 @@ function pieStatusChangeHandler(item: { status: string; color: string }) {
 							:src="item.icon"
 							style="filter: drop-shadow(0 0 0.8rem #999)"
 						></x-image>
-						<x-title ml-2rem wfull flex-1>{{ item.name }}</x-title>
+						<div ml-2rem wfull flex-1 text-xl>{{ item.name }}</div>
 					</div>
 					<div :ref="computeDropRef(index)" class="exp-task-wrapper p-6" flex-1>
 						<x-flex-y-overflow p-5px class="hfull -m-5px">

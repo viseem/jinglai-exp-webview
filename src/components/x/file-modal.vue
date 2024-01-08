@@ -36,6 +36,7 @@ const currentFileUrl = computed(() =>
 const computeFileExtension = computed(() =>
 	getFileExtension(currentFileUrl.value),
 )
+onMounted(() => {})
 </script>
 
 <template>
@@ -48,6 +49,7 @@ const computeFileExtension = computed(() =>
 				>
 					<div>{{ currentFileName }}</div>
 				</div>
+				<!--https://view.officeapps.live.com/op/view.aspx-->
 				<iframe
 					v-if="
 						modalVisible &&
@@ -55,12 +57,12 @@ const computeFileExtension = computed(() =>
 							isExcelFile(computeFileExtension) ||
 							isPPTFile(computeFileExtension))
 					"
-					border="1px solid red"
+					border="1px solid yellow"
 					style="width: 100%; min-height: 70vh"
 					:style="{ height }"
 					:src="`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(
 						currentFileUrl,
-					)}&rs:toolbar=0`"
+					)}&rs:toolbar=0&id=${getUUID()}`"
 					frameborder="0"
 				></iframe>
 				<div v-if="isImgFile(currentFileUrl)" class="flex justify-center">
@@ -69,7 +71,7 @@ const computeFileExtension = computed(() =>
 				<div v-if="modalVisible && isPDFFile(computeFileExtension)">
 					<iframe
 						v-if="isPDFFile(computeFileExtension)"
-						border="1px solid red"
+						border="1px solid green"
 						style="width: 100%; min-height: 65vh"
 						:style="{ height }"
 						:src="currentFileUrl"
