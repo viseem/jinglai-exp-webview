@@ -48,35 +48,36 @@ onMounted(() => {})
 					class="relative mb-0.5rem flex justify-between bg-[white]"
 				>
 					<div>{{ currentFileName }}</div>
+					{{ currentFileUrl }}
 				</div>
 				<!--https://view.officeapps.live.com/op/view.aspx-->
-				<iframe
+				<web-view
 					v-if="
 						modalVisible &&
 						(isWordFile(computeFileExtension) ||
 							isExcelFile(computeFileExtension) ||
 							isPPTFile(computeFileExtension))
 					"
-					border="1px solid yellow"
+					border="1px solid #ccc"
 					style="width: 100%; min-height: 70vh"
 					:style="{ height }"
 					:src="`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(
 						currentFileUrl,
-					)}&rs:toolbar=0&id=${getUUID()}`"
+					)}&id=${getUUID()}`"
 					frameborder="0"
-				></iframe>
+				></web-view>
 				<div v-if="isImgFile(currentFileUrl)" class="flex justify-center">
 					<x-image :src="fileUrl" />
 				</div>
 				<div v-if="modalVisible && isPDFFile(computeFileExtension)">
-					<iframe
+					<web-view
 						v-if="isPDFFile(computeFileExtension)"
 						border="1px solid green"
 						style="width: 100%; min-height: 65vh"
 						:style="{ height }"
 						:src="currentFileUrl"
 						frameborder="0"
-					></iframe>
+					></web-view>
 				</div>
 				<div v-if="isNotKnowFile(currentFileUrl)">
 					暂不支持此文件预览，请点击下载查看

@@ -24,12 +24,20 @@ const props = defineProps({
 	},
 })
 
-const modalStore = useModalStore()
+// const modalStore = useModalStore()
 // const fileViewRef = ref()
+// 获取目标窗口的引用
+
+// 发送消息
+function sendMessage() {
+	/* eslint-disable-next-line */
+	uni.postMessage({ data: { fileName: props.name, fileUrl: props.url } })
+}
 function handleFileClick() {
+	sendMessage()
 	// fileViewRef.value?.open(props)
-	modalStore.setFileModalConfig({ fileName: props.name, fileUrl: props.url })
-	modalStore.setFileModalVisible(true)
+	// modalStore.setFileModalConfig({ fileName: props.name, fileUrl: props.url })
+	// modalStore.setFileModalVisible(true)
 }
 let picFlag = false
 const determineFile = () => {

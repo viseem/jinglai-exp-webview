@@ -21,7 +21,6 @@ export function isExcelFile(filename: string): boolean {
 
 export function isPPTFile(filename: string): boolean {
 	const extension = getFileExtension(filename)
-	console.log('extension----', extension)
 	return extension === 'pptx' || extension === 'ppt'
 }
 

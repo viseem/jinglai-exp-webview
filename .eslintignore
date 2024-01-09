@@ -3,3 +3,4 @@ dist
 node_modules
 presets/types
 src/pages/canvasPreview
+public/sdk
