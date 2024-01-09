@@ -48,10 +48,9 @@ onMounted(() => {})
 					class="relative mb-0.5rem flex justify-between bg-[white]"
 				>
 					<div>{{ currentFileName }}</div>
-					{{ currentFileUrl }}
 				</div>
 				<!--https://view.officeapps.live.com/op/view.aspx-->
-				<web-view
+				<iframe
 					v-if="
 						modalVisible &&
 						(isWordFile(computeFileExtension) ||
@@ -65,19 +64,19 @@ onMounted(() => {})
 						currentFileUrl,
 					)}&id=${getUUID()}`"
 					frameborder="0"
-				></web-view>
+				></iframe>
 				<div v-if="isImgFile(currentFileUrl)" class="flex justify-center">
 					<x-image :src="fileUrl" />
 				</div>
 				<div v-if="modalVisible && isPDFFile(computeFileExtension)">
-					<web-view
+					<iframe
 						v-if="isPDFFile(computeFileExtension)"
-						border="1px solid green"
+						border="1px solid #ccc"
 						style="width: 100%; min-height: 65vh"
 						:style="{ height }"
 						:src="currentFileUrl"
 						frameborder="0"
-					></web-view>
+					></iframe>
 				</div>
 				<div v-if="isNotKnowFile(currentFileUrl)">
 					暂不支持此文件预览，请点击下载查看
