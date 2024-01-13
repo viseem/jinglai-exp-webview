@@ -63,15 +63,23 @@ onMounted(() => {
 			></div>
 		</div>
 		<div>
-			<div
-				mb-1
-				text-xs
-				op80
-				:style="{
-					color: EXP_STATUS_MAP?.[item.stage]?.color,
-				}"
-			>
-				{{ EXP_STATUS_MAP?.[item.stage]?.name }}
+			<div mb-1 flex items-center justify-between>
+				<div
+					text-xs
+					op80
+					:style="{
+						color: EXP_STATUS_MAP?.[item.stage]?.color,
+					}"
+				>
+					{{ EXP_STATUS_MAP?.[item.stage]?.name }}
+				</div>
+				<div flex items-center>
+					<span text-xs op-70>预检项：</span>
+					<div flex items-center text-xs>
+						<span>{{ item.preTodoDone }}</span
+						>/<span>{{ item.preTodoTotal }}</span>
+					</div>
+				</div>
 			</div>
 			<div flex items-center justify-between gap-2>
 				<x-text mr-4 flex-1 :text="item.project?.name"></x-text>
