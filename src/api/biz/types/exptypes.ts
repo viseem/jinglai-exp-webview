@@ -1,4 +1,5 @@
 import type { IUser } from '~/api/biz/types/basetypes'
+import { ICheckboxItem } from '~/components/x/checkbox/checkbox'
 
 export interface ILab {
 	id: number
@@ -7,7 +8,7 @@ export interface ILab {
 	mark: string
 }
 
-export interface ISop {
+export interface ISop extends ICheckboxItem {
 	createTime: 1702884490000
 	updateTime: 1702884490000
 	creator: 145

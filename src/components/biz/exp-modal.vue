@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IExp, IExpAttachment, IExpLog, ISop } from '~/api/biz/types/exptypes'
 import { IQuotation } from '~/api/biz/types/quotationtypes'
-import { booleanToSopStatus } from '~/utils/biz/exputils'
+import { booleanToSopStatus, sopStatusToBoolean } from '~/utils/biz/exputils'
 import { updateExpStage } from '~/api/biz/expapi'
 import dayjs from 'dayjs'
 
@@ -9,6 +9,13 @@ const emit = defineEmits(['sop-change', 'exp-change'])
 const userStore = useUserStore()
 const expDialogRef = ref()
 const formData = ref({} as IExp)
+const computedSopList = computed(() => {
+	return formData.value?.sopList?.map((item) => {
+		item.checked = sopStatusToBoolean(item.status)
+		item.disabled = formData.value.operatorId !== userStore?.userinfo?.id
+		return item
+	})
+})
 const computedExpStatusConfig = computed(
 	() => EXP_STATUS_MAP?.[formData.value.stage],
 )
@@ -199,7 +206,7 @@ async function changeStatusHandler(stage: string) {
  * 实验sop状态更改
  * */
 const sopStatusLoading = ref(false)
-async function sopStatusChange(item: ISop, _status: boolean) {
+async function sopStatusChange(_status: boolean, item: ISop) {
 	sopStatusLoading.value = true
 	const status = booleanToSopStatus(_status)
 	await updateSopStatus({ id: item.id, status }).finally(() => {
@@ -340,68 +347,14 @@ async function sopStatusChange(item: ISop, _status: boolean) {
 									<a-spin dot hfull wfull :loading="sopStatusLoading">
 										<x-flex-y-overflow hfull flex-1>
 											<div flex flex-col ml="-1">
-												<a-checkbox
-													v-for="item in formData?.sopList"
-													:key="item"
-													mb-2
-													style="zoom: 1.25"
-													:disabled="
-														formData.operatorId !== userStore?.userinfo?.id
-													"
-													:model-value="sopStatusToBoolean(item.status)"
-													@update:model-value="
-														(v) => {
-															sopStatusChange(item, v)
-														}
-													"
+												<x-checkbox
+													:list="computedSopList"
+													@update="sopStatusChange"
 												>
-													<template #checkbox="{ checked }">
-														<div flex>
-															<div
-																rounded="50%"
-																relative
-																mr-2
-																mt-0.5
-																h1.3rem
-																min-h-1.3rem
-																min-w-1.3rem
-																w1.3rem
-																flex
-																items-center
-																justify-center
-															>
-																<div
-																	v-show="checked"
-																	absolute
-																	hfull
-																	wfull
-																	class="i-bi:check-circle-fill"
-																	:style="
-																		formData.operatorId ==
-																		userStore?.userinfo?.id
-																			? 'color: #017FF5'
-																			: 'color: #ccc'
-																	"
-																></div>
-																<div
-																	v-show="!checked"
-																	absolute
-																	hfull
-																	wfull
-																	rounded="50%"
-																	border="3px solid #017FF5"
-																	:style="
-																		formData.operatorId ==
-																		userStore?.userinfo?.id
-																			? 'border:3px solid #017FF5'
-																			: 'border:3px solid #ccc'
-																	"
-																></div>
-															</div>
-															<div v-html="item.content"></div>
-														</div>
+													<template #content="{ item }">
+														<span v-html="item.content"></span>
 													</template>
-												</a-checkbox>
+												</x-checkbox>
 											</div>
 										</x-flex-y-overflow>
 									</a-spin>
