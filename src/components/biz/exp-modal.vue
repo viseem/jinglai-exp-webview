@@ -5,12 +5,22 @@ import { booleanToSopStatus, sopStatusToBoolean } from '~/utils/biz/exputils'
 import { updateExpStage } from '~/api/biz/expapi'
 import dayjs from 'dayjs'
 
+const modalStore = useModalStore()
+
 const emit = defineEmits(['sop-change', 'exp-change'])
 const userStore = useUserStore()
 const expDialogRef = ref()
+const isLoadDetail = ref(false)
 const formData = ref({} as IExp)
 const computedSopList = computed(() => {
 	return formData.value?.sopList?.map((item) => {
+		item.checked = sopStatusToBoolean(item.status)
+		item.disabled = formData.value.operatorId !== userStore?.userinfo?.id
+		return item
+	})
+})
+const computedPreTodoList = computed(() => {
+	return formData.value?.preTodoList?.map((item) => {
 		item.checked = sopStatusToBoolean(item.status)
 		item.disabled = formData.value.operatorId !== userStore?.userinfo?.id
 		return item
@@ -35,6 +45,7 @@ async function open(params: { id: number; index: number }) {
 			loadExpAttachments()
 			// 获取任务详情
 			loadExpDetail().then(() => {
+				isLoadDetail.value = true
 				formData.value.index = params.index
 				loadQuotationDetail()
 				loadGrapDatas()
@@ -217,9 +228,28 @@ async function sopStatusChange(_status: boolean, item: ISop) {
 	formData.value.sopDone += _status ? 1 : -1
 	emit('sop-change', formData.value)
 }
+
+/*
+ * 预检项相关
+ * */
+function preCheckClickHandler() {
+	modalStore.setExpPreCheckModalConfig({ list: computedPreTodoList })
+	modalStore.setExpPreCheckModalVisible(true)
+}
+function preCheckUpdateHandler(checked: boolean, index?: number) {
+	if (formData.value?.preTodoList?.[index] === undefined) {
+		return
+	}
+
+	formData.value.preTodoList[index].status = booleanToSopStatus(checked)
+	modalStore.setExpPreCheckModalConfig({ list: computedPreTodoList })
+	formData.value.preTodoDone += checked ? 1 : -1
+	emit('exp-change', formData.value)
+}
 </script>
 
 <template>
+	<biz-exp-pre-check-modal @success="preCheckUpdateHandler" />
 	<x-dialog ref="expDialogRef" width="95%" height="95vh">
 		<div class="wfull" m-3 flex flex-col rounded-2 p-5 bg="#EAEDF0">
 			<div flex items-center justify-between>
@@ -392,7 +422,22 @@ async function sopStatusChange(_status: boolean, item: ISop) {
 					<a-col hfull :span="8">
 						<div hfull flex flex-col>
 							<div flex flex-1 flex-col>
-								<div class="content-card-title">实验总览</div>
+								<div class="content-card-title" flex justify-between>
+									<span>实验总览</span>
+									<div
+										v-if="isLoadDetail"
+										text="#017FF5"
+										flex
+										cursor-pointer
+										items-center
+										@click="preCheckClickHandler()"
+									>
+										<span>预检项：</span>
+										<div>
+											{{ formData.preTodoDone }}/{{ formData.preTodoTotal }}
+										</div>
+									</div>
+								</div>
 								<div class="content-card" flex-1>
 									<biz-exp-graph v-if="graphDatas" :list="graphDatas" />
 								</div>

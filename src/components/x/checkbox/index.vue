@@ -9,14 +9,14 @@ const props = defineProps({
 })
 const computedList = computed(() => props.list)
 const emit = defineEmits(['update'])
-function updateHandler(v: boolean, item: any) {
-	emit('update', v, item)
+function updateHandler(v: boolean, item: any, index: number) {
+	emit('update', v, item, index)
 }
 </script>
 
 <template>
 	<a-checkbox
-		v-for="item in computedList"
+		v-for="(item, index) in computedList"
 		:key="item"
 		mb-2
 		style="zoom: 1.25"
@@ -24,7 +24,7 @@ function updateHandler(v: boolean, item: any) {
 		:model-value="item.checked"
 		@update:model-value="
 			(v: boolean) => {
-				updateHandler(v, item)
+				updateHandler(v, item, index)
 			}
 		"
 	>
@@ -34,7 +34,7 @@ function updateHandler(v: boolean, item: any) {
 					rounded="50%"
 					relative
 					mr-2
-					mt="1.5%"
+					mt="2%"
 					h1.3rem
 					min-h-1.3rem
 					min-w-1.3rem

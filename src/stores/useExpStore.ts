@@ -10,7 +10,7 @@ export default defineStore('counter', {
 				sopWidth: 200,
 				sopHeight: 60,
 			},
-			expStatusChangeCount: 0,
+			refreshExpListCount: 0,
 		}
 	},
 	actions: {
@@ -18,8 +18,8 @@ export default defineStore('counter', {
 			this.taskItemData = null
 			this.taskItemData = payload
 		},
-		setExpStatusChangeCount() {
-			this.expStatusChangeCount++
+		refreshExpList() {
+			this.refreshExpListCount++
 		},
 	},
 	persist: true,

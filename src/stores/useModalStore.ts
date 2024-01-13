@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ICheckboxItem } from '~/components/x/checkbox/checkbox'
 
 export default defineStore('modal', {
 	state() {
@@ -7,6 +8,8 @@ export default defineStore('modal', {
 			loginModalVisible: false,
 			fileModalVisible: false,
 			fileModalConfig: {} as IFileConfig,
+			expPreCheckModalVisible: false,
+			expPreCheckModalConfig: {} as { list: ICheckboxItem[] },
 		}
 	},
 	actions: {
@@ -27,6 +30,12 @@ export default defineStore('modal', {
 		},
 		setFileModalConfig(config: IFileConfig) {
 			this.fileModalConfig = config
+		},
+		setExpPreCheckModalVisible(visible: boolean) {
+			this.expPreCheckModalVisible = visible
+		},
+		setExpPreCheckModalConfig(config: { list: ICheckboxItem[] }) {
+			this.expPreCheckModalConfig = config
 		},
 	},
 	persist: false,

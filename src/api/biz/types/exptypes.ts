@@ -35,6 +35,7 @@ export interface IExp {
 	sopTotal: number
 	preTodoDone: number
 	preTodoTotal: number
+	preTodoList?: any[]
 	sopList: ISop[]
 	stage: string
 	project: {
