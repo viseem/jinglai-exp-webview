@@ -5,17 +5,21 @@ const modalVisible = computed({
 	set: (v) => modalStore.setExpPreCheckModalVisible(v),
 })
 
-const computedList = computed(() => modalStore.expPreCheckModalConfig?.list)
+const computedExpPreCheckModalConfig = computed(
+	() => modalStore.expPreCheckModalConfig,
+)
 const loading = ref(false)
 const emit = defineEmits(['success'])
 async function updateHandler(checked: boolean, item: any, index: number) {
-	if (!item.id) {
+	if (!item.id || !computedExpPreCheckModalConfig.value.exp?.id) {
 		return
 	}
 	loading.value = true
-	await updateCommonTodoLogStatus({
-		id: item.id,
+	await saveCommonTodoLogStatus({
 		status: booleanToSopStatus(checked),
+		refId: computedExpPreCheckModalConfig.value.exp.id,
+		type: 'PROJECT_CATEGORY',
+		todoId: item?.id,
 	}).finally(() => {
 		loading.value = false
 	})
@@ -29,7 +33,10 @@ async function updateHandler(checked: boolean, item: any, index: number) {
 			<div bg="white" hfull wfull flex items-center justify-center rounded-2>
 				<a-spin dot max-w="80%" :loading="loading" flex flex-col>
 					<div wfull flex flex-col>
-						<x-checkbox :list="computedList" @update="updateHandler">
+						<x-checkbox
+							:list="computedExpPreCheckModalConfig?.list"
+							@update="updateHandler"
+						>
 							<template #content="{ item }">
 								{{ item.content }}
 							</template>

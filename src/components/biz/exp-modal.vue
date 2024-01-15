@@ -233,7 +233,10 @@ async function sopStatusChange(_status: boolean, item: ISop) {
  * 预检项相关
  * */
 function preCheckClickHandler() {
-	modalStore.setExpPreCheckModalConfig({ list: computedPreTodoList })
+	modalStore.setExpPreCheckModalConfig({
+		list: computedPreTodoList,
+		exp: { id: formData.value.id },
+	})
 	modalStore.setExpPreCheckModalVisible(true)
 }
 function preCheckUpdateHandler(checked: boolean, index?: number) {
@@ -242,7 +245,10 @@ function preCheckUpdateHandler(checked: boolean, index?: number) {
 	}
 
 	formData.value.preTodoList[index].status = booleanToSopStatus(checked)
-	modalStore.setExpPreCheckModalConfig({ list: computedPreTodoList })
+	modalStore.setExpPreCheckModalConfig({
+		list: computedPreTodoList,
+		exp: { id: formData.value.id },
+	})
 	formData.value.preTodoDone += checked ? 1 : -1
 	emit('exp-change', formData.value)
 }

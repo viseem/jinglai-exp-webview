@@ -9,7 +9,10 @@ export default defineStore('modal', {
 			fileModalVisible: false,
 			fileModalConfig: {} as IFileConfig,
 			expPreCheckModalVisible: false,
-			expPreCheckModalConfig: {} as { list: ICheckboxItem[] },
+			expPreCheckModalConfig: {} as {
+				list: ICheckboxItem[]
+				exp: { id: number }
+			},
 		}
 	},
 	actions: {
@@ -34,7 +37,10 @@ export default defineStore('modal', {
 		setExpPreCheckModalVisible(visible: boolean) {
 			this.expPreCheckModalVisible = visible
 		},
-		setExpPreCheckModalConfig(config: { list: ICheckboxItem[] }) {
+		setExpPreCheckModalConfig(config: {
+			list: ICheckboxItem[]
+			exp: { id: number }
+		}) {
 			this.expPreCheckModalConfig = config
 		},
 	},
