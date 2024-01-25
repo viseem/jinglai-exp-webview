@@ -112,14 +112,16 @@ function computeDropRef(index: number) {
 const labStore = useLabStore()
 const currentLab = computed(() => labStore.getCurrentLab)
 
-const expParams = ref({
-	labId: null as null | number,
-	operatorId: null as null | number,
-})
-
 /*
  * 加载任务列表
  * */
+const expParams = ref({
+	labId: null as null | number,
+	operatorId: null as null | number,
+	pageNo: 1,
+	pageSize: 10,
+})
+const expTotal = ref(0)
 const expRes = ref([] as IExp[])
 async function loadExpPage() {
 	expRes.value = []
@@ -132,6 +134,7 @@ async function loadExpPage() {
 		item.index = index
 	})
 	expRes.value = res?.list
+	expTotal.value = res?.total
 }
 
 function initExpParams() {
@@ -302,7 +305,7 @@ function pieStatusChangeHandler(
 		<div w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-6>
 				<!--左侧实验室信息-->
-				<div class="wfull" flex flex-col>
+				<div flex flex-1 flex-col>
 					<div class="exp-card-wrapper">
 						<biz-lab-info />
 					</div>
@@ -325,43 +328,64 @@ function pieStatusChangeHandler(
 						</x-flex-y-overflow>
 					</div>
 				</div>
-				<!--实验列表 三列-->
-				<div
-					v-for="(item, index) in expStatusList"
-					:key="index"
-					class="hfull wfull"
-					flex
-					flex-col
-				>
-					<div relative mb-4 flex items-center>
-						<x-image
-							h1.5rem
-							w1.5rem
-							:src="item.icon"
-							style="filter: drop-shadow(0 0 0.8rem #999)"
-						></x-image>
-						<div ml-2rem wfull flex-1 text-xl>{{ item.name }}</div>
-					</div>
-					<div :ref="computeDropRef(index)" class="exp-task-wrapper p-6" flex-1>
-						<x-flex-y-overflow p-5px class="hfull -m-5px">
-							<div
-								v-for="expItem in filterExpListByStatus(item)"
-								:key="expItem"
-								mb6
-								wfull
-							>
-								<biz-exp-card
-									:index="expItem.index"
-									:item="expItem"
-									@click="cardClickHandler(expItem.id, expItem.index)"
-									@drop="expCardDropHandler"
-								></biz-exp-card>
+				<!--中间区域 加分页-->
+				<div hfull w="60%" flex flex-col>
+					<!--实验列表 三列-->
+					<div hfull wfull flex gap-6>
+						<div
+							v-for="(item, index) in expStatusList"
+							:key="index"
+							class="hfull wfull"
+							flex
+							flex-col
+						>
+							<div relative mb-4 flex items-center>
+								<x-image
+									h1.5rem
+									w1.5rem
+									:src="item.icon"
+									style="filter: drop-shadow(0 0 0.8rem #999)"
+								></x-image>
+								<div ml-2rem wfull flex-1 text-xl>{{ item.name }}</div>
 							</div>
-						</x-flex-y-overflow>
+							<div
+								:ref="computeDropRef(index)"
+								class="exp-task-wrapper p-6"
+								flex-1
+							>
+								<x-flex-y-overflow p-5px class="hfull -m-5px">
+									<div
+										v-for="expItem in filterExpListByStatus(item)"
+										:key="expItem"
+										mb6
+										wfull
+									>
+										<biz-exp-card
+											:index="expItem.index"
+											:item="expItem"
+											@click="cardClickHandler(expItem.id, expItem.index)"
+											@drop="expCardDropHandler"
+										></biz-exp-card>
+									</div>
+								</x-flex-y-overflow>
+							</div>
+						</div>
+					</div>
+					<!-- 分页 -->
+					<div mt-4 wfull flex justify-center>
+						<a-pagination
+							v-model:current="expParams.pageNo"
+							v-model:page-size="expParams.pageSize"
+							size="large"
+							:total="expTotal"
+							show-total
+							show-page-size
+						/>
 					</div>
 				</div>
+
 				<!--右侧 人员列表-->
-				<div hfull wfull flex flex-col>
+				<div hfull flex flex-1 flex-col>
 					<div flex items-center justify-between pb-4>
 						<x-title flex-1>人员负载</x-title>
 						<div v-if="computedUserinfo.id" flex items-center>

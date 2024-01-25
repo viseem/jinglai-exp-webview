@@ -8,7 +8,7 @@ import {
 
 export const getExpPage = (
 	params: { labId?: null | number; quotationId?: number } = {},
-): Promise<{ list: IExp[] }> =>
+): Promise<{ list: IExp[]; total: number }> =>
 	request.get('/open-api/lab/project-category/page', params)
 export const getLabPage = (): Promise<{ list: ILab[] }> =>
 	request.get('/open-api/lab/laboratory-lab/page')
