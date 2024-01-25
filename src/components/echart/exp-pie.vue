@@ -39,30 +39,49 @@ const chartData = ref([
 		name: '进行中',
 		color: EXP_STATUS_MAP.DOING.color,
 		status: EXP_STATUS_MAP.DOING.status,
+		groupIndex: 1,
 	},
 	{
 		value: 0,
 		name: '暂停',
 		color: EXP_STATUS_MAP.PAUSE.color,
 		status: EXP_STATUS_MAP.PAUSE.status,
+		groupIndex: 1,
 	},
 	{
 		value: 0,
 		name: '审核中',
 		color: EXP_STATUS_MAP.DATA_CHECK.color,
 		status: EXP_STATUS_MAP.DATA_CHECK.status,
+		groupIndex: 1,
 	},
 	{
 		value: 0,
 		name: '审核通过',
 		color: EXP_STATUS_MAP.DATA_ACCEPT.color,
 		status: EXP_STATUS_MAP.DATA_ACCEPT.status,
+		groupIndex: 1,
 	},
 	{
 		value: 0,
 		name: '审核驳回',
 		color: EXP_STATUS_MAP.DATA_REJECT.color,
 		status: EXP_STATUS_MAP.DATA_REJECT.status,
+		groupIndex: 1,
+	},
+	{
+		value: 0,
+		name: '已完成',
+		color: EXP_STATUS_MAP.DONE.color,
+		status: EXP_STATUS_MAP.DONE.status,
+		groupIndex: 2,
+	},
+	{
+		value: 0,
+		name: '已出库',
+		color: EXP_STATUS_MAP.Z_COMPLETE.color,
+		status: EXP_STATUS_MAP.Z_COMPLETE.status,
+		groupIndex: 2,
 	},
 ])
 watch(
@@ -76,6 +95,9 @@ watch(
 			chartData.value[3].value = v?.dataCheckCount || 0
 			chartData.value[4].value = v?.dataAcceptCount || 0
 			chartData.value[5].value = v?.dataRejectCount || 0
+			chartData.value[6].value = v?.doneCount || 0
+			chartData.value[7].value = v?.completeCount || 0
+
 			// chartRef.value.setOptions(option)
 		}
 	},
@@ -93,21 +115,12 @@ const option = ref<EChartsOption>({
 		EXP_STATUS_MAP.DATA_CHECK.color,
 		EXP_STATUS_MAP.DATA_ACCEPT.color,
 		EXP_STATUS_MAP.DATA_REJECT.color,
+		EXP_STATUS_MAP.DONE.color,
+		EXP_STATUS_MAP.Z_COMPLETE.color,
 	],
 	tooltip: {
 		trigger: 'item',
 		formatter: '{b} : {c} ({d}%)',
-	},
-	legend: {
-		show: false,
-		orient: 'vertical',
-		left: 'left',
-		data: ['待开展', '进行中', '暂停', '审核中', '审核通过', '数据驳回'],
-		formatter: (name) => {
-			return (
-				name + ' ' + chartData.value.find((item) => item.name === name)?.value
-			)
-		},
 	},
 	series: [
 		{
@@ -134,13 +147,17 @@ function tagClickHandler(index: number) {
 		currentTagIndex.value = index
 	}
 	if (![0].includes(index)) {
-		emit('status-change', chartData.value[currentTagIndex.value])
+		emit(
+			'status-change',
+			chartData.value[currentTagIndex.value],
+			chartData.value[index]?.groupIndex,
+		)
 	}
 }
 </script>
 
 <template>
-	<div h19rem flex>
+	<div h23rem flex>
 		<div hfull min-w-8rem flex-1>
 			<div
 				v-for="(item, index) in chartData"

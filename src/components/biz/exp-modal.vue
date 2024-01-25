@@ -220,7 +220,11 @@ const sopStatusLoading = ref(false)
 async function sopStatusChange(_status: boolean, item: ISop) {
 	sopStatusLoading.value = true
 	const status = booleanToSopStatus(_status)
-	await updateSopStatus({ id: item.id, status }).finally(() => {
+	await updateSopStatus({
+		id: item.id,
+		status,
+		projectCategoryId: formData.value.id,
+	}).finally(() => {
 		sopStatusLoading.value = false
 	})
 	// toast.success('修改成功')

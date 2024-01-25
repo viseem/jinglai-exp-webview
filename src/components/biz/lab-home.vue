@@ -46,10 +46,10 @@ const _expStatusList = [
 		icon: EXP_STATUS_MAP.DOING.icon,
 	},
 	{
-		name: '已完成',
-		status: [EXP_STATUS_MAP.COMPLETE.status],
-		colors: [EXP_STATUS_MAP.COMPLETE.color],
-		icon: EXP_STATUS_MAP.COMPLETE.icon,
+		name: '已完成、已出库',
+		status: [EXP_STATUS_MAP.DONE.status, EXP_STATUS_MAP.Z_COMPLETE.status],
+		colors: [EXP_STATUS_MAP.DONE.color, EXP_STATUS_MAP.Z_COMPLETE.color],
+		icon: EXP_STATUS_MAP.Z_COMPLETE.icon,
 	},
 ]
 const expStatusList = ref<IStatusItem[]>(
@@ -269,17 +269,23 @@ async function expChangeHandler(item: IExp) {
 /*
  * 饼图状态改变
  * */
-function pieStatusChangeHandler(item: { status: string; color: string }) {
-	console.log('item--===', item)
+function pieStatusChangeHandler(
+	item: {
+		status: string
+		color: string
+		groupIndex: number
+	},
+	groupIndex: number,
+) {
 	if (item) {
-		expStatusList.value[1].name = EXP_STATUS_MAP?.[item.status]?.name
-		expStatusList.value[1].status = [item.status]
-		expStatusList.value[1].colors = [item.color]
+		expStatusList.value[groupIndex].name = EXP_STATUS_MAP?.[item.status]?.name
+		expStatusList.value[groupIndex].status = [item.status]
+		expStatusList.value[groupIndex].colors = [item.color]
 		console.log('expStatusList.value[1]--===', expStatusList.value[1])
 	} else {
-		expStatusList.value[1].name = '开展中'
-		expStatusList.value[1].status = _expStatusList[1].status
-		expStatusList.value[1].colors = _expStatusList[1].colors
+		expStatusList.value[groupIndex].name = _expStatusList[groupIndex].name
+		expStatusList.value[groupIndex].status = _expStatusList[groupIndex].status
+		expStatusList.value[groupIndex].colors = _expStatusList[groupIndex].colors
 	}
 }
 </script>

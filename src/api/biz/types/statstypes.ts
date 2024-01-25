@@ -5,4 +5,6 @@ export interface IExpCountStats {
 	dataCheckCount: number
 	dataAcceptCount: number
 	dataRejectCount: number
+	doneCount: number
+	completeCount: number
 }
