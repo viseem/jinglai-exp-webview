@@ -49,7 +49,7 @@ export const EXP_STATUS_MAP = {
 	},
 	COMPLETE: {
 		name: '已出库',
-		status: 'COMPLETE',
+		status: 'Z_COMPLETE',
 		color: '#01C3F5',
 		icon: 'images/expstatus/outed.png',
 	},
