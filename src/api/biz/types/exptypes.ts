@@ -25,6 +25,7 @@ export interface ISop extends ICheckboxItem {
 }
 
 export interface IExp {
+	cateIndex?: number
 	index?: number
 	id: number
 	quotationId?: number

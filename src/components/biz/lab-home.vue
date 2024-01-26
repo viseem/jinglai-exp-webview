@@ -14,6 +14,11 @@ interface IStatusItem {
 	status: string[]
 	colors: string[]
 	icon: string
+	pageNo: number
+	pageSize: number
+	total: number
+	list: IExp[]
+	cateIndex: number
 }
 
 /*
@@ -23,12 +28,19 @@ const userStore = useUserStore()
 const _expStatusList = [
 	{
 		name: '筹备待开展',
+		cateIndex: 0,
+
 		status: ['0'],
 		colors: [EXP_STATUS_MAP['0'].color],
 		icon: EXP_STATUS_MAP['0'].icon,
+		pageNo: 1,
+		pageSize: 10,
+		list: [],
 	},
 	{
 		name: '开展中',
+		cateIndex: 1,
+
 		status: [
 			EXP_STATUS_MAP.DOING.status,
 			EXP_STATUS_MAP.PAUSE.status,
@@ -44,12 +56,19 @@ const _expStatusList = [
 			EXP_STATUS_MAP.DATA_REJECT.color,
 		],
 		icon: EXP_STATUS_MAP.DOING.icon,
+		pageNo: 1,
+		pageSize: 10,
+		list: [],
 	},
 	{
 		name: '已完成、已出库',
+		cateIndex: 2,
 		status: [EXP_STATUS_MAP.DONE.status, EXP_STATUS_MAP.Z_COMPLETE.status],
 		colors: [EXP_STATUS_MAP.DONE.color, EXP_STATUS_MAP.Z_COMPLETE.color],
 		icon: EXP_STATUS_MAP.Z_COMPLETE.icon,
+		pageNo: 1,
+		pageSize: 10,
+		list: [],
 	},
 ]
 const expStatusList = ref<IStatusItem[]>(
@@ -88,7 +107,8 @@ const [, drop3] = useDrop(() => ({
 async function expCardDropHandler(item, dropResult) {
 	if (item?.index > -1 && item?.item?.id && dropResult?.status) {
 		await updateExpStage({ id: item.item.id, stage: dropResult.status })
-		expRes.value[item.index].stage = dropResult.status
+		// expStatusList.value[item.cateIndex][item.index].stage = dropResult.status
+		loadAllExpPage()
 		toast.success('操作成功')
 		loadExpStats()
 		loadExperPage()
@@ -118,23 +138,37 @@ const currentLab = computed(() => labStore.getCurrentLab)
 const expParams = ref({
 	labId: null as null | number,
 	operatorId: null as null | number,
-	pageNo: 1,
-	pageSize: 10,
 })
-const expTotal = ref(0)
-const expRes = ref([] as IExp[])
-async function loadExpPage() {
-	expRes.value = []
+async function loadAllExpPage(reset: boolean = true) {
 	if (!currentLab.value.id) {
 		return
 	}
 	expParams.value.labId = currentLab.value.id
-	const res = await getExpPage(expParams.value)
-	res?.list?.forEach((item, index) => {
-		item.index = index
+	for (const item of expStatusList.value) {
+		loadExpPageByItem(item, reset)
+	}
+}
+
+async function loadExpPageByItem(item: IStatusItem, reset: boolean = false) {
+	item.list = []
+	if (reset) {
+		item.pageNo = 1
+		item.pageSize = 10
+		item.total = 0
+	}
+
+	const res = await getExpPage({
+		...expParams.value,
+		pageNo: item.pageNo,
+		pageSize: item.pageSize,
+		stageArr: item.status,
 	})
-	expRes.value = res?.list
-	expTotal.value = res?.total
+	res?.list?.forEach((_item, index) => {
+		_item.index = index
+		_item.cateIndex = item.cateIndex
+	})
+	item.list = res?.list || []
+	item.total = res?.total
 }
 
 function initExpParams() {
@@ -144,20 +178,6 @@ function initExpParams() {
 		labId: null,
 		operatorId: null,
 	}
-}
-
-const filterExpListByStatus = (statusItem: IStatusItem) => {
-	const resultList: IExp[] = []
-	if (expRes.value) {
-		expRes.value.forEach((item) => {
-			const statusIndex = statusItem.status.indexOf(item?.stage?.toString())
-			if (statusIndex > -1) {
-				item.color = statusItem.colors[statusIndex]
-				resultList.push(item)
-			}
-		})
-	}
-	return resultList
 }
 
 /*
@@ -215,7 +235,7 @@ function experClickHandler(experIndex: number, experItem: IExper) {
 	lookSelf.value = currentExperIndex.value == computedLoginUserIndex.value
 	const operatorId = currentExperIndex.value == -1 ? null : experItem.userId
 	expParams.value.operatorId = operatorId
-	loadExpPage()
+	loadAllExpPage()
 }
 
 /*
@@ -225,7 +245,7 @@ const lookSelf = ref(false)
 function lookSelfClickHandler(e: boolean) {
 	currentExperIndex.value = e ? computedLoginUserIndex.value : -1
 	expParams.value.operatorId = e ? computedUserinfo.value.id : null
-	loadExpPage()
+	loadAllExpPage()
 }
 
 /*
@@ -247,7 +267,7 @@ watch(
 	(v) => {
 		console.log('currentLab.value changed--', v)
 		initExpParams()
-		loadExpPage()
+		loadAllExpPage()
 		loadExperPage()
 		loadDevicePage()
 		loadExpStats()
@@ -264,9 +284,19 @@ function cardClickHandler(id: number, index: number) {
  * */
 async function expChangeHandler(item: IExp) {
 	console.log('item---====', item)
-	if (item?.index !== undefined && item?.index > -1) {
-		expRes.value[item.index] = { ...expRes.value[item.index], ...item }
-	}
+	loadAllExpPage()
+	return
+	/*	if (
+		item?.index !== undefined &&
+		item?.index > -1 &&
+		item?.cateIndex !== undefined &&
+		item?.cateIndex > -1
+	) {
+		expStatusList.value[item.cateIndex][item.index] = {
+			...expStatusList.value[item.cateIndex][item.index],
+			...item,
+		}
+	}*/
 }
 
 /*
@@ -280,6 +310,7 @@ function pieStatusChangeHandler(
 	},
 	groupIndex: number,
 ) {
+	console.log('item----', item)
 	if (item) {
 		expStatusList.value[groupIndex].name = EXP_STATUS_MAP?.[item.status]?.name
 		expStatusList.value[groupIndex].status = [item.status]
@@ -290,6 +321,7 @@ function pieStatusChangeHandler(
 		expStatusList.value[groupIndex].status = _expStatusList[groupIndex].status
 		expStatusList.value[groupIndex].colors = _expStatusList[groupIndex].colors
 	}
+	loadExpPageByItem(expStatusList.value[groupIndex], true)
 }
 </script>
 
@@ -305,7 +337,7 @@ function pieStatusChangeHandler(
 		<div w-full flex flex-1 items-center justify-center>
 			<div hfull wfull flex gap-6>
 				<!--左侧实验室信息-->
-				<div flex flex-1 flex-col>
+				<div wfull flex flex-col>
 					<div class="exp-card-wrapper">
 						<biz-lab-info />
 					</div>
@@ -328,64 +360,56 @@ function pieStatusChangeHandler(
 						</x-flex-y-overflow>
 					</div>
 				</div>
-				<!--中间区域 加分页-->
-				<div hfull w="60%" flex flex-col>
-					<!--实验列表 三列-->
-					<div hfull wfull flex gap-6>
-						<div
-							v-for="(item, index) in expStatusList"
-							:key="index"
-							class="hfull wfull"
-							flex
-							flex-col
-						>
-							<div relative mb-4 flex items-center>
-								<x-image
-									h1.5rem
-									w1.5rem
-									:src="item.icon"
-									style="filter: drop-shadow(0 0 0.8rem #999)"
-								></x-image>
-								<div ml-2rem wfull flex-1 text-xl>{{ item.name }}</div>
-							</div>
-							<div
-								:ref="computeDropRef(index)"
-								class="exp-task-wrapper p-6"
-								flex-1
-							>
-								<x-flex-y-overflow p-5px class="hfull -m-5px">
-									<div
-										v-for="expItem in filterExpListByStatus(item)"
-										:key="expItem"
-										mb6
-										wfull
-									>
-										<biz-exp-card
-											:index="expItem.index"
-											:item="expItem"
-											@click="cardClickHandler(expItem.id, expItem.index)"
-											@drop="expCardDropHandler"
-										></biz-exp-card>
-									</div>
-								</x-flex-y-overflow>
-							</div>
-						</div>
+
+				<div
+					v-for="(item, index) in expStatusList"
+					:key="index"
+					class="box-border hfull"
+					min-w="20%"
+					flex
+					flex-col
+				>
+					<div relative mb-4 flex items-center>
+						<x-image
+							h1.5rem
+							w1.5rem
+							:src="item.icon"
+							style="filter: drop-shadow(0 0 0.8rem #999)"
+						></x-image>
+						<div ml-2rem wfull flex-1 text-xl>{{ item.name }}</div>
 					</div>
-					<!-- 分页 -->
-					<div mt-4 wfull flex justify-center>
-						<a-pagination
-							v-model:current="expParams.pageNo"
-							v-model:page-size="expParams.pageSize"
-							size="large"
-							:total="expTotal"
-							show-total
-							show-page-size
-						/>
+					<div
+						:ref="computeDropRef(index)"
+						class="exp-task-wrapper p-6 pb-4"
+						flex
+						flex-1
+						flex-col
+					>
+						<x-flex-y-overflow p-5px class="hfull -m-5px">
+							<div v-for="expItem in item.list" :key="expItem" mb6 wfull>
+								<biz-exp-card
+									:index="expItem.index"
+									:item="expItem"
+									@click="cardClickHandler(expItem.id, expItem.index)"
+									@drop="expCardDropHandler"
+								></biz-exp-card>
+							</div>
+						</x-flex-y-overflow>
+						<div ml-3 wfull flex justify-center pt-6>
+							<a-pagination
+								v-model:current="item.pageNo"
+								v-model:page-size="item.pageSize"
+								size="large"
+								:total="item.total"
+								show-total
+								@change="loadExpPageByItem(item)"
+							/>
+						</div>
 					</div>
 				</div>
 
 				<!--右侧 人员列表-->
-				<div hfull flex flex-1 flex-col>
+				<div hfull wfull flex flex-col>
 					<div flex items-center justify-between pb-4>
 						<x-title flex-1>人员负载</x-title>
 						<div v-if="computedUserinfo.id" flex items-center>

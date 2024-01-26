@@ -7,9 +7,15 @@ import {
 } from '~/api/biz/types/exptypes'
 
 export const getExpPage = (
-	params: { labId?: null | number; quotationId?: number } = {},
+	params: {
+		labId?: null | number
+		quotationId?: number
+		pageNo: number
+		pageSize: number
+		stageArr: string[]
+	} = {} as any,
 ): Promise<{ list: IExp[]; total: number }> =>
-	request.get('/open-api/lab/project-category/page', params)
+	request.post('/open-api/lab/project-category/page', params)
 export const getLabPage = (): Promise<{ list: ILab[] }> =>
 	request.get('/open-api/lab/laboratory-lab/page')
 

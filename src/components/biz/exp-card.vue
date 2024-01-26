@@ -58,7 +58,7 @@ onMounted(() => {
 				wfull
 				h="70%"
 				class="exp-card-bar"
-				:style="{ background: item.color }"
+				:style="{ background: EXP_STATUS_MAP?.[item.stage]?.color }"
 				rounded-1
 			></div>
 		</div>
