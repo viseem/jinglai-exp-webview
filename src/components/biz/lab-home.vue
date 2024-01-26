@@ -19,6 +19,7 @@ interface IStatusItem {
 	total: number
 	list: IExp[]
 	cateIndex: number
+	loading: boolean
 }
 
 /*
@@ -29,18 +30,18 @@ const _expStatusList = [
 	{
 		name: '筹备待开展',
 		cateIndex: 0,
-
 		status: ['0'],
 		colors: [EXP_STATUS_MAP['0'].color],
 		icon: EXP_STATUS_MAP['0'].icon,
 		pageNo: 1,
 		pageSize: 10,
 		list: [],
+		loading: false,
 	},
 	{
 		name: '开展中',
 		cateIndex: 1,
-
+		loading: false,
 		status: [
 			EXP_STATUS_MAP.DOING.status,
 			EXP_STATUS_MAP.PAUSE.status,
@@ -63,6 +64,7 @@ const _expStatusList = [
 	{
 		name: '已完成、已出库',
 		cateIndex: 2,
+		loading: false,
 		status: [EXP_STATUS_MAP.DONE.status, EXP_STATUS_MAP.Z_COMPLETE.status],
 		colors: [EXP_STATUS_MAP.DONE.color, EXP_STATUS_MAP.Z_COMPLETE.color],
 		icon: EXP_STATUS_MAP.Z_COMPLETE.icon,
@@ -155,14 +157,15 @@ async function loadExpPageByItem(item: IStatusItem, reset: boolean = false) {
 		item.pageNo = 1
 		item.pageSize = 10
 		item.total = 0
+		item.loading = false
 	}
-
+	item.loading = true
 	const res = await getExpPage({
 		...expParams.value,
 		pageNo: item.pageNo,
 		pageSize: item.pageSize,
 		stageArr: item.status,
-	})
+	}).finally(() => (item.loading = false))
 	res?.list?.forEach((_item, index) => {
 		_item.index = index
 		_item.cateIndex = item.cateIndex
@@ -376,11 +379,16 @@ function pieStatusChangeHandler(
 							:src="item.icon"
 							style="filter: drop-shadow(0 0 0.8rem #999)"
 						></x-image>
-						<div ml-2rem wfull flex-1 text-xl>{{ item.name }}</div>
+						<div ml-2rem wfull flex-1 text-xl>
+							{{ item.name }}
+						</div>
+						<a-spin v-if="item.loading" dot />
 					</div>
+
 					<div
 						:ref="computeDropRef(index)"
 						class="exp-task-wrapper p-6 pb-4"
+						relative
 						flex
 						flex-1
 						flex-col
