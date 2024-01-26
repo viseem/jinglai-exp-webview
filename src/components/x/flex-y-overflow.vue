@@ -10,4 +10,21 @@
 	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+::-webkit-scrollbar {
+	width: 10px;
+	height: 4px;
+	background-color: rgb(246, 247, 248);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: rgb(233, 236, 239, 0.8);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: rgb(246, 247, 248);
+	border-radius: 10px;
+}
+</style>
