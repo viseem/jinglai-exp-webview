@@ -31,8 +31,8 @@ const chartData = ref([
 	{
 		value: 0,
 		name: '待开展',
-		color: EXP_STATUS_MAP['0'].color,
-		status: EXP_STATUS_MAP['0'].status,
+		color: EXP_STATUS_MAP['E'].color,
+		status: EXP_STATUS_MAP['E'].status,
 	},
 	{
 		value: 0,
@@ -72,8 +72,8 @@ const chartData = ref([
 	{
 		value: 0,
 		name: '已完成',
-		color: EXP_STATUS_MAP.DONE.color,
-		status: EXP_STATUS_MAP.DONE.status,
+		color: EXP_STATUS_MAP.V_DONE.color,
+		status: EXP_STATUS_MAP.V_DONE.status,
 		groupIndex: 2,
 	},
 	{
@@ -109,13 +109,13 @@ const option = ref<EChartsOption>({
 		left: 'center',
 	},
 	color: [
-		EXP_STATUS_MAP['0'].color,
+		EXP_STATUS_MAP['E'].color,
 		EXP_STATUS_MAP.DOING.color,
 		EXP_STATUS_MAP.PAUSE.color,
 		EXP_STATUS_MAP.DATA_CHECK.color,
 		EXP_STATUS_MAP.DATA_ACCEPT.color,
 		EXP_STATUS_MAP.DATA_REJECT.color,
-		EXP_STATUS_MAP.DONE.color,
+		EXP_STATUS_MAP.V_DONE.color,
 		EXP_STATUS_MAP.Z_COMPLETE.color,
 	],
 	tooltip: {

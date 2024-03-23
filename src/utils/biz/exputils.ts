@@ -11,9 +11,9 @@ export function booleanToSopStatus(status: boolean) {
 }
 
 export const EXP_STATUS_MAP = {
-	'0': {
+	E: {
 		name: '待开展',
-		status: '0',
+		status: 'E',
 		color: '#878C9F',
 		icon: 'images/expstatus/not-do.png',
 	},
@@ -47,9 +47,9 @@ export const EXP_STATUS_MAP = {
 		color: '#E21F1F',
 		icon: 'images/expstatus/doing.png',
 	},
-	DONE: {
+	V_DONE: {
 		name: '已完成',
-		status: 'DONE',
+		status: 'V_DONE',
 		color: '#00495e',
 		icon: 'images/expstatus/outed.png',
 	},
